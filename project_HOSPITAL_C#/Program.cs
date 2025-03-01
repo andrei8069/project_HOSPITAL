@@ -33,14 +33,15 @@ namespace project_HOSPITAL_C_
             Console.WriteLine(pacient3.toScreenPacient());
             Console.WriteLine();
 
-            Console.WriteLine(pacient3.Cnp);
+            Console.WriteLine("CNP Pacinet: " + pacient3.Cnp);
             Console.WriteLine();
 
 
             SectieSpital sectieSpital3 = new SectieSpital("Cardiologie", 3, 200, 19, 24, 400, 10000000.987);
+            Console.WriteLine(sectieSpital3.toScreenSectie());
             Console.WriteLine();
 
-            Console.WriteLine(sectieSpital3.BugetSectie);
+            Console.WriteLine("BUGET SectieSpital: " + sectieSpital3.BugetSectie);
             Console.WriteLine();
 
 
