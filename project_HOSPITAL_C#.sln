@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35818.85 d17.13
+VisualStudioVersion = 17.13.35818.85
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "project_HOSPITAL_C#", "project_HOSPITAL_C#\project_HOSPITAL_C#.csproj", "{F64A7A67-CCF0-47FA-804C-139934829DD7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibrarieModele", "LibrarieModele\LibrarieModele.csproj", "{7420EA19-4D18-445C-96A2-E06DB032B9B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NivelStocareDate", "NivelStocareDate\NivelStocareDate.csproj", "{CF45AA03-9456-4684-9C60-C40103CE7352}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{F64A7A67-CCF0-47FA-804C-139934829DD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F64A7A67-CCF0-47FA-804C-139934829DD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F64A7A67-CCF0-47FA-804C-139934829DD7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7420EA19-4D18-445C-96A2-E06DB032B9B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7420EA19-4D18-445C-96A2-E06DB032B9B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7420EA19-4D18-445C-96A2-E06DB032B9B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7420EA19-4D18-445C-96A2-E06DB032B9B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF45AA03-9456-4684-9C60-C40103CE7352}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF45AA03-9456-4684-9C60-C40103CE7352}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF45AA03-9456-4684-9C60-C40103CE7352}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF45AA03-9456-4684-9C60-C40103CE7352}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
