@@ -23,6 +23,13 @@ namespace project_HOSPITAL_C_
             Pacienti HostPacienti = new Pacienti();
             Sectii HostSectii = new Sectii();
 
+            Pacienti_FISIERTEXT adminPacienti = new Pacienti_FISIERTEXT("Pacienti.txt");
+            Sectii_FISIERTEXT adminSectii = new Sectii_FISIERTEXT("Sectii.txt");
+            Pacient pacientNou = new Pacient();
+            SectieSpital sectieSpitalNoua = new SectieSpital();
+            int pozitieVectorPacient =0;
+            int pozitieVectorSpital =0;
+
             string choice;
             do
             {
@@ -35,10 +42,11 @@ namespace project_HOSPITAL_C_
                 Console.WriteLine("TP: Afiseaza toti pacientii"); //afisare totala pacienti
                 Console.WriteLine("TS: Afiseaza toate sectiile"); //afisare totala sectii
 
+                Console.WriteLine("SFP: SALVARE PACIENT IN FISIER"); //afisare totala pacienti
+                Console.WriteLine("AFP: AFISARE PACIENTI DIN FISIER"); //afisare totala sectii
 
-                Console.WriteLine("RECP: căutarea după anumite criterii pentru pacienti");
-                Console.WriteLine("RECS: căutarea după anumite criterii pentru sectie spital");
-
+                Console.WriteLine("SFS: SALVARE SECTIE IN FISIER"); //afisare totala pacienti
+                Console.WriteLine("AFS: AFISARE SECTII DIN FISIER"); //afisare totala sectii
 
                 Console.WriteLine("Q: Quit program");  // quit
 
@@ -47,8 +55,8 @@ namespace project_HOSPITAL_C_
 
                 switch (choice.ToUpper())
                 {
+                    
                     case "RP":
-                        Pacient pacientNou;
                         pacientNou = CitirePacientTastatura();
                         HostPacienti.AdaugarePacienti(pacientNou);
        
@@ -56,7 +64,6 @@ namespace project_HOSPITAL_C_
                         break;
 
                     case "RS":
-                        SectieSpital sectieSpitalNoua;
                         sectieSpitalNoua = CitireSectieTastatura();
 
                         HostSectii.AdaugareSectii(sectieSpitalNoua);
@@ -84,169 +91,28 @@ namespace project_HOSPITAL_C_
                     case "TS":
                         HostSectii.AfisareSectii();
                         break;
-
-                    case "RECP":
-                        Console.WriteLine("Introduceti numele sectiunii unde doriti sa faceti modificari");
-                        string sectiunePacient = Console.ReadLine();
-                        switch(sectiunePacient.ToUpper())
-                        {
-                            case "NUME":
-                                for(int i =0; i < HostPacienti.pozitieVectorPacient; i++)
-                                {
-                                    if(HostPacienti.vectorPacient[i].Nume == "Maria")
-                                    {
-                                        Console.WriteLine("SUCCES! COD FUNCTIONAL");
-                                    }
-                                }
-                               
-
-                                break;
-                            case "PRENUME":
-                                for (int i = 0; i < HostPacienti.pozitieVectorPacient; i++)
-                                {
-                                    if (HostPacienti.vectorPacient[i].Prenume == "Maria")
-                                    {
-
-                                    }
-                                }
-                                
-                                break;
-                            case "CNP":
-                                for (int i = 0; i < HostPacienti.pozitieVectorPacient; i++)
-                                {
-                                    if (HostPacienti.vectorPacient[i].Cnp == "11212212122112")
-                                    {
-
-                                    }
-                                }
-                                
-                                break;
-                            case "VARSTA":
-                                for (int i = 0; i < HostPacienti.pozitieVectorPacient; i++)
-                                {
-                                    if (HostPacienti.vectorPacient[i].Varsta == 12)
-                                    {
-
-                                    }
-                                }
-                                
-                                break;
-                            case "GREUTATE":
-                                for (int i = 0; i < HostPacienti.pozitieVectorPacient; i++)
-                                {
-                                    if (HostPacienti.vectorPacient[i].Greutate == 0.0)
-                                    {
-
-                                    }
-                                }
-                                
-                                break;
-                            case "INALTIME":
-                                for (int i = 0; i < HostPacienti.pozitieVectorPacient; i++)
-                                {
-                                    if ( HostPacienti.vectorPacient[i].Inaltime == 0.0)
-                                    {
-
-                                    }
-                                }
-                               
-                                break;
-                            case "TEMPERATURACORP":
-                                for (int i = 0; i < HostPacienti.pozitieVectorPacient; i++)
-                                {
-                                    if (HostPacienti.vectorPacient[i].TemperaturaCorp == 0.0)
-                                    {
-
-                                    }
-                                }
-                                
-                                break;
-                            default:
-                                Console.WriteLine("Optiunea este invalida");
-                                break;
-                        }
-
+                    case "AFS":
+                        SectieSpital[] vectorSectieSpital = adminSectii.GetSectie(out pozitieVectorSpital);
+                        AfisareSectii(vectorSectieSpital, pozitieVectorSpital);
                         break;
-                    case "RECS":
-                        Console.WriteLine("Introduceti numele sectiunii unde doriti sa faceti modificari");
-                        string sectiuneSectie = Console.ReadLine();
-                        switch (sectiuneSectie.ToUpper())
-                        {
+                    case "SFS":
+                        int codSectie = ++pozitieVectorSpital;
+                        sectieSpitalNoua.CodSectie = codSectie;
 
-                            case "NUMESECTIE":
-                                for (int i = 0; i < HostSectii.pozitieVectorSpital; i++)
-                                {
-                                    if (HostSectii.vectorSectieSpital[i].NumeSectie == "Cardiologie")
-                                    {
-                                        Console.WriteLine("SUCCES! COD FUNCTIONAL");
-                                    }
-                                }
-                                
-                                break;
-                            case "ETAJ":
-                                for (int i = 0; i < HostSectii.pozitieVectorSpital; i++)
-                                {
-                                    if (HostSectii.vectorSectieSpital[i].Etaj == 0)
-                                    {
+                        adminSectii.AddSectii(sectieSpitalNoua);
+                        break;
+                    case "AFP":
+                        Pacient[] vectorPacient = adminPacienti.GetPacienti(out pozitieVectorPacient);
+                        //Console.WriteLine("menu");
+                        //Console.WriteLine(pozitieVectorPacient);
+                        AfisarePacienti(vectorPacient, pozitieVectorPacient);
+                        break;
+                    case "SFP":
+                        int codPacient = ++pozitieVectorPacient;
+                        pacientNou.CodPacient = codPacient;
+                        adminPacienti.AddPacient(pacientNou);
 
-                                    }
-                                }
-                                
-                                break;
-                            case "CAPACITATEMAXIMA":
-                                for (int i = 0; i < HostSectii.pozitieVectorSpital; i++)
-                                {
-                                    if (HostSectii.vectorSectieSpital[i].CapacitateMaxima == 0)
-                                    {
 
-                                    }
-                                }
-                                
-                                break;
-                            case "NRPACIENTIINTERNATI":
-                                for (int i = 0; i < HostSectii.pozitieVectorSpital; i++)
-                                {
-                                    if (HostSectii.vectorSectieSpital[i].NrPacientiInternati == 0)
-                                    {
-
-                                    }
-                                }
-                                
-                                break;
-                            case "TEMPERATURAMEDIU":
-                                for (int i = 0; i < HostSectii.pozitieVectorSpital; i++)
-                                {
-                                    if (HostSectii.vectorSectieSpital[i].TemperaturaMediu == 0.0)
-                                    {
-
-                                    }
-                                }
-                                
-                                break;
-                            case "SUPRAFATASECTIE":
-                                for (int i = 0; i < HostSectii.pozitieVectorSpital; i++)
-                                {
-                                    if (HostSectii.vectorSectieSpital[i].SuprafataSectie == 0.0)
-                                    {
-
-                                    }
-                                }
-                                
-                                break;
-                            case "BUGETSECTIE":
-                                for (int i = 0; i < HostSectii.pozitieVectorSpital; i++)
-                                {
-                                    if (HostSectii.vectorSectieSpital[i].BugetSectie == 0.0)
-                                    {
-
-                                    }
-                                }
-                                
-                                break;
-                            default:
-                                Console.WriteLine("Optiunea este invalida");
-                                break;
-                        }
                         break;
                     case "Q":
                         return;
@@ -262,7 +128,25 @@ namespace project_HOSPITAL_C_
 
             Console.ReadKey();
         }
-
+        public static void AfisareSectii(SectieSpital[] vectorSectieSpital , int pozitieVectorSpital )
+        {
+            Console.WriteLine("Sectiile sunt:");
+            for(int contor =0; contor < pozitieVectorSpital; contor++)
+            {
+                string infoSectieSpital = vectorSectieSpital[contor].toScreenSectie();
+                Console.WriteLine(infoSectieSpital);
+            }
+        }
+        public static void AfisarePacienti(Pacient[] vectorPacient , int pozitieVectorPacient)
+        {
+            Console.WriteLine("Pacientii sunt:");
+            for (int contor =0; contor < pozitieVectorPacient; contor++)
+            {
+                
+                string infoPacient = vectorPacient[contor].toScreenPacient();
+                Console.WriteLine(infoPacient);
+            }
+        }
         public static Pacient CitirePacientTastatura()
         {
             Console.WriteLine("Introduceti datele aferente pacientului (nume,prenume,cnp,varsta,greutate,inaltime,temperatura) : ");

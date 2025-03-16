@@ -11,10 +11,15 @@ namespace NivelStocareDate
     public class Pacienti
     {
         const int NR_MAX_PACIENTI = 500;
-        public int pozitieVectorPacient = 0;
-        public Pacient[] vectorPacient = new Pacient[NR_MAX_PACIENTI];
+        private int pozitieVectorPacient = 0;
+        private Pacient[] vectorPacient = new Pacient[NR_MAX_PACIENTI];
 
 
+        public Pacienti()
+        {
+            pozitieVectorPacient = 0;
+            vectorPacient = new Pacient[NR_MAX_PACIENTI];
+        }
         public void AdaugarePacienti(Pacient pacientNou)
         {
             vectorPacient[pozitieVectorPacient] = pacientNou;

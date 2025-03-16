@@ -42,8 +42,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Pacienti.cs" />
+    <Compile Include="Pacienti_FISIERTEXT.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sectii.cs" />
+    <Compile Include="Sectii_FISIERTEXT.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LibrarieModele\LibrarieModele.csproj">

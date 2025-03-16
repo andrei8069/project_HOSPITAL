@@ -10,9 +10,14 @@ namespace NivelStocareDate
     public class Sectii
     {
         const int NR_MAX_SECTII = 200;
-        public SectieSpital[] vectorSectieSpital = new SectieSpital[NR_MAX_SECTII];
-        public int pozitieVectorSpital = 0;
+        private SectieSpital[] vectorSectieSpital = new SectieSpital[NR_MAX_SECTII];
+        private int pozitieVectorSpital = 0;
 
+        public Sectii()
+        {
+            pozitieVectorSpital = 0;
+            vectorSectieSpital = new SectieSpital[NR_MAX_SECTII];
+        }
         public void AdaugareSectii(SectieSpital sectieSpitalNoua)
         {
             vectorSectieSpital[pozitieVectorSpital] = sectieSpitalNoua;
