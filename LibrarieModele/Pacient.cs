@@ -22,6 +22,8 @@ namespace LibrarieModele
         private const int GREUTATE = 5;
         private const int INALTIME = 6;
         private const int TEMPERATURACORP = 7;
+        private const int GRUPASANGE = 8;
+        private const int AFECTIUNI = 9;
         
         public string Nume {get; set;}
         public string Prenume {get; set;}
@@ -32,10 +34,17 @@ namespace LibrarieModele
         public double TemperaturaCorp {get; set;}
         public int CodPacient {get; set;}
 
-        private static int codPacientStatic = 0;
+        public GrupaSangePacient Grupa { get; set; }
+
+        public AfectiuniMedicale AfectiuniMed { get; set; }
+
+        //private static int codPacientStatic = 0;
 
       
-        
+        //public static void SeteazaUltimulCod(int cod)
+        //{
+        //    codPacientStatic = cod;
+        //}
         public Pacient()
         {
             Nume = string.Empty;
@@ -45,11 +54,12 @@ namespace LibrarieModele
             Greutate = 0.0;
             Inaltime = 0.0;
             TemperaturaCorp = 0.0;
-            codPacientStatic++;
-            CodPacient = codPacientStatic;
+            //codPacientStatic++;
+            //CodPacient = codPacientStatic;
         }
-        public Pacient(string nume , string prenume , string cnp ,int varsta , double greutate , double inaltime , double temperaturaCorp)
+        public Pacient(int codPacient,string nume , string prenume , string cnp ,int varsta , double greutate , double inaltime , double temperaturaCorp, GrupaSangePacient grupa , AfectiuniMedicale afectiuni)
         {
+            
             this.Nume = nume;
             this.Prenume = prenume;
             this.Cnp = cnp;
@@ -57,8 +67,11 @@ namespace LibrarieModele
             this.Greutate = greutate;
             this.Inaltime = inaltime;
             this.TemperaturaCorp = temperaturaCorp;
-            codPacientStatic++;
-            CodPacient = codPacientStatic;
+            this.Grupa = grupa;
+            this.AfectiuniMed = afectiuni;
+            //codPacientStatic++;
+            //CodPacient = codPacientStatic;
+            this.CodPacient = codPacient;
         }
 
 
@@ -75,7 +88,13 @@ namespace LibrarieModele
             this.Greutate =  Convert.ToDouble(dateFisier[GREUTATE]);
             this.Inaltime = Convert.ToDouble(dateFisier[INALTIME]);
             this.TemperaturaCorp = Convert.ToDouble(dateFisier[TEMPERATURACORP]);
-
+            if (Enum.TryParse(dateFisier[GRUPASANGE] , out GrupaSangePacient grupaResult)){
+                this.Grupa = grupaResult;
+            }
+            if (Enum.TryParse(dateFisier[AFECTIUNI],out AfectiuniMedicale afectiuniResult))
+            {
+                this.AfectiuniMed = afectiuniResult;
+            }
 
 
 
@@ -84,12 +103,12 @@ namespace LibrarieModele
 
         public string toScreenPacient()
         {
-            return ($"Pacient: CodPacient -> {CodPacient} Nume -> {Nume} Prenume -> {Prenume} CNP -> {Cnp} Varsta -> {Varsta} Greutate -> {Greutate} Inaltime -> {Inaltime} TemperaturaCorp -> {TemperaturaCorp}");
+            return ($"Pacient: CodPacient -> {CodPacient} Nume -> {Nume} Prenume -> {Prenume} CNP -> {Cnp} Varsta -> {Varsta} Greutate -> {Greutate} Inaltime -> {Inaltime} TemperaturaCorp -> {TemperaturaCorp} GrupaPacient -> {Grupa} Afectiuni -> {AfectiuniMed}");
         }
 
         public string ConversieLaSir_PentruFisier()
         {
-            string obiectPacientPentruFisier = string.Format("{1}{0}{2}{0}{3}{0}{4}{0}{5}{0}{6}{0}{7}{0}{8}",
+            string obiectPacientPentruFisier = string.Format("{1}{0}{2}{0}{3}{0}{4}{0}{5}{0}{6}{0}{7}{0}{8}{0}{9}{0}{10}",
                     SEPARATOR_PRINCIPAL_FISIER,
                     CodPacient.ToString(),
                     (Nume ?? "Necunoscut"),
@@ -98,7 +117,12 @@ namespace LibrarieModele
                     Varsta,
                     Greutate,
                     Inaltime,
-                    TemperaturaCorp
+                    TemperaturaCorp,
+                    Grupa,
+                    //Enum.GetName(typeof(GrupaSangePacient),Grupa),
+                    //Enum.GetName(typeof(AfectiuniMedicale),AfectiuniMed)
+                    //AfectiuniMed.ToString()
+                    AfectiuniMed
                 );
             return obiectPacientPentruFisier;
         }

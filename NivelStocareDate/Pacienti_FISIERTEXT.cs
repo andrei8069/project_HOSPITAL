@@ -45,6 +45,24 @@ namespace NivelStocareDate
             }
             return vectorPacient;
         }
+        public Pacient FindNumePacient(string nume)
+        {
+            Pacient pacient;
+            using (StreamReader citireFisier = new StreamReader(numeFisier))
+            {
+                string linieFisier;
+                while ((linieFisier = citireFisier.ReadLine()) != null)
+                {
+                    pacient = new Pacient(linieFisier);
+                    if (pacient.Nume == nume)
+                    {
+                        return pacient;
+                    }
+                }
+            }
+            return null;
+
+        }
 
     }
 }

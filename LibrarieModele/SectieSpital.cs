@@ -19,6 +19,8 @@ namespace LibrarieModele
         private const int TEMPERATURAMEDIU = 5;
         private const int SUPRAFATASECTIE = 6;
         private const int BUGETSECTIE = 7;
+        private const int STATUSSECTIE = 8;
+        private const int DOTARI = 9;
 
         public string NumeSectie { get; set; }
         public int Etaj { get; set; }
@@ -29,17 +31,26 @@ namespace LibrarieModele
         public double BugetSectie { get; set; }
         public int CodSectie { get; set; }
 
-        private static int codSectieStatic = 0;
+        public StatusFunctionareSectie Status { get; set; }
+        public DotariSectie DotariSec { get; set; }
+
+        //private static int codSectieStatic = 0;
+
+        //public static void SeteazaUltimulCod(int cod)
+        //{
+        //    codSectieStatic = cod;
+        //}
 
         public SectieSpital()
         {
             
 
         }
-        public SectieSpital(string numeSectie, int etaj, int capacitateMaxima, int nrPacientiInternati, double temperaturaMediu, double suprafataSectie, double bugetSectie)
+        public SectieSpital(int codSectie,string numeSectie, int etaj, int capacitateMaxima, int nrPacientiInternati, double temperaturaMediu, double suprafataSectie, double bugetSectie,StatusFunctionareSectie status, DotariSectie dotari)
         {
-            codSectieStatic++;
-            CodSectie = codSectieStatic;
+            //codSectieStatic++;
+            //CodSectie = codSectieStatic;
+            this.CodSectie = codSectie;
             this.NumeSectie = numeSectie;
             this.Etaj = etaj;
             this.CapacitateMaxima = capacitateMaxima;
@@ -47,6 +58,8 @@ namespace LibrarieModele
             this.TemperaturaMediu = temperaturaMediu;
             this.SuprafataSectie = suprafataSectie;
             this.BugetSectie = bugetSectie;
+            this.Status = status;
+            this.DotariSec = dotari;
 
         }
 
@@ -61,18 +74,24 @@ namespace LibrarieModele
             this.TemperaturaMediu = Convert.ToDouble(dateFisier[TEMPERATURAMEDIU]);
             this.SuprafataSectie = Convert.ToDouble(dateFisier[SUPRAFATASECTIE]);
             this.BugetSectie = Convert.ToDouble(dateFisier[BUGETSECTIE]);
-
+            if (Enum.TryParse(dateFisier[STATUSSECTIE],out StatusFunctionareSectie statusResult)){
+                this.Status = statusResult;
+            }
+            if (Enum.TryParse(dateFisier[DOTARI],out DotariSectie dotariResult))
+            {
+                this.DotariSec = dotariResult;
+            }
         }
 
 
         public string toScreenSectie()
         {
-            return ($"Sectie: CodSectie -> {CodSectie} Nume -> {NumeSectie} Etaj -> {Etaj} CapacitateMaxima -> {CapacitateMaxima} NrPacientiInternati -> {NrPacientiInternati} TemperaturaMediu -> {TemperaturaMediu} SuprafataSectie -> {SuprafataSectie} BugetSectie -> {BugetSectie}");
+            return ($"Sectie: CodSectie -> {CodSectie} Nume -> {NumeSectie} Etaj -> {Etaj} CapacitateMaxima -> {CapacitateMaxima} NrPacientiInternati -> {NrPacientiInternati} TemperaturaMediu -> {TemperaturaMediu} SuprafataSectie -> {SuprafataSectie} BugetSectie -> {BugetSectie} StatusSectie -> {Status} DotariSectie -> {DotariSec}");
         }
 
         public string ConversieLaSir_PentruFisier()
         {
-            string obiectSectieSpitalPentruFisier = string.Format("{1}{0}{2}{0}{3}{0}{4}{0}{5}{0}{6}{0}{7}{0}{8}",
+            string obiectSectieSpitalPentruFisier = string.Format("{1}{0}{2}{0}{3}{0}{4}{0}{5}{0}{6}{0}{7}{0}{8}{0}{9}{0}{10}",
                 SEPARATOR_PRINCIPAL_FISIER,
                 CodSectie.ToString(),
                 (NumeSectie ?? "Necunoscut"),
@@ -81,8 +100,12 @@ namespace LibrarieModele
                 NrPacientiInternati,
                 TemperaturaMediu,
                 SuprafataSectie,
-                BugetSectie
-
+                BugetSectie,
+                Status,
+                //Enum.GetName(typeof(StatusFunctionareSectie),Status) ,
+                //Enum.GetName(typeof(DotariSectie),DotariSec)
+                //DotariSec.ToString()
+                DotariSec
                 );
             return obiectSectieSpitalPentruFisier;
         }

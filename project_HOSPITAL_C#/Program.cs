@@ -24,29 +24,48 @@ namespace project_HOSPITAL_C_
             Sectii HostSectii = new Sectii();
 
             Pacienti_FISIERTEXT adminPacienti = new Pacienti_FISIERTEXT("Pacienti.txt");
+            //Pacient[] pacienti = adminPacienti.GetPacienti(out int pozitieVectorPacientFISIER);
+            //if (pozitieVectorPacientFISIER > 0)
+            //{
+            //    int cod = pacienti[pozitieVectorPacientFISIER - 1].CodPacient;
+            //    Pacient.SeteazaUltimulCod(cod);
+            //}
             Sectii_FISIERTEXT adminSectii = new Sectii_FISIERTEXT("Sectii.txt");
+            //SectieSpital[] sectii = adminSectii.GetSectie(out int pozitieVectorSpitalFISIER);
+            //if(pozitieVectorSpitalFISIER > 0)
+            //{
+            //    int cod = sectii[pozitieVectorSpitalFISIER - 1].CodSectie;
+            //    SectieSpital.SeteazaUltimulCod(cod);
+            //}
             Pacient pacientNou = new Pacient();
             SectieSpital sectieSpitalNoua = new SectieSpital();
-            int pozitieVectorPacient =0;
-            int pozitieVectorSpital =0;
+            //int pozitieVectorPacient =0;
+            //int pozitieVectorSpital =0;
+            int nrPacienti = 0;
+            int nrSectii = 0;
+            adminPacienti.GetPacienti(out nrPacienti);
+            adminSectii.GetSectie(out nrSectii);
 
             string choice;
             do
             {
-                Console.WriteLine("RP: Introducere pacient de la tastatura"); //read pacient
-                Console.WriteLine("RS: Introducere sectie de la tastatura"); //read sectie
+                Console.WriteLine("A: Introducere pacient de la tastatura"); //read pacient
+                Console.WriteLine("B: Introducere sectie de la tastatura"); //read sectie
 
-                Console.WriteLine("SP: Afisarea pacientului dorit introdus de la tastatura"); //screen pacient
-                Console.WriteLine("SS: Afisarea sectiei dorite introduse de la tastatura"); //screen sectie
+                Console.WriteLine("C: Afisarea pacientului dorit introdus de la tastatura"); //screen pacient
+                Console.WriteLine("D: Afisarea sectiei dorite introduse de la tastatura"); //screen sectie
 
-                Console.WriteLine("TP: Afiseaza toti pacientii"); //afisare totala pacienti
-                Console.WriteLine("TS: Afiseaza toate sectiile"); //afisare totala sectii
+                Console.WriteLine("E: Afiseaza toti pacientii"); //afisare totala pacienti
+                Console.WriteLine("F: Afiseaza toate sectiile"); //afisare totala sectii
 
-                Console.WriteLine("SFP: SALVARE PACIENT IN FISIER"); //afisare totala pacienti
-                Console.WriteLine("AFP: AFISARE PACIENTI DIN FISIER"); //afisare totala sectii
+                Console.WriteLine("G: SALVARE PACIENT IN FISIER"); 
+                Console.WriteLine("H: AFISARE PACIENTI DIN FISIER"); 
 
-                Console.WriteLine("SFS: SALVARE SECTIE IN FISIER"); //afisare totala pacienti
-                Console.WriteLine("AFS: AFISARE SECTII DIN FISIER"); //afisare totala sectii
+                Console.WriteLine("I: SALVARE SECTIE IN FISIER"); 
+                Console.WriteLine("J: AFISARE SECTII DIN FISIER");
+
+                Console.WriteLine("K: cautare pacient dupa nume in fisier");
+                Console.WriteLine("L: cautare sectie dupa nume in fisier");
 
                 Console.WriteLine("Q: Quit program");  // quit
 
@@ -56,20 +75,20 @@ namespace project_HOSPITAL_C_
                 switch (choice.ToUpper())
                 {
                     
-                    case "RP":
+                    case "A":
                         pacientNou = CitirePacientTastatura();
                         HostPacienti.AdaugarePacienti(pacientNou);
        
 
                         break;
 
-                    case "RS":
+                    case "B":
                         sectieSpitalNoua = CitireSectieTastatura();
 
                         HostSectii.AdaugareSectii(sectieSpitalNoua);
                         break;
 
-                    case "SP":
+                    case "C":
                         Console.WriteLine("Introduceti numarul pacientului pe care doriti sa fie afisat pe ecran:");
                         bool valueNrPacient = Int32.TryParse(Console.ReadLine(), out int nrPacient);
                         
@@ -77,42 +96,56 @@ namespace project_HOSPITAL_C_
                         Console.WriteLine(HostPacienti.AfisarePacient(nrPacient));
                         break;
 
-                    case "SS":
+                    case "D":
                         Console.WriteLine("Introduceti numarul sectiei pe care doriti sa fie afisata pe ecran:");
                         bool valueNrSectie = Int32.TryParse(Console.ReadLine(), out int nrSectie);
 
 
                         Console.WriteLine(HostSectii.AfisareSectie(nrSectie));
                         break;
-                    case "TP":
+                    case "E":
                         HostPacienti.AfisarePacienti();
                         
                         break;
-                    case "TS":
+                    case "F":
                         HostSectii.AfisareSectii();
                         break;
-                    case "AFS":
-                        SectieSpital[] vectorSectieSpital = adminSectii.GetSectie(out pozitieVectorSpital);
-                        AfisareSectii(vectorSectieSpital, pozitieVectorSpital);
+                    case "J":
+                        SectieSpital[] vectorSectieSpital = adminSectii.GetSectie(out nrSectii);
+                        AfisareSectii(vectorSectieSpital,nrSectii);
                         break;
-                    case "SFS":
-                        int codSectie = ++pozitieVectorSpital;
+                    case "I":
+                        //int codSectie = ++pozitieVectorSpital;
+                        int codSectie = ++nrSectii;
                         sectieSpitalNoua.CodSectie = codSectie;
 
                         adminSectii.AddSectii(sectieSpitalNoua);
                         break;
-                    case "AFP":
-                        Pacient[] vectorPacient = adminPacienti.GetPacienti(out pozitieVectorPacient);
+                    case "H":
+                        Pacient[] vectorPacient = adminPacienti.GetPacienti(out nrPacienti);
                         //Console.WriteLine("menu");
                         //Console.WriteLine(pozitieVectorPacient);
-                        AfisarePacienti(vectorPacient, pozitieVectorPacient);
+                        AfisarePacienti(vectorPacient, nrPacienti);
                         break;
-                    case "SFP":
-                        int codPacient = ++pozitieVectorPacient;
+                    case "G":
+                        //int codPacient = ++pozitieVectorPacient;
+                        int codPacient = ++nrPacienti;
                         pacientNou.CodPacient = codPacient;
                         adminPacienti.AddPacient(pacientNou);
 
 
+                        break;
+
+                    case "K":
+                        Console.WriteLine("Introduceti numele pacientului pe care doriti sa il afisati ");
+                        
+                        Console.WriteLine(adminPacienti.FindNumePacient(Console.ReadLine()).toScreenPacient());
+                        
+                        break;
+                    case "L":
+                        Console.WriteLine("Introduceti numele sectiei pe care doriti sa o afisati ");
+                        
+                        Console.WriteLine(adminSectii.FindNumeSectie(Console.ReadLine()).toScreenSectie());
                         break;
                     case "Q":
                         return;
@@ -128,19 +161,19 @@ namespace project_HOSPITAL_C_
 
             Console.ReadKey();
         }
-        public static void AfisareSectii(SectieSpital[] vectorSectieSpital , int pozitieVectorSpital )
+        public static void AfisareSectii(SectieSpital[] vectorSectieSpital , int nrSectii )
         {
             Console.WriteLine("Sectiile sunt:");
-            for(int contor =0; contor < pozitieVectorSpital; contor++)
+            for(int contor =0; contor < nrSectii; contor++)
             {
                 string infoSectieSpital = vectorSectieSpital[contor].toScreenSectie();
                 Console.WriteLine(infoSectieSpital);
             }
         }
-        public static void AfisarePacienti(Pacient[] vectorPacient , int pozitieVectorPacient)
+        public static void AfisarePacienti(Pacient[] vectorPacient , int nrPacienti)
         {
             Console.WriteLine("Pacientii sunt:");
-            for (int contor =0; contor < pozitieVectorPacient; contor++)
+            for (int contor =0; contor < nrPacienti; contor++)
             {
                 
                 string infoPacient = vectorPacient[contor].toScreenPacient();
@@ -158,8 +191,49 @@ namespace project_HOSPITAL_C_
             bool valueInaltime = Double.TryParse(Console.ReadLine(), out double inaltime);
             bool valueTemperatura = Double.TryParse(Console.ReadLine(), out double temperaturaCorp);
 
+            Console.WriteLine("Selectati grupa de sange a pacientului:");
+            foreach(GrupaSangePacient grupa in Enum.GetValues(typeof(GrupaSangePacient)))
+            {
+                Console.WriteLine($"{(int)grupa} - {grupa}");
+            }
+            bool valid = int.TryParse(Console.ReadLine(), out int choiceGrupa);
+            GrupaSangePacient grupaSelectata = default;
+            if(valid == true && Enum.IsDefined(typeof(GrupaSangePacient), choiceGrupa)) // se verifica daca e un nr introdus si se mai verifica daca numarul este definit in cadrul enum
+            {
+                grupaSelectata = (GrupaSangePacient)choiceGrupa;
+                Console.WriteLine($"Ai selectat grupa de sange: {grupaSelectata}");
+            }
+            else
+            {
+                Console.WriteLine("Alegere invalida!");
+            }
 
-            Pacient pacient = new Pacient(nume, prenume, cnp, varsta, greutate, inaltime, temperaturaCorp);
+            Console.WriteLine("Selectati afectiunea pe care o are pacientul:");
+            foreach(AfectiuniMedicale afectiuni in Enum.GetValues(typeof(AfectiuniMedicale)))
+            {
+                if(afectiuni!= AfectiuniMedicale.Nimic)
+                {
+                    Console.WriteLine($"{(int)afectiuni} - {afectiuni}");
+                }
+                
+            }
+            Console.WriteLine("Introduceti numerele afectiunilor separate prin virgula:");
+            string input = Console.ReadLine();
+            AfectiuniMedicale afectiuniSelectate = AfectiuniMedicale.Nimic;
+            string[] optiuni = input.Split(',');
+
+            foreach(string opt in optiuni)
+            {
+                if(int.TryParse(opt.Trim(),out int valoare) && Enum.IsDefined(typeof(AfectiuniMedicale), valoare)){
+                    //afectiuniSelectate |= (AfectiuniMedicale)valoare;
+                    afectiuniSelectate = afectiuniSelectate | (AfectiuniMedicale)valoare;
+                } //trim elimina spatiile de la inceput si sfarsit
+
+            }
+            Console.WriteLine($"Ai selectat: {afectiuniSelectate}");
+
+
+            Pacient pacient = new Pacient(0,nume, prenume, cnp, varsta, greutate, inaltime, temperaturaCorp , grupaSelectata,afectiuniSelectate);
             return pacient;
         }
         public static SectieSpital CitireSectieTastatura()
@@ -173,7 +247,51 @@ namespace project_HOSPITAL_C_
             bool valueSuprafataSectie = Double.TryParse(Console.ReadLine(), out double suprafataSectie);
             bool valueBugetSectie = Double.TryParse(Console.ReadLine(), out double bugetSectie);
 
-            SectieSpital sectieSpital = new SectieSpital(numeSectie,etaj,capacitateMaxima,nrPacientiInternati,temperaturaMediu,suprafataSectie,bugetSectie);
+            Console.WriteLine("Selectati statusul de functionare al sectiei:");
+            foreach (StatusFunctionareSectie status in Enum.GetValues(typeof(StatusFunctionareSectie)))
+            {
+                Console.WriteLine($"{(int)status} - {status}");
+            }
+            bool valid = int.TryParse(Console.ReadLine(), out int choiceStatus);
+            StatusFunctionareSectie statusSelectat = default;
+            if (valid == true && Enum.IsDefined(typeof(StatusFunctionareSectie), choiceStatus)) // se verifica daca e un nr introdus si se mai verifica daca numarul este definit in cadrul enum
+            {
+                statusSelectat = (StatusFunctionareSectie)choiceStatus;
+                Console.WriteLine($"Ai selectat statul de functionare: {statusSelectat}");
+            }
+            else
+            {
+                Console.WriteLine("Alegere invalida!");
+            }
+
+
+            Console.WriteLine("Selectati dotarile sectiei din spital:");
+            foreach (DotariSectie dotari in Enum.GetValues(typeof(DotariSectie)))
+            {
+                if (dotari != DotariSectie.Nimic)
+                {
+                    Console.WriteLine($"{(int)dotari} - {dotari}");
+                }
+
+            }
+            Console.WriteLine("Introduceti numerele dotarilor din sectie separate prin virgula");
+            string input = Console.ReadLine();
+            DotariSectie dotariSelectate = DotariSectie.Nimic;
+            string[] optiuni = input.Split(',');
+
+            foreach (string opt in optiuni)
+            {
+                if (int.TryParse(opt.Trim(), out int valoare) && Enum.IsDefined(typeof(DotariSectie), valoare))
+                {
+                    dotariSelectate |= (DotariSectie)valoare;
+                } //trim elimina spatiile de la inceput si sfarsit
+
+            }
+            Console.WriteLine($"Ai selectat: {dotariSelectate}");
+
+
+
+            SectieSpital sectieSpital = new SectieSpital(0,numeSectie,etaj,capacitateMaxima,nrPacientiInternati,temperaturaMediu,suprafataSectie,bugetSectie,statusSelectat , dotariSelectate);
             return sectieSpital;
 
 

@@ -42,5 +42,23 @@ namespace NivelStocareDate
             }
             return vectorSectieSpital;
         }
+        public SectieSpital FindNumeSectie(string numeSectie)
+        {
+            SectieSpital sectieSpital;
+            using (StreamReader citireFisier = new StreamReader(numeFisier))
+            {
+                string linieFisier;
+                while((linieFisier = citireFisier.ReadLine())!= null)
+                {
+                    sectieSpital = new SectieSpital(linieFisier);
+                    if(sectieSpital.NumeSectie == numeSectie)
+                    {
+                        return sectieSpital;
+                    }
+                }
+            }
+            return null;
+
+        }
     }
 }

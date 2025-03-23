@@ -11,19 +11,20 @@ namespace NivelStocareDate
     public class Pacienti
     {
         const int NR_MAX_PACIENTI = 500;
-        private int pozitieVectorPacient = 0;
+        private int nrPacienti = 0;
         private Pacient[] vectorPacient = new Pacient[NR_MAX_PACIENTI];
 
 
         public Pacienti()
         {
-            pozitieVectorPacient = 0;
+            nrPacienti = 0;
             vectorPacient = new Pacient[NR_MAX_PACIENTI];
         }
         public void AdaugarePacienti(Pacient pacientNou)
         {
-            vectorPacient[pozitieVectorPacient] = pacientNou;
-            pozitieVectorPacient++;
+            pacientNou.CodPacient = nrPacienti + 1;
+            vectorPacient[nrPacienti] = pacientNou;
+            nrPacienti++;
         }
         public string AfisarePacient(int nrPacient)
         {
@@ -32,7 +33,7 @@ namespace NivelStocareDate
 
         public void AfisarePacienti()
         {
-            for (int i = 0; i < pozitieVectorPacient; i++)
+            for (int i = 0; i < nrPacienti; i++)
             {
                 Console.WriteLine(vectorPacient[i].toScreenPacient());
                 Console.WriteLine();

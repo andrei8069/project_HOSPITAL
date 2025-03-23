@@ -11,17 +11,18 @@ namespace NivelStocareDate
     {
         const int NR_MAX_SECTII = 200;
         private SectieSpital[] vectorSectieSpital = new SectieSpital[NR_MAX_SECTII];
-        private int pozitieVectorSpital = 0;
+        private int nrSectii = 0;
 
         public Sectii()
         {
-            pozitieVectorSpital = 0;
+            nrSectii = 0;
             vectorSectieSpital = new SectieSpital[NR_MAX_SECTII];
         }
         public void AdaugareSectii(SectieSpital sectieSpitalNoua)
         {
-            vectorSectieSpital[pozitieVectorSpital] = sectieSpitalNoua;
-            pozitieVectorSpital++;
+            sectieSpitalNoua.CodSectie = nrSectii + 1;
+            vectorSectieSpital[nrSectii] = sectieSpitalNoua;
+            nrSectii++;
         }
 
         public string AfisareSectie(int nrSectie)
@@ -31,7 +32,7 @@ namespace NivelStocareDate
 
         public void AfisareSectii()
         {
-            for (int i = 0; i < pozitieVectorSpital; i++)
+            for (int i = 0; i < nrSectii; i++)
             {
                 Console.WriteLine(vectorSectieSpital[i].toScreenSectie());
                 Console.WriteLine();
