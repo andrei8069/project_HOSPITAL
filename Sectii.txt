@@ -1,0 +1,4 @@
+1;cardiologie;2;200;12;25;200;10000000;Functionala;VentilatieMecanica, MonitorizarePacienti
+2;cardiologie;2;200;12;25;200;10000000;Functionala;VentilatieMecanica, MonitorizarePacienti
+3;cardiologie;2;200;12;25;200;10000000;Functionala;VentilatieMecanica, MonitorizarePacienti
+4;cardiologie;2;200;12;25;200;10000000;Functionala;VentilatieMecanica, MonitorizarePacienti

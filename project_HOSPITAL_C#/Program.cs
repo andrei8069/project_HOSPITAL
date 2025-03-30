@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Configuration;
+using System.IO;
+using System.ComponentModel;
 using LibrarieModele;
 using NivelStocareDate;
+using System.Text.RegularExpressions;
 
 
 
@@ -23,20 +27,17 @@ namespace project_HOSPITAL_C_
             Pacienti HostPacienti = new Pacienti();
             Sectii HostSectii = new Sectii();
 
-            Pacienti_FISIERTEXT adminPacienti = new Pacienti_FISIERTEXT("Pacienti.txt");
-            //Pacient[] pacienti = adminPacienti.GetPacienti(out int pozitieVectorPacientFISIER);
-            //if (pozitieVectorPacientFISIER > 0)
-            //{
-            //    int cod = pacienti[pozitieVectorPacientFISIER - 1].CodPacient;
-            //    Pacient.SeteazaUltimulCod(cod);
-            //}
-            Sectii_FISIERTEXT adminSectii = new Sectii_FISIERTEXT("Sectii.txt");
-            //SectieSpital[] sectii = adminSectii.GetSectie(out int pozitieVectorSpitalFISIER);
-            //if(pozitieVectorSpitalFISIER > 0)
-            //{
-            //    int cod = sectii[pozitieVectorSpitalFISIER - 1].CodSectie;
-            //    SectieSpital.SeteazaUltimulCod(cod);
-            //}
+            string numeFisierPacienti = ConfigurationManager.AppSettings["NumeFisierPacienti"];
+            string numeFisierSectii = ConfigurationManager.AppSettings["NumeFisierSectii"];
+            string locatieFisierSolutie = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.FullName;
+            string caleFisierPacienti = locatieFisierSolutie + "\\" + numeFisierPacienti;
+            string caleFisierSectii = locatieFisierSolutie + "\\" + numeFisierSectii;
+
+
+            Pacienti_FISIERTEXT adminPacienti = new Pacienti_FISIERTEXT(caleFisierPacienti);
+
+            Sectii_FISIERTEXT adminSectii = new Sectii_FISIERTEXT(caleFisierSectii);
+
             Pacient pacientNou = new Pacient();
             SectieSpital sectieSpitalNoua = new SectieSpital();
             //int pozitieVectorPacient =0;
@@ -64,8 +65,8 @@ namespace project_HOSPITAL_C_
                 Console.WriteLine("I: SALVARE SECTIE IN FISIER"); 
                 Console.WriteLine("J: AFISARE SECTII DIN FISIER");
 
-                Console.WriteLine("K: cautare pacient dupa nume in fisier");
-                Console.WriteLine("L: cautare sectie dupa nume in fisier");
+                Console.WriteLine("K: cautare pacient dupa cnp in fisier");
+                Console.WriteLine("L: cautare sectie dupa id in fisier");
 
                 Console.WriteLine("Q: Quit program");  // quit
 
@@ -137,15 +138,15 @@ namespace project_HOSPITAL_C_
                         break;
 
                     case "K":
-                        Console.WriteLine("Introduceti numele pacientului pe care doriti sa il afisati ");
+                        Console.WriteLine("Introduceti CNP-ul pacientului pe care doriti sa il afisati ");
                         
-                        Console.WriteLine(adminPacienti.FindNumePacient(Console.ReadLine()).toScreenPacient());
+                        Console.WriteLine(adminPacienti.FindCNP(Console.ReadLine()).toScreenPacient());
                         
                         break;
                     case "L":
-                        Console.WriteLine("Introduceti numele sectiei pe care doriti sa o afisati ");
+                        Console.WriteLine("Introduceti id-ul sectiei pe care doriti sa o afisati ");
                         
-                        Console.WriteLine(adminSectii.FindNumeSectie(Console.ReadLine()).toScreenSectie());
+                        Console.WriteLine(adminSectii.FindSectie(Console.ReadLine()).toScreenSectie());
                         break;
                     case "Q":
                         return;
@@ -194,10 +195,14 @@ namespace project_HOSPITAL_C_
             Console.WriteLine("Selectati grupa de sange a pacientului:");
             foreach(GrupaSangePacient grupa in Enum.GetValues(typeof(GrupaSangePacient)))
             {
-                Console.WriteLine($"{(int)grupa} - {grupa}");
+                if (grupa != GrupaSangePacient.Nimic)
+                {
+                    Console.WriteLine($"{(int)grupa} - {grupa}");
+                }
+                
             }
             bool valid = int.TryParse(Console.ReadLine(), out int choiceGrupa);
-            GrupaSangePacient grupaSelectata = default;
+            GrupaSangePacient grupaSelectata = GrupaSangePacient.Nimic;
             if(valid == true && Enum.IsDefined(typeof(GrupaSangePacient), choiceGrupa)) // se verifica daca e un nr introdus si se mai verifica daca numarul este definit in cadrul enum
             {
                 grupaSelectata = (GrupaSangePacient)choiceGrupa;
@@ -226,7 +231,7 @@ namespace project_HOSPITAL_C_
             {
                 if(int.TryParse(opt.Trim(),out int valoare) && Enum.IsDefined(typeof(AfectiuniMedicale), valoare)){
                     //afectiuniSelectate |= (AfectiuniMedicale)valoare;
-                    afectiuniSelectate = afectiuniSelectate | (AfectiuniMedicale)valoare;
+                    afectiuniSelectate = afectiuniSelectate | (AfectiuniMedicale)valoare; // | e sau pt biti
                 } //trim elimina spatiile de la inceput si sfarsit
 
             }
@@ -250,10 +255,14 @@ namespace project_HOSPITAL_C_
             Console.WriteLine("Selectati statusul de functionare al sectiei:");
             foreach (StatusFunctionareSectie status in Enum.GetValues(typeof(StatusFunctionareSectie)))
             {
-                Console.WriteLine($"{(int)status} - {status}");
+                if (status != StatusFunctionareSectie.Nimic)
+                {
+                    Console.WriteLine($"{(int)status} - {status}");
+
+                }
             }
             bool valid = int.TryParse(Console.ReadLine(), out int choiceStatus);
-            StatusFunctionareSectie statusSelectat = default;
+            StatusFunctionareSectie statusSelectat = StatusFunctionareSectie.Nimic;
             if (valid == true && Enum.IsDefined(typeof(StatusFunctionareSectie), choiceStatus)) // se verifica daca e un nr introdus si se mai verifica daca numarul este definit in cadrul enum
             {
                 statusSelectat = (StatusFunctionareSectie)choiceStatus;

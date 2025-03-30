@@ -27,22 +27,23 @@ namespace NivelStocareDate
             }
         }
 
-        public SectieSpital[] GetSectie(out int pozitieVectorSpital)
+        public SectieSpital[] GetSectie(out int nrSectii)
         {
-            SectieSpital[] vectorSectieSpital = new SectieSpital[NR_MAX_SECTII];
+            SectieSpital[] sectii = new SectieSpital[NR_MAX_SECTII];
             using (StreamReader streamReader = new StreamReader(numeFisier))
             {
                 string linieFisier;
-                pozitieVectorSpital = 0;
+                nrSectii = 0;
                 while ((linieFisier = streamReader.ReadLine()) != null)
                 {
-                    vectorSectieSpital[pozitieVectorSpital++] = new SectieSpital(linieFisier);
+                    sectii[nrSectii++] = new SectieSpital(linieFisier);
 
                 }
             }
-            return vectorSectieSpital;
+            Array.Resize(ref sectii, nrSectii);
+            return sectii;
         }
-        public SectieSpital FindNumeSectie(string numeSectie)
+        public SectieSpital FindSectie(string id)
         {
             SectieSpital sectieSpital;
             using (StreamReader citireFisier = new StreamReader(numeFisier))
@@ -51,7 +52,7 @@ namespace NivelStocareDate
                 while((linieFisier = citireFisier.ReadLine())!= null)
                 {
                     sectieSpital = new SectieSpital(linieFisier);
-                    if(sectieSpital.NumeSectie == numeSectie)
+                    if(sectieSpital.CodSectie.ToString() == id)
                     {
                         return sectieSpital;
                     }

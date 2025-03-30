@@ -1,0 +1,4 @@
+1;andrei;bogdan;1234567890123;20;100;12.4;900;A;Diabet, Hipertensiune
+2;andrei;bogdan;1234567890123;20;100;12.4;900;A;Diabet, Hipertensiune
+3;andrei;bogdan;1234567890123;20;100;12.4;900;A;Diabet, Hipertensiune
+4;andrei;bogdan;1234567890123;20;100;12.4;900;A;Diabet, Hipertensiune

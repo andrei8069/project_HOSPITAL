@@ -29,23 +29,24 @@ namespace NivelStocareDate
                 streamWriterFisierText.WriteLine(pacient.ConversieLaSir_PentruFisier());
             }
         }
-        public Pacient[] GetPacienti(out int pozitieVectorPacient)
+        public Pacient[] GetPacienti(out int nrPacienti)
         {
-            Pacient[] vectorPacient = new Pacient[NR_MAX_PACIENTI];
+            Pacient[] pacienti = new Pacient[NR_MAX_PACIENTI];
             using (StreamReader streamReader = new StreamReader(numeFisier))
             {
                 string linieFisier;
-                pozitieVectorPacient = 0;
+                nrPacienti = 0;
                 while ((linieFisier = streamReader.ReadLine()) != null)
                 {
-                    vectorPacient[pozitieVectorPacient++] = new Pacient(linieFisier);
+                    pacienti[nrPacienti++] = new Pacient(linieFisier);
                     //Console.WriteLine(pozitieVectorPacient);
                     //Console.WriteLine("getPacienti");
                 }
             }
-            return vectorPacient;
+            Array.Resize(ref pacienti, nrPacienti);
+            return pacienti;
         }
-        public Pacient FindNumePacient(string nume)
+        public Pacient FindCNP(string cnp)
         {
             Pacient pacient;
             using (StreamReader citireFisier = new StreamReader(numeFisier))
@@ -54,7 +55,7 @@ namespace NivelStocareDate
                 while ((linieFisier = citireFisier.ReadLine()) != null)
                 {
                     pacient = new Pacient(linieFisier);
-                    if (pacient.Nume == nume)
+                    if (pacient.Cnp == cnp)
                     {
                         return pacient;
                     }
