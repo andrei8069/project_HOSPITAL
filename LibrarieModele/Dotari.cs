@@ -9,12 +9,12 @@ namespace LibrarieModele
     [Flags]
     public enum DotariSectie
     {
-        Nimic = 0,
-        VentilatieMecanica = 1 << 0, //1
-        MonitorizarePacienti = 1 << 1,//2
-        CameraIzolare = 1 << 2,//4
-        EchipamentRadiologie = 1 << 3,//8
-        EchipamentReanimare = 1 << 4,//16
-        AccesInternet = 1 << 5//32
+        Nespecificat = 0,
+        Ventilatie = 1 << 0, //1
+        Monitorizare = 1 << 1,//2
+        Izolare = 1 << 2,//4
+        Radiologie = 1 << 3,//8
+        Reanimare = 1 << 4,//16
+        Internet = 1 << 5//32
     }
 }

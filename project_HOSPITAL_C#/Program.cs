@@ -195,14 +195,14 @@ namespace project_HOSPITAL_C_
             Console.WriteLine("Selectati grupa de sange a pacientului:");
             foreach(GrupaSangePacient grupa in Enum.GetValues(typeof(GrupaSangePacient)))
             {
-                if (grupa != GrupaSangePacient.Nimic)
+                if (grupa != GrupaSangePacient.Nespecificat)
                 {
                     Console.WriteLine($"{(int)grupa} - {grupa}");
                 }
                 
             }
             bool valid = int.TryParse(Console.ReadLine(), out int choiceGrupa);
-            GrupaSangePacient grupaSelectata = GrupaSangePacient.Nimic;
+            GrupaSangePacient grupaSelectata = GrupaSangePacient.Nespecificat;
             if(valid == true && Enum.IsDefined(typeof(GrupaSangePacient), choiceGrupa)) // se verifica daca e un nr introdus si se mai verifica daca numarul este definit in cadrul enum
             {
                 grupaSelectata = (GrupaSangePacient)choiceGrupa;
@@ -216,7 +216,7 @@ namespace project_HOSPITAL_C_
             Console.WriteLine("Selectati afectiunea pe care o are pacientul:");
             foreach(AfectiuniMedicale afectiuni in Enum.GetValues(typeof(AfectiuniMedicale)))
             {
-                if(afectiuni!= AfectiuniMedicale.Nimic)
+                if(afectiuni!= AfectiuniMedicale.Nespecificat)
                 {
                     Console.WriteLine($"{(int)afectiuni} - {afectiuni}");
                 }
@@ -224,7 +224,7 @@ namespace project_HOSPITAL_C_
             }
             Console.WriteLine("Introduceti numerele afectiunilor separate prin virgula:");
             string input = Console.ReadLine();
-            AfectiuniMedicale afectiuniSelectate = AfectiuniMedicale.Nimic;
+            AfectiuniMedicale afectiuniSelectate = AfectiuniMedicale.Nespecificat;
             string[] optiuni = input.Split(',');
 
             foreach(string opt in optiuni)
@@ -255,14 +255,14 @@ namespace project_HOSPITAL_C_
             Console.WriteLine("Selectati statusul de functionare al sectiei:");
             foreach (StatusFunctionareSectie status in Enum.GetValues(typeof(StatusFunctionareSectie)))
             {
-                if (status != StatusFunctionareSectie.Nimic)
+                if (status != StatusFunctionareSectie.Nespecificat)
                 {
                     Console.WriteLine($"{(int)status} - {status}");
 
                 }
             }
             bool valid = int.TryParse(Console.ReadLine(), out int choiceStatus);
-            StatusFunctionareSectie statusSelectat = StatusFunctionareSectie.Nimic;
+            StatusFunctionareSectie statusSelectat = StatusFunctionareSectie.Nespecificat;
             if (valid == true && Enum.IsDefined(typeof(StatusFunctionareSectie), choiceStatus)) // se verifica daca e un nr introdus si se mai verifica daca numarul este definit in cadrul enum
             {
                 statusSelectat = (StatusFunctionareSectie)choiceStatus;
@@ -277,7 +277,7 @@ namespace project_HOSPITAL_C_
             Console.WriteLine("Selectati dotarile sectiei din spital:");
             foreach (DotariSectie dotari in Enum.GetValues(typeof(DotariSectie)))
             {
-                if (dotari != DotariSectie.Nimic)
+                if (dotari != DotariSectie.Nespecificat)
                 {
                     Console.WriteLine($"{(int)dotari} - {dotari}");
                 }
@@ -285,7 +285,7 @@ namespace project_HOSPITAL_C_
             }
             Console.WriteLine("Introduceti numerele dotarilor din sectie separate prin virgula");
             string input = Console.ReadLine();
-            DotariSectie dotariSelectate = DotariSectie.Nimic;
+            DotariSectie dotariSelectate = DotariSectie.Nespecificat;
             string[] optiuni = input.Split(',');
 
             foreach (string opt in optiuni)
