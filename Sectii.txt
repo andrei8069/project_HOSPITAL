@@ -1,1 +1,2 @@
-1;Cardiologie;2;100;50;25;250;1000000;Open;Radiologie
+1;asa;1;122;23;25;100;1000000;Renovare;Monitorizare
+2;asa;2;122;12;25;144;12342;InLucru;Izolare
