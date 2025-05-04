@@ -37,9 +37,12 @@ namespace InterfataUtilizator_WindowsForms
         //refresh date
         private MetroButton btnRefreshDate;
 
+        //modifica pacient ales
+        private MetroButton btnModifyPacient;
+
         //PACIENTI 
         Pacienti_FISIERTEXT adminPacienti;
-       // private MetroLabel lblTitluPacienti;
+        // private MetroLabel lblTitluPacienti;
 
         //buton adauga pacient
         private MetroButton btnAdaugaPacienti;
@@ -74,16 +77,16 @@ namespace InterfataUtilizator_WindowsForms
         private MetroLabel[] lblsAfectiuni;
 
         //introducem datele in fiecare camp creat 
-        private MetroTextBox txtNume;
-        private MetroTextBox txtPrenume;
-        private MetroTextBox txtCnp;
-        private MetroTextBox txtVarsta;
-        private MetroTextBox txtGreutate;
-        private MetroTextBox txtInaltime;
-        private MetroTextBox txtTemperaturaCorp;
+        //private MetroTextBox txtNume;
+        //private MetroTextBox txtPrenume;
+        //private MetroTextBox txtCnp;
+        //private MetroTextBox txtVarsta;
+        //private MetroTextBox txtGreutate;
+        //private MetroTextBox txtInaltime;
+        //private MetroTextBox txtTemperaturaCorp;
 
-        private ComboBox txtGrupaSange;
-        private ComboBox txtAfectiuni;
+        //private ComboBox txtGrupaSange;
+        //private ListBox txtAfectiuni;
 
         // constante pt valori bune pacienti
         private const int VARSTA_MIN = 0;
@@ -161,11 +164,23 @@ namespace InterfataUtilizator_WindowsForms
             btnSearchCNP.Click += BtnSearchCNP_Click;
             this.Controls.Add(btnSearchCNP);
 
+
+
+            btnModifyPacient = new MetroButton();
+            btnModifyPacient.Width = LATIME_CONTROL;
+            btnModifyPacient.Text = "Modifica";
+            btnModifyPacient.Left = 0;
+            btnModifyPacient.Top = 5 * DIMENSIUNE_PAS_Y;
+            btnModifyPacient.AutoSize = true;
+            btnModifyPacient.Click += BtnModifyPacient_Click;
+            this.Controls.Add(btnModifyPacient);
+
+
             btnInapoi = new MetroButton();
             btnInapoi.Width = LATIME_CONTROL;
             btnInapoi.Text = "Inapoi";
             btnInapoi.Left = 0;
-            btnInapoi.Top = 5 * DIMENSIUNE_PAS_Y;
+            btnInapoi.Top = 6 * DIMENSIUNE_PAS_Y;
             btnInapoi.AutoSize = true;
             btnInapoi.Click += BtnInapoi_Click;
             this.Controls.Add(btnInapoi);
@@ -216,14 +231,14 @@ namespace InterfataUtilizator_WindowsForms
             lblNume.ForeColor = Color.DarkSlateGray;
             this.Controls.Add(lblNume);
 
-            txtNume = new MetroTextBox();
-            txtNume.Left = 2 * DIMENSIUNE_PAS_X;
-            txtNume.Top = 2 * DIMENSIUNE_PAS_Y;
-            txtNume.Width = LATIME_CONTROL;
-            txtNume.Theme = MetroThemeStyle.Light;
-            txtNume.Style = MetroColorStyle.Blue;
-            txtNume.UseStyleColors = true;
-            this.Controls.Add(txtNume);
+            //txtNume = new MetroTextBox();
+            //txtNume.Left = 2 * DIMENSIUNE_PAS_X;
+            //txtNume.Top = 2 * DIMENSIUNE_PAS_Y;
+            //txtNume.Width = LATIME_CONTROL;
+            //txtNume.Theme = MetroThemeStyle.Light;
+            //txtNume.Style = MetroColorStyle.Blue;
+            //txtNume.UseStyleColors = true;
+            //this.Controls.Add(txtNume);
 
             lblPrenume = new MetroLabel();
             lblPrenume.Width = LATIME_CONTROL;
@@ -233,14 +248,14 @@ namespace InterfataUtilizator_WindowsForms
             lblPrenume.ForeColor = Color.DarkSlateGray;
             this.Controls.Add(lblPrenume);
 
-            txtPrenume = new MetroTextBox();
-            txtPrenume.Left = 3 * DIMENSIUNE_PAS_X;
-            txtPrenume.Top = 2 * DIMENSIUNE_PAS_Y;
-            txtPrenume.Width = LATIME_CONTROL;
-            txtPrenume.Theme = MetroThemeStyle.Light;
-            txtPrenume.Style = MetroColorStyle.Blue;
-            txtPrenume.UseStyleColors = true;
-            this.Controls.Add(txtPrenume);
+            //txtPrenume = new MetroTextBox();
+            //txtPrenume.Left = 3 * DIMENSIUNE_PAS_X;
+            //txtPrenume.Top = 2 * DIMENSIUNE_PAS_Y;
+            //txtPrenume.Width = LATIME_CONTROL;
+            //txtPrenume.Theme = MetroThemeStyle.Light;
+            //txtPrenume.Style = MetroColorStyle.Blue;
+            //txtPrenume.UseStyleColors = true;
+            //this.Controls.Add(txtPrenume);
 
             lblCnp = new MetroLabel();
             lblCnp.Width = LATIME_CONTROL;
@@ -250,14 +265,14 @@ namespace InterfataUtilizator_WindowsForms
             lblCnp.ForeColor = Color.DarkSlateGray;
             this.Controls.Add(lblCnp);
 
-            txtCnp = new MetroTextBox();
-            txtCnp.Left = 4 * DIMENSIUNE_PAS_X;
-            txtCnp.Top = 2 * DIMENSIUNE_PAS_Y;
-            txtCnp.Width = LATIME_CONTROL;
-            txtCnp.Theme = MetroThemeStyle.Light;
-            txtCnp.Style = MetroColorStyle.Blue;
-            txtCnp.UseStyleColors = true;
-            this.Controls.Add(txtCnp);
+            //txtCnp = new MetroTextBox();
+            //txtCnp.Left = 4 * DIMENSIUNE_PAS_X;
+            //txtCnp.Top = 2 * DIMENSIUNE_PAS_Y;
+            //txtCnp.Width = LATIME_CONTROL;
+            //txtCnp.Theme = MetroThemeStyle.Light;
+            //txtCnp.Style = MetroColorStyle.Blue;
+            //txtCnp.UseStyleColors = true;
+            //this.Controls.Add(txtCnp);
 
             lblVarsta = new MetroLabel();
             lblVarsta.Width = LATIME_CONTROL;
@@ -267,14 +282,14 @@ namespace InterfataUtilizator_WindowsForms
             lblVarsta.ForeColor = Color.DarkSlateGray;
             this.Controls.Add(lblVarsta);
 
-            txtVarsta = new MetroTextBox();
-            txtVarsta.Left = 5 * DIMENSIUNE_PAS_X;
-            txtVarsta.Top = 2 * DIMENSIUNE_PAS_Y;
-            txtVarsta.Width = LATIME_CONTROL;
-            txtVarsta.Theme = MetroThemeStyle.Light;
-            txtVarsta.Style = MetroColorStyle.Blue;
-            txtVarsta.UseStyleColors = true;
-            this.Controls.Add(txtVarsta);
+            //txtVarsta = new MetroTextBox();
+            //txtVarsta.Left = 5 * DIMENSIUNE_PAS_X;
+            //txtVarsta.Top = 2 * DIMENSIUNE_PAS_Y;
+            //txtVarsta.Width = LATIME_CONTROL;
+            //txtVarsta.Theme = MetroThemeStyle.Light;
+            //txtVarsta.Style = MetroColorStyle.Blue;
+            //txtVarsta.UseStyleColors = true;
+            //this.Controls.Add(txtVarsta);
 
             lblGreutate = new MetroLabel();
             lblGreutate.Width = LATIME_CONTROL;
@@ -284,14 +299,14 @@ namespace InterfataUtilizator_WindowsForms
             lblGreutate.ForeColor = Color.DarkSlateGray;
             this.Controls.Add(lblGreutate);
 
-            txtGreutate = new MetroTextBox();
-            txtGreutate.Left = 6 * DIMENSIUNE_PAS_X;
-            txtGreutate.Top = 2 * DIMENSIUNE_PAS_Y;
-            txtGreutate.Width = LATIME_CONTROL;
-            txtGreutate.Theme = MetroThemeStyle.Light;
-            txtGreutate.Style = MetroColorStyle.Blue;
-            txtGreutate.UseStyleColors = true;
-            this.Controls.Add(txtGreutate);
+            //txtGreutate = new MetroTextBox();
+            //txtGreutate.Left = 6 * DIMENSIUNE_PAS_X;
+            //txtGreutate.Top = 2 * DIMENSIUNE_PAS_Y;
+            //txtGreutate.Width = LATIME_CONTROL;
+            //txtGreutate.Theme = MetroThemeStyle.Light;
+            //txtGreutate.Style = MetroColorStyle.Blue;
+            //txtGreutate.UseStyleColors = true;
+            //this.Controls.Add(txtGreutate);
 
             lblInaltime = new MetroLabel();
             lblInaltime.Width = LATIME_CONTROL;
@@ -301,14 +316,14 @@ namespace InterfataUtilizator_WindowsForms
             lblInaltime.ForeColor = Color.DarkSlateGray;
             this.Controls.Add(lblInaltime);
 
-            txtInaltime = new MetroTextBox();
-            txtInaltime.Left = 7 * DIMENSIUNE_PAS_X;
-            txtInaltime.Top = 2 * DIMENSIUNE_PAS_Y;
-            txtInaltime.Width = LATIME_CONTROL;
-            txtInaltime.Theme = MetroThemeStyle.Light;
-            txtInaltime.Style = MetroColorStyle.Blue;
-            txtInaltime.UseStyleColors = true;
-            this.Controls.Add(txtInaltime);
+            //txtInaltime = new MetroTextBox();
+            //txtInaltime.Left = 7 * DIMENSIUNE_PAS_X;
+            //txtInaltime.Top = 2 * DIMENSIUNE_PAS_Y;
+            //txtInaltime.Width = LATIME_CONTROL;
+            //txtInaltime.Theme = MetroThemeStyle.Light;
+            //txtInaltime.Style = MetroColorStyle.Blue;
+            //txtInaltime.UseStyleColors = true;
+            //this.Controls.Add(txtInaltime);
 
             lblTemperaturaCorp = new MetroLabel();
             lblTemperaturaCorp.Width = LATIME_CONTROL;
@@ -318,14 +333,14 @@ namespace InterfataUtilizator_WindowsForms
             lblTemperaturaCorp.ForeColor = Color.DarkSlateGray;
             this.Controls.Add(lblTemperaturaCorp);
 
-            txtTemperaturaCorp = new MetroTextBox();
-            txtTemperaturaCorp.Left = 8 * DIMENSIUNE_PAS_X;
-            txtTemperaturaCorp.Top = 2 * DIMENSIUNE_PAS_Y;
-            txtTemperaturaCorp.Width = LATIME_CONTROL;
-            txtTemperaturaCorp.Theme = MetroThemeStyle.Light;
-            txtTemperaturaCorp.Style = MetroColorStyle.Blue;
-            txtTemperaturaCorp.UseStyleColors = true;
-            this.Controls.Add(txtTemperaturaCorp);
+            //txtTemperaturaCorp = new MetroTextBox();
+            //txtTemperaturaCorp.Left = 8 * DIMENSIUNE_PAS_X;
+            //txtTemperaturaCorp.Top = 2 * DIMENSIUNE_PAS_Y;
+            //txtTemperaturaCorp.Width = LATIME_CONTROL;
+            //txtTemperaturaCorp.Theme = MetroThemeStyle.Light;
+            //txtTemperaturaCorp.Style = MetroColorStyle.Blue;
+            //txtTemperaturaCorp.UseStyleColors = true;
+            //this.Controls.Add(txtTemperaturaCorp);
 
             lblGrupaSange = new MetroLabel();
             lblGrupaSange.Width = LATIME_CONTROL;
@@ -335,12 +350,12 @@ namespace InterfataUtilizator_WindowsForms
             lblGrupaSange.ForeColor = Color.DarkSlateGray;
             this.Controls.Add(lblGrupaSange);
 
-            txtGrupaSange = new ComboBox();
-            txtGrupaSange.Left = 9 * DIMENSIUNE_PAS_X;
-            txtGrupaSange.Top = 2 * DIMENSIUNE_PAS_Y;
-            txtGrupaSange.Width = LATIME_CONTROL;
-            txtGrupaSange.Items.AddRange(Enum.GetNames(typeof(GrupaSangePacient)));
-            this.Controls.Add(txtGrupaSange);
+            //txtGrupaSange = new ComboBox();
+            //txtGrupaSange.Left = 9 * DIMENSIUNE_PAS_X;
+            //txtGrupaSange.Top = 2 * DIMENSIUNE_PAS_Y;
+            //txtGrupaSange.Width = LATIME_CONTROL;
+            //txtGrupaSange.Items.AddRange(Enum.GetNames(typeof(GrupaSangePacient)));
+            //this.Controls.Add(txtGrupaSange);
 
             lblAfectiuni = new MetroLabel();
             lblAfectiuni.Width = LATIME_CONTROL;
@@ -350,12 +365,14 @@ namespace InterfataUtilizator_WindowsForms
             lblAfectiuni.ForeColor = Color.DarkSlateGray;
             this.Controls.Add(lblAfectiuni);
 
-            txtAfectiuni = new ComboBox();
-            txtAfectiuni.Left = 10 * DIMENSIUNE_PAS_X;
-            txtAfectiuni.Top = 2 * DIMENSIUNE_PAS_Y;
-            txtAfectiuni.Width = LATIME_CONTROL;
-            txtAfectiuni.Items.AddRange(Enum.GetNames(typeof(AfectiuniMedicale)));
-            this.Controls.Add(txtAfectiuni);
+            //txtAfectiuni = new ListBox();
+            //txtAfectiuni.Left = 10 * DIMENSIUNE_PAS_X;
+            //txtAfectiuni.Top = 2 * DIMENSIUNE_PAS_Y;
+            //txtAfectiuni.Width = LATIME_CONTROL;
+            //txtAfectiuni.Height = 3 * DIMENSIUNE_PAS_Y;
+            //txtAfectiuni.SelectionMode = SelectionMode.MultiSimple;
+            //txtAfectiuni.Items.AddRange(Enum.GetNames(typeof(AfectiuniMedicale)));
+            //this.Controls.Add(txtAfectiuni);
 
 
 
@@ -368,7 +385,7 @@ namespace InterfataUtilizator_WindowsForms
         private void BtnRefreshDate_Click(object sender, EventArgs e)
         {
             //this.Controls.Clear();
-           // InitializareInterfata();
+            // InitializareInterfata();
             AfiseazaPacienti();
 
 
@@ -377,6 +394,12 @@ namespace InterfataUtilizator_WindowsForms
         {
             Cautare_Dupa_CNP cautatorCNP = new Cautare_Dupa_CNP();
             cautatorCNP.Show();
+        }
+
+        private void BtnModifyPacient_Click(object sender, EventArgs e)
+        {
+            ModificaPacient modificatorPacient = new ModificaPacient();
+            modificatorPacient.Show();
         }
 
 
@@ -401,168 +424,182 @@ namespace InterfataUtilizator_WindowsForms
 
 
 
-
-
-
         private void BtnAdaugaPacienti_Click(object sender, EventArgs e)
         {
-
-            string eroare = "";
-
-            lblNume.Style = MetroColorStyle.Blue;
-            lblNume.UseStyleColors = true;
-
-            lblPrenume.Style = MetroColorStyle.Blue;
-            lblPrenume.UseStyleColors = true;
-
-            lblCnp.Style = MetroColorStyle.Blue;
-            lblCnp.UseStyleColors = true;
-
-            lblVarsta.Style = MetroColorStyle.Blue;
-            lblVarsta.UseStyleColors = true;
-
-            lblGreutate.Style = MetroColorStyle.Blue;
-            lblGreutate.UseStyleColors = true;
-
-            lblInaltime.Style = MetroColorStyle.Blue;
-            lblInaltime.UseStyleColors = true;
-
-            lblTemperaturaCorp.Style = MetroColorStyle.Blue;
-            lblTemperaturaCorp.UseStyleColors = true;
-
-            lblGrupaSange.Style = MetroColorStyle.Blue;
-            lblGrupaSange.UseStyleColors = true;
-
-            lblAfectiuni.Style = MetroColorStyle.Blue;
-            lblAfectiuni.UseStyleColors = true;
-
-
-            // Nume
-            string nume = txtNume.Text.Trim();
-            if (nume.Length < 2)
-            {
-                eroare += "Numele trebuie sa aiba cel putin 2 caractere.\n";
-
-                lblNume.Style = MetroColorStyle.Red;
-                lblNume.UseStyleColors = true;
-            }
-
-
-            // Prenume
-            string prenume = txtPrenume.Text.Trim();
-            if (prenume.Length < 2)
-            {
-                eroare += "Prenumele trebuie sa aiba cel putin 2 caractere.\n";
-
-                lblPrenume.Style = MetroColorStyle.Red;
-                lblPrenume.UseStyleColors = true;
-            }
-
-
-            // CNP
-            string cnp = txtCnp.Text.Trim();
-            if (cnp.Length != CNP_LUNGIME)
-            {
-                eroare += "CNP-ul trebuie sa aiba 13 caractere.\n";
-
-                lblCnp.Style = MetroColorStyle.Red;
-                lblCnp.UseStyleColors = true;
-            }
-
-
-            // Varsta
-            int varsta;
-            if (!int.TryParse(txtVarsta.Text.Trim(), out varsta) || varsta < VARSTA_MIN || varsta > VARSTA_MAX)
-            {
-                eroare += $"Varsta trebuie sa fie intre {VARSTA_MIN} si {VARSTA_MAX}.\n";
-
-                lblVarsta.Style = MetroColorStyle.Red;
-                lblVarsta.UseStyleColors = true;
-            }
-
-
-            // Greutate
-            double greutate;
-            if (!double.TryParse(txtGreutate.Text.Trim(), out greutate) || greutate < GREUTATE_MIN || greutate > GREUTATE_MAX)
-            {
-                eroare += $"Greutatea trebuie sa fie intre {GREUTATE_MIN} si {GREUTATE_MAX}.\n";
-
-                lblGreutate.Style = MetroColorStyle.Red;
-                lblGreutate.UseStyleColors = true;
-            }
-
-
-            // Inaltime
-            double inaltime;
-            if (!double.TryParse(txtInaltime.Text.Trim(), out inaltime) || inaltime < INALTIME_MIN || inaltime > INALTIME_MAX)
-            {
-                eroare += $"Inaltimea trebuie sa fie intre {INALTIME_MIN} si {INALTIME_MAX}.\n";
-
-                lblInaltime.Style = MetroColorStyle.Red;
-                lblInaltime.UseStyleColors = true;
-            }
-
-
-            // Temperatura corp
-            double temperaturaCorp;
-            if (!double.TryParse(txtTemperaturaCorp.Text.Trim(), out temperaturaCorp) || temperaturaCorp < TEMP_MIN || temperaturaCorp > TEMP_MAX)
-            {
-                eroare += $"Temperatura corpului trebuie sa fie intre {TEMP_MIN} si {TEMP_MAX}.\n";
-
-                lblTemperaturaCorp.Style = MetroColorStyle.Red;
-                lblTemperaturaCorp.UseStyleColors = true;
-            }
-
-
-            // Grupa sange
-            GrupaSangePacient grupaSange = GrupaSangePacient.Nespecificat;
-            if (Enum.TryParse(txtGrupaSange.Text, out grupaSange)==false)
-            {
-                eroare += "Grupa de sange selectata este invalida.\n";
-                lblGrupaSange.Style = MetroColorStyle.Red;
-                lblGrupaSange.UseStyleColors = true;
-            }
-
-
-
-            // Afectiuni
-            AfectiuniMedicale afectiuni = AfectiuniMedicale.Nespecificat;
-            if (Enum.TryParse(txtAfectiuni.Text, out afectiuni)==false)
-            {
-                eroare += "Afectiunea selectata este invalida.\n";
-                lblAfectiuni.Style = MetroColorStyle.Red;
-                lblAfectiuni.UseStyleColors = true;
-            }
-
-
-
-
-            if (eroare != "")
-            {   //afiseaza textul , titul ferestrei , un buton ok si un icon de avertizare
-                MessageBox.Show(eroare, "Date invalide", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-
-
-            int nrPacienti = 0;
-            Pacient[] pacienti = adminPacienti.GetPacienti(out nrPacienti);
-
-            Pacient pacient = new Pacient(nrPacienti + 1, nume, prenume, cnp, varsta, greutate, inaltime, temperaturaCorp, grupaSange, afectiuni);
-            adminPacienti.AddPacient(pacient);
-
-            txtNume.ResetText();
-            txtPrenume.ResetText();
-            txtCnp.ResetText();
-            txtVarsta.ResetText();
-            txtGreutate.ResetText();
-            txtInaltime.ResetText();
-            txtTemperaturaCorp.ResetText();
-            txtGrupaSange.ResetText();
-            txtAfectiuni.ResetText();
-
-
+            AdaugaPacient adaugatorPacient = new AdaugaPacient();
+            adaugatorPacient.Show();
         }
+
+
+        //private void BtnAdaugaPacienti_Click(object sender, EventArgs e)
+        //{
+
+        //    string eroare = "";
+
+        //    lblNume.Style = MetroColorStyle.Blue;
+        //    lblNume.UseStyleColors = true;
+
+        //    lblPrenume.Style = MetroColorStyle.Blue;
+        //    lblPrenume.UseStyleColors = true;
+
+        //    lblCnp.Style = MetroColorStyle.Blue;
+        //    lblCnp.UseStyleColors = true;
+
+        //    lblVarsta.Style = MetroColorStyle.Blue;
+        //    lblVarsta.UseStyleColors = true;
+
+        //    lblGreutate.Style = MetroColorStyle.Blue;
+        //    lblGreutate.UseStyleColors = true;
+
+        //    lblInaltime.Style = MetroColorStyle.Blue;
+        //    lblInaltime.UseStyleColors = true;
+
+        //    lblTemperaturaCorp.Style = MetroColorStyle.Blue;
+        //    lblTemperaturaCorp.UseStyleColors = true;
+
+        //    lblGrupaSange.Style = MetroColorStyle.Blue;
+        //    lblGrupaSange.UseStyleColors = true;
+
+        //    lblAfectiuni.Style = MetroColorStyle.Blue;
+        //    lblAfectiuni.UseStyleColors = true;
+
+
+        //    // Nume
+        //    string nume = txtNume.Text.Trim();
+        //    if (nume.Length < 2)
+        //    {
+        //        eroare += "Numele trebuie sa aiba cel putin 2 caractere.\n";
+
+        //        lblNume.Style = MetroColorStyle.Red;
+        //        lblNume.UseStyleColors = true;
+        //    }
+
+
+        //    // Prenume
+        //    string prenume = txtPrenume.Text.Trim();
+        //    if (prenume.Length < 2)
+        //    {
+        //        eroare += "Prenumele trebuie sa aiba cel putin 2 caractere.\n";
+
+        //        lblPrenume.Style = MetroColorStyle.Red;
+        //        lblPrenume.UseStyleColors = true;
+        //    }
+
+
+        //    // CNP
+        //    string cnp = txtCnp.Text.Trim();
+        //    if (cnp.Length != CNP_LUNGIME)
+        //    {
+        //        eroare += "CNP-ul trebuie sa aiba 13 caractere.\n";
+
+        //        lblCnp.Style = MetroColorStyle.Red;
+        //        lblCnp.UseStyleColors = true;
+        //    }
+
+
+        //    // Varsta
+        //    int varsta;
+        //    if (!int.TryParse(txtVarsta.Text.Trim(), out varsta) || varsta < VARSTA_MIN || varsta > VARSTA_MAX)
+        //    {
+        //        eroare += $"Varsta trebuie sa fie intre {VARSTA_MIN} si {VARSTA_MAX}.\n";
+
+        //        lblVarsta.Style = MetroColorStyle.Red;
+        //        lblVarsta.UseStyleColors = true;
+        //    }
+
+
+        //    // Greutate
+        //    double greutate;
+        //    if (!double.TryParse(txtGreutate.Text.Trim(), out greutate) || greutate < GREUTATE_MIN || greutate > GREUTATE_MAX)
+        //    {
+        //        eroare += $"Greutatea trebuie sa fie intre {GREUTATE_MIN} si {GREUTATE_MAX}.\n";
+
+        //        lblGreutate.Style = MetroColorStyle.Red;
+        //        lblGreutate.UseStyleColors = true;
+        //    }
+
+
+        //    // Inaltime
+        //    double inaltime;
+        //    if (!double.TryParse(txtInaltime.Text.Trim(), out inaltime) || inaltime < INALTIME_MIN || inaltime > INALTIME_MAX)
+        //    {
+        //        eroare += $"Inaltimea trebuie sa fie intre {INALTIME_MIN} si {INALTIME_MAX}.\n";
+
+        //        lblInaltime.Style = MetroColorStyle.Red;
+        //        lblInaltime.UseStyleColors = true;
+        //    }
+
+
+        //    // Temperatura corp
+        //    double temperaturaCorp;
+        //    if (!double.TryParse(txtTemperaturaCorp.Text.Trim(), out temperaturaCorp) || temperaturaCorp < TEMP_MIN || temperaturaCorp > TEMP_MAX)
+        //    {
+        //        eroare += $"Temperatura corpului trebuie sa fie intre {TEMP_MIN} si {TEMP_MAX}.\n";
+
+        //        lblTemperaturaCorp.Style = MetroColorStyle.Red;
+        //        lblTemperaturaCorp.UseStyleColors = true;
+        //    }
+
+
+        //    // Grupa sange
+        //    GrupaSangePacient grupaSange = GrupaSangePacient.Nespecificat;
+        //    if (Enum.TryParse(txtGrupaSange.Text, out grupaSange)==false)
+        //    {
+        //        eroare += "Grupa de sange selectata este invalida.\n";
+        //        lblGrupaSange.Style = MetroColorStyle.Red;
+        //        lblGrupaSange.UseStyleColors = true;
+        //    }
+
+
+
+        //    AfectiuniMedicale afectiuni = AfectiuniMedicale.Nespecificat;
+        //    if (txtAfectiuni.SelectedItems.Count == 0)
+        //    {
+        //        eroare += "Selecteaza cel putin o afectiune.\n";
+        //        lblAfectiuni.Style = MetroColorStyle.Red;
+        //        lblAfectiuni.UseStyleColors = true;
+        //    }
+        //    else
+        //    {
+        //        foreach (var item in txtAfectiuni.SelectedItems)
+        //        {
+        //            if (Enum.TryParse(item.ToString(), out AfectiuniMedicale af))
+        //            {
+        //                afectiuni |= af;
+        //            }
+        //        }
+        //    }
+
+
+
+
+
+        //    if (eroare != "")
+        //    {   //afiseaza textul , titul ferestrei , un buton ok si un icon de avertizare
+        //        MessageBox.Show(eroare, "Date invalide", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //        return;
+        //    }
+
+
+
+        //    int nrPacienti = 0;
+        //    Pacient[] pacienti = adminPacienti.GetPacienti(out nrPacienti);
+
+        //    Pacient pacient = new Pacient(nrPacienti + 1, nume, prenume, cnp, varsta, greutate, inaltime, temperaturaCorp, grupaSange, afectiuni);
+        //    adminPacienti.AddPacient(pacient);
+
+        //    txtNume.ResetText();
+        //    txtPrenume.ResetText();
+        //    txtCnp.ResetText();
+        //    txtVarsta.ResetText();
+        //    txtGreutate.ResetText();
+        //    txtInaltime.ResetText();
+        //    txtTemperaturaCorp.ResetText();
+        //    txtGrupaSange.ResetText();
+        //    txtAfectiuni.ClearSelected();
+
+
+        //}
 
 
         private void Form1_Load(object sender, EventArgs e)
@@ -571,9 +608,34 @@ namespace InterfataUtilizator_WindowsForms
             AfiseazaPacienti();
 
         }
+
+        private void StergeEtichetePacienti()
+        {
+            void RemoveLabels(MetroLabel[] labels)
+            {
+                if (labels != null)
+                {
+                    foreach (var lbl in labels)
+                        this.Controls.Remove(lbl);
+                }
+            }
+
+            RemoveLabels(lblsCodPacient);
+            RemoveLabels(lblsNume);
+            RemoveLabels(lblsPrenume);
+            RemoveLabels(lblsCnp);
+            RemoveLabels(lblsVarsta);
+            RemoveLabels(lblsGreutate);
+            RemoveLabels(lblsInaltime);
+            RemoveLabels(lblsTemperaturaCorp);
+            RemoveLabels(lblsGrupaSange);
+            RemoveLabels(lblsAfectiuni);
+        }
+
         private void AfiseazaPacienti()
         {
 
+            StergeEtichetePacienti();
 
             Pacient[] pacienti = adminPacienti.GetPacienti(out int nrPacienti);
             //MessageBox.Show($"nrPacienti: {nrPacienti}, null? {pacienti == null}");
@@ -591,13 +653,14 @@ namespace InterfataUtilizator_WindowsForms
             lblsAfectiuni = new MetroLabel[nrPacienti];
 
             int i = 0;
+            int valoare = 2;
             foreach (Pacient pacient in pacienti)
             {
                 lblsCodPacient[i] = new MetroLabel();
                 lblsCodPacient[i].Width = LATIME_CONTROL;
                 lblsCodPacient[i].Text = pacient.CodPacient.ToString();
                 lblsCodPacient[i].Left = 1 * DIMENSIUNE_PAS_X;
-                lblsCodPacient[i].Top = (i + 3) * DIMENSIUNE_PAS_Y;
+                lblsCodPacient[i].Top = (i + valoare) * DIMENSIUNE_PAS_Y;
                 lblsCodPacient[i].BackColor = Color.White; //background alb in spate
                                                            // lblsCodPacient[i].BorderStyle = BorderStyle.FixedSingle; //border , sa arate ca un tabel
                 this.Controls.Add(lblsCodPacient[i]);
@@ -606,7 +669,7 @@ namespace InterfataUtilizator_WindowsForms
                 lblsNume[i].Width = LATIME_CONTROL;
                 lblsNume[i].Text = pacient.Nume;
                 lblsNume[i].Left = 2 * DIMENSIUNE_PAS_X;
-                lblsNume[i].Top = (i + 3) * DIMENSIUNE_PAS_Y;
+                lblsNume[i].Top = (i + valoare) * DIMENSIUNE_PAS_Y;
                 lblsNume[i].BackColor = Color.White;
                 // lblsNume[i].BorderStyle = BorderStyle.FixedSingle;
                 this.Controls.Add(lblsNume[i]);
@@ -616,7 +679,7 @@ namespace InterfataUtilizator_WindowsForms
                 lblsPrenume[i].Width = LATIME_CONTROL;
                 lblsPrenume[i].Text = pacient.Prenume;
                 lblsPrenume[i].Left = 3 * DIMENSIUNE_PAS_X;
-                lblsPrenume[i].Top = (i + 3) * DIMENSIUNE_PAS_Y;
+                lblsPrenume[i].Top = (i + valoare) * DIMENSIUNE_PAS_Y;
                 lblsPrenume[i].BackColor = Color.White;
                 // lblsPrenume[i].BorderStyle = BorderStyle.FixedSingle;
                 this.Controls.Add(lblsPrenume[i]);
@@ -625,7 +688,7 @@ namespace InterfataUtilizator_WindowsForms
                 lblsCnp[i].Width = LATIME_CONTROL;
                 lblsCnp[i].Text = pacient.Cnp;
                 lblsCnp[i].Left = 4 * DIMENSIUNE_PAS_X;
-                lblsCnp[i].Top = (i + 3) * DIMENSIUNE_PAS_Y;
+                lblsCnp[i].Top = (i + valoare) * DIMENSIUNE_PAS_Y;
                 lblsCnp[i].BackColor = Color.White;
                 // lblsCnp[i].BorderStyle = BorderStyle.FixedSingle;
                 this.Controls.Add(lblsCnp[i]);
@@ -634,7 +697,7 @@ namespace InterfataUtilizator_WindowsForms
                 lblsVarsta[i].Width = LATIME_CONTROL;
                 lblsVarsta[i].Text = pacient.Varsta.ToString();
                 lblsVarsta[i].Left = 5 * DIMENSIUNE_PAS_X;
-                lblsVarsta[i].Top = (i + 3) * DIMENSIUNE_PAS_Y;
+                lblsVarsta[i].Top = (i + valoare) * DIMENSIUNE_PAS_Y;
                 lblsVarsta[i].BackColor = Color.White;
                 // lblsVarsta[i].BorderStyle = BorderStyle.FixedSingle;
                 this.Controls.Add(lblsVarsta[i]);
@@ -644,7 +707,7 @@ namespace InterfataUtilizator_WindowsForms
                 lblsGreutate[i].Width = LATIME_CONTROL;
                 lblsGreutate[i].Text = pacient.Greutate.ToString();
                 lblsGreutate[i].Left = 6 * DIMENSIUNE_PAS_X;
-                lblsGreutate[i].Top = (i + 3) * DIMENSIUNE_PAS_Y;
+                lblsGreutate[i].Top = (i + valoare) * DIMENSIUNE_PAS_Y;
                 lblsGreutate[i].BackColor = Color.White;
                 //  lblsGreutate[i].BorderStyle = BorderStyle.FixedSingle;
                 this.Controls.Add(lblsGreutate[i]);
@@ -654,7 +717,7 @@ namespace InterfataUtilizator_WindowsForms
                 lblsInaltime[i].Width = LATIME_CONTROL;
                 lblsInaltime[i].Text = pacient.Inaltime.ToString();
                 lblsInaltime[i].Left = 7 * DIMENSIUNE_PAS_X;
-                lblsInaltime[i].Top = (i + 3) * DIMENSIUNE_PAS_Y;
+                lblsInaltime[i].Top = (i + valoare) * DIMENSIUNE_PAS_Y;
                 lblsInaltime[i].BackColor = Color.White;
                 //   lblsInaltime[i].BorderStyle = BorderStyle.FixedSingle;
                 this.Controls.Add(lblsInaltime[i]);
@@ -664,7 +727,7 @@ namespace InterfataUtilizator_WindowsForms
                 lblsTemperaturaCorp[i].Width = LATIME_CONTROL;
                 lblsTemperaturaCorp[i].Text = pacient.TemperaturaCorp.ToString();
                 lblsTemperaturaCorp[i].Left = 8 * DIMENSIUNE_PAS_X;
-                lblsTemperaturaCorp[i].Top = (i + 3) * DIMENSIUNE_PAS_Y;
+                lblsTemperaturaCorp[i].Top = (i + valoare) * DIMENSIUNE_PAS_Y;
                 lblsTemperaturaCorp[i].BackColor = Color.White;
                 //   lblsTemperaturaCorp[i].BorderStyle = BorderStyle.FixedSingle;
                 this.Controls.Add(lblsTemperaturaCorp[i]);
@@ -673,7 +736,7 @@ namespace InterfataUtilizator_WindowsForms
                 lblsGrupaSange[i].Width = LATIME_CONTROL;
                 lblsGrupaSange[i].Text = pacient.Grupa.ToString();
                 lblsGrupaSange[i].Left = 9 * DIMENSIUNE_PAS_X;
-                lblsGrupaSange[i].Top = (i + 3) * DIMENSIUNE_PAS_Y;
+                lblsGrupaSange[i].Top = (i + valoare) * DIMENSIUNE_PAS_Y;
                 lblsGrupaSange[i].BackColor = Color.White;
                 //    lblsGrupaSange[i].BorderStyle = BorderStyle.FixedSingle;
                 this.Controls.Add(lblsGrupaSange[i]);
@@ -682,7 +745,7 @@ namespace InterfataUtilizator_WindowsForms
                 lblsAfectiuni[i].Width = LATIME_CONTROL;
                 lblsAfectiuni[i].Text = pacient.AfectiuniMed.ToString();
                 lblsAfectiuni[i].Left = 10 * DIMENSIUNE_PAS_X;
-                lblsAfectiuni[i].Top = (i + 3) * DIMENSIUNE_PAS_Y;
+                lblsAfectiuni[i].Top = (i + valoare) * DIMENSIUNE_PAS_Y;
                 lblsAfectiuni[i].BackColor = Color.White;
                 //  lblsAfectiuni[i].BorderStyle = BorderStyle.FixedSingle;
                 this.Controls.Add(lblsAfectiuni[i]);
@@ -694,6 +757,6 @@ namespace InterfataUtilizator_WindowsForms
 
             }
         }
-       
-        }
+
     }
+}

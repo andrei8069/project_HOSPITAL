@@ -111,5 +111,24 @@ namespace InterfataUtilizator_WindowsForms
                 MessageBox.Show("Pacientul cu CNP-ul introdus nu a fost gasit.", "CNP inexistent", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
+        private void metroButton2_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Form formPacienti = Application.OpenForms["Form1"];
+
+            if (formPacienti != null)
+            {
+                formPacienti.Show();
+            }
+            else
+            {
+                //meniu nou doar daca nu exista
+                Form1 formNouPacienti = new Form1();
+                formNouPacienti.Show();
+            }
+
+            this.Close();
+        }
     }
 }

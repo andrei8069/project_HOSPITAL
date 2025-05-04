@@ -30,39 +30,83 @@ namespace InterfataUtilizator_WindowsForms
         {
             InitializeComponent();
 
-            //setari fereastra
-            this.Text = "Meniu Principal";
-
+            // Setari fereastra
+            this.Text = "Hospital";
             this.Theme = MetroThemeStyle.Light;
-            this.Style = MetroColorStyle.Teal;
-
-            this.BackColor = Color.FromArgb(240, 248, 255);
+            this.Style = MetroColorStyle.Blue;
+            this.BackColor = Color.FromArgb(135, 206, 235); // SkyBlue (cer senin)
             this.Size = new Size(1000, 700);
-
             this.StartPosition = FormStartPosition.CenterScreen;
 
-            // Buton pentru Pacienti
-            MetroButton btnPacienti = new MetroButton();
-            btnPacienti.Text = "Gestionare Pacienti";
-            btnPacienti.Size = new Size(200, 200);
-            btnPacienti.Location = new Point(200, 250);
-            //200 distanta pe axa X , 250 distanta pe axa Y
-            btnPacienti.Style = MetroColorStyle.Green;
+           // Titlu central
+            MetroLabel lblTitlu = new MetroLabel();
+            lblTitlu.Text = "Main Menu";
+            lblTitlu.FontSize = MetroLabelSize.Tall;
+            lblTitlu.FontWeight = MetroLabelWeight.Bold;
+            lblTitlu.AutoSize = true;
+            lblTitlu.Location = new Point((this.ClientSize.Width - lblTitlu.PreferredWidth) / 2, 30);
+            this.Controls.Add(lblTitlu);
+
+            // CARD PACIENTI
+            Panel cardPacienti = new Panel();
+            cardPacienti.Size = new Size(300, 300);
+            cardPacienti.Location = new Point(160, 150);
+            cardPacienti.BackColor = Color.FromArgb(230, 240, 255); // albastru deschis
+            cardPacienti.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Controls.Add(cardPacienti);
+
+            PictureBox imgDoctor = new PictureBox();
+            imgDoctor.Size = new Size(128, 128);
+            imgDoctor.Location = new Point(86, 20);
+            imgDoctor.SizeMode = PictureBoxSizeMode.Zoom;
+            try { imgDoctor.Image = Image.FromFile("images/doctor.png"); }
+            catch { imgDoctor.BackColor = Color.LightGray; }
+            cardPacienti.Controls.Add(imgDoctor);
+
+            Button btnPacienti = new Button();
+            btnPacienti.Text = "Gestionare pacienți";
+            btnPacienti.Size = new Size(200, 50);
+            btnPacienti.Location = new Point(50, 180);
             btnPacienti.Font = new Font("Segoe UI", 12, FontStyle.Bold);
+            btnPacienti.BackColor = Color.DeepSkyBlue;      // fundal modern
+            btnPacienti.ForeColor = Color.White;            // text alb
+            btnPacienti.FlatStyle = FlatStyle.Flat;
+            btnPacienti.FlatAppearance.BorderSize = 0;
+            btnPacienti.Cursor = Cursors.Hand;
             btnPacienti.Click += BtnPacienti_Click;
-            this.Controls.Add(btnPacienti);
+            cardPacienti.Controls.Add(btnPacienti);
 
-            // Buton pentru Sectii
-            MetroButton btnSectii = new MetroButton();
-            btnSectii.Text = "Gestionare Sectii";
-            btnSectii.Size = new Size(200, 200);
+            // CARD SECTII 
+            Panel cardSectii = new Panel();
+            cardSectii.Size = new Size(300, 300);
+            cardSectii.Location = new Point(520, 150);
+            cardSectii.BackColor = Color.FromArgb(230, 240, 255); // albastru deschis
+            cardSectii.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Controls.Add(cardSectii);
 
-            btnSectii.Location = new Point(600, 250);
-            btnSectii.Style = MetroColorStyle.Blue;
+            PictureBox imgHospital = new PictureBox();
+            imgHospital.Size = new Size(128, 128);
+            imgHospital.Location = new Point(86, 20);
+            imgHospital.SizeMode = PictureBoxSizeMode.Zoom;
+            try { imgHospital.Image = Image.FromFile("images/hospital.png"); }
+            catch { imgHospital.BackColor = Color.LightGray; }
+            cardSectii.Controls.Add(imgHospital);
+
+            Button btnSectii = new Button();
+            btnSectii.Text = "Gestionare secții";
+            btnSectii.Size = new Size(200, 50);
+            btnSectii.Location = new Point(50, 180);
             btnSectii.Font = new Font("Segoe UI", 12, FontStyle.Bold);
+            btnSectii.BackColor = Color.MediumSlateBlue;    // fundal violet modern
+            btnSectii.ForeColor = Color.White;              // text alb
+            btnSectii.FlatStyle = FlatStyle.Flat;
+            btnSectii.FlatAppearance.BorderSize = 0;
+            btnSectii.Cursor = Cursors.Hand;
             btnSectii.Click += BtnSectii_Click;
-            this.Controls.Add(btnSectii);
+            cardSectii.Controls.Add(btnSectii);
         }
+
+
 
         private void HospitalMenu_Load(object sender, EventArgs e)
         {

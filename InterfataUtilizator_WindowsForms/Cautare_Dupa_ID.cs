@@ -109,5 +109,24 @@ namespace InterfataUtilizator_WindowsForms
             }
 
         }
+
+        private void metroButton2_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Form formPacienti = Application.OpenForms["Sectii_Spital"];
+
+            if (formPacienti != null)
+            {
+                formPacienti.Show();
+            }
+            else
+            {
+                //meniu nou doar daca nu exista
+                Form1 formNouPacienti = new Form1();
+                formNouPacienti.Show();
+            }
+
+            this.Close();
+        }
     }
 }

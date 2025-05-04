@@ -1,2 +1,2 @@
-1;asa;1;122;23;25;100;1000000;Renovare;Monitorizare
-2;asa;2;122;12;25;144;12342;InLucru;Izolare
+1;asa;9;122;23;25;100;1000000;Renovare;Ventilatie, Monitorizare, Izolare
+2;asa;3;122;12;23;144;12342;Renovare;Ventilatie
