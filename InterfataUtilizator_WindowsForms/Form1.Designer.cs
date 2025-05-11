@@ -1,6 +1,6 @@
 ﻿namespace InterfataUtilizator_WindowsForms
 {
-    partial class Form1
+    partial class Form1 : MetroFramework.Forms.MetroForm
     {
         /// <summary>
         /// Required designer variable.

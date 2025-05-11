@@ -45,6 +45,7 @@ namespace InterfataUtilizator_WindowsForms
             lblTitlu.FontWeight = MetroLabelWeight.Bold;
             lblTitlu.AutoSize = true;
             lblTitlu.Location = new Point((this.ClientSize.Width - lblTitlu.PreferredWidth) / 2, 30);
+            //latimea disponibila a ferestrei - latimea ideala / 2 , 30 - pozitia pe axa y
             this.Controls.Add(lblTitlu);
 
             // CARD PACIENTI

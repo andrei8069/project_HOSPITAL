@@ -5,41 +5,43 @@ using System.Text;
 using System.Threading.Tasks;
 using LibrarieModele;
 
-
 namespace NivelStocareDate
 {
     public class Pacienti
     {
-        const int NR_MAX_PACIENTI = 500;
-        private int nrPacienti = 0;
-        private Pacient[] vectorPacient = new Pacient[NR_MAX_PACIENTI];
-
+        private List<Pacient> listaPacienti;
 
         public Pacienti()
         {
-            nrPacienti = 0;
-            vectorPacient = new Pacient[NR_MAX_PACIENTI];
+            listaPacienti = new List<Pacient>();
         }
+
         public void AdaugarePacienti(Pacient pacientNou)
         {
-            pacientNou.CodPacient = nrPacienti + 1;
-            vectorPacient[nrPacienti] = pacientNou;
-            nrPacienti++;
+            pacientNou.CodPacient = listaPacienti.Count + 1;
+            listaPacienti.Add(pacientNou);
         }
+
         public string AfisarePacient(int nrPacient)
         {
-            return vectorPacient[nrPacient - 1].toScreenPacient();
+            if (nrPacient >= 1 && nrPacient <= listaPacienti.Count)
+            {
+                return listaPacienti[nrPacient - 1].toScreenPacient();
+            }
+            else
+            {
+                return "Pacient inexistent!";
+            }
         }
 
         public void AfisarePacienti()
         {
-            for (int i = 0; i < nrPacienti; i++)
+            foreach (var pacient in listaPacienti)
             {
-                Console.WriteLine(vectorPacient[i].toScreenPacient());
+                Console.WriteLine(pacient.toScreenPacient());
                 Console.WriteLine();
             }
             Console.WriteLine();
         }
-
     }
 }

@@ -86,7 +86,9 @@ namespace InterfataUtilizator_WindowsForms
             string caleFisier = Path.Combine(locatieFisier, numeFisierSectii);
 
             Sectii_FISIERTEXT adminSectii = new Sectii_FISIERTEXT(caleFisier);
-            SectieSpital[] sectii = adminSectii.GetSectie(out int nrSectii);
+            List<SectieSpital> sectii = adminSectii.GetSectii();
+            int nrSectii = sectii.Count;
+
 
             bool gasit = false;
             for (int i = 0; i < nrSectii; i++)

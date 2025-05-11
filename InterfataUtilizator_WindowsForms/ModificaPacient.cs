@@ -87,7 +87,9 @@ namespace InterfataUtilizator_WindowsForms
             string caleFisier = Path.Combine(locatieFisier, numeFisierPacienti);
 
             Pacienti_FISIERTEXT adminPacienti = new Pacienti_FISIERTEXT(caleFisier);
-            Pacient[] pacienti = adminPacienti.GetPacienti(out int nrPacienti);
+            List<Pacient> pacienti = adminPacienti.GetPacienti();
+            int nrPacienti = pacienti.Count;
+
 
             bool gasit = false;
             for (int i = 0; i < nrPacienti; i++)

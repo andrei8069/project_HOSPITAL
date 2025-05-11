@@ -230,7 +230,8 @@ namespace InterfataUtilizator_WindowsForms
                 return;
             }
 
-            adminPacienti.GetPacienti(out int nrPacienti);
+            List<Pacient> listaPacienti = adminPacienti.GetPacienti();
+            int nrPacienti = listaPacienti.Count;
             GrupaSangePacient grupa = (GrupaSangePacient)Enum.Parse(typeof(GrupaSangePacient), cmbGrupaSange.Text);
             AfectiuniMedicale afectiuni = AfectiuniMedicale.Nespecificat;
             foreach (var item in lstAfectiuni.SelectedItems)

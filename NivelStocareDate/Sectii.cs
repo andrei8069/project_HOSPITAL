@@ -9,32 +9,36 @@ namespace NivelStocareDate
 {
     public class Sectii
     {
-        const int NR_MAX_SECTII = 200;
-        private SectieSpital[] vectorSectieSpital = new SectieSpital[NR_MAX_SECTII];
-        private int nrSectii = 0;
+        private List<SectieSpital> listaSectii;
 
         public Sectii()
         {
-            nrSectii = 0;
-            vectorSectieSpital = new SectieSpital[NR_MAX_SECTII];
+            listaSectii = new List<SectieSpital>();
         }
+
         public void AdaugareSectii(SectieSpital sectieSpitalNoua)
         {
-            sectieSpitalNoua.CodSectie = nrSectii + 1;
-            vectorSectieSpital[nrSectii] = sectieSpitalNoua;
-            nrSectii++;
+            sectieSpitalNoua.CodSectie = listaSectii.Count + 1;
+            listaSectii.Add(sectieSpitalNoua);
         }
 
         public string AfisareSectie(int nrSectie)
         {
-            return vectorSectieSpital[nrSectie - 1].toScreenSectie();
+            if (nrSectie >= 1 && nrSectie <= listaSectii.Count)
+            {
+                return listaSectii[nrSectie - 1].toScreenSectie();
+            }
+            else
+            {
+                return "Sectie inexistenta!";
+            }
         }
 
         public void AfisareSectii()
         {
-            for (int i = 0; i < nrSectii; i++)
+            foreach (var sectie in listaSectii)
             {
-                Console.WriteLine(vectorSectieSpital[i].toScreenSectie());
+                Console.WriteLine(sectie.toScreenSectie());
                 Console.WriteLine();
             }
             Console.WriteLine();

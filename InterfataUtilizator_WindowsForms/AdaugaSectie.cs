@@ -8,6 +8,7 @@ using MetroFramework.Controls;
 using MetroFramework.Forms;
 using LibrarieModele;
 using NivelStocareDate;
+using System.Collections.Generic;
 
 namespace InterfataUtilizator_WindowsForms
 {
@@ -209,8 +210,10 @@ namespace InterfataUtilizator_WindowsForms
 
             StatusFunctionareSectie status = (StatusFunctionareSectie)Enum.Parse(typeof(StatusFunctionareSectie), cmbStatus.Text);
 
-            int nrSectii;
-            adminSectii.GetSectie(out nrSectii);
+      
+            List<SectieSpital> listaSectii = adminSectii.GetSectii();
+            int nrSectii = listaSectii.Count;
+
 
             var sectie = new SectieSpital(nrSectii + 1, txtNume.Text.Trim(), etaj, capacitate, nrPacienti,
                 temperatura, suprafata, buget, status, dotari);

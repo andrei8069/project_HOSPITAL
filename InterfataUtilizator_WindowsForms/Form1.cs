@@ -112,6 +112,7 @@ namespace InterfataUtilizator_WindowsForms
             this.StyleManager = new MetroStyleManager();
             this.StyleManager.Theme = MetroThemeStyle.Light;
             this.StyleManager.Style = MetroColorStyle.Blue;
+            this.StyleManager.Owner = this;  
 
             InitializareInterfata();
         }
@@ -130,8 +131,8 @@ namespace InterfataUtilizator_WindowsForms
             adminPacienti = new Pacienti_FISIERTEXT(caleCompletaFisierPacienti);
 
 
-            int nrPacienti = 0;
-            Pacient[] pacienti = adminPacienti.GetPacienti(out nrPacienti);
+            List<Pacient> pacienti = adminPacienti.GetPacienti();
+            int nrPacienti = pacienti.Count;
 
 
 
@@ -212,6 +213,7 @@ namespace InterfataUtilizator_WindowsForms
             btnAdaugaPacienti.Theme = MetroThemeStyle.Light;
             btnAdaugaPacienti.Style = MetroColorStyle.Blue;
             this.Controls.Add(btnAdaugaPacienti);
+
 
 
 
@@ -637,7 +639,9 @@ namespace InterfataUtilizator_WindowsForms
 
             StergeEtichetePacienti();
 
-            Pacient[] pacienti = adminPacienti.GetPacienti(out int nrPacienti);
+            List<Pacient> pacienti = adminPacienti.GetPacienti();
+            int nrPacienti = pacienti.Count;
+
             //MessageBox.Show($"nrPacienti: {nrPacienti}, null? {pacienti == null}");
             //MessageBox.Show($"Lungime array: {pacienti.Length}, nrPacienti: {nrPacienti}");
 
