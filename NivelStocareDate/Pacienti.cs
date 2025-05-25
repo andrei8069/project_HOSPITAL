@@ -18,8 +18,14 @@ namespace NivelStocareDate
 
         public void AdaugarePacienti(Pacient pacientNou)
         {
-            pacientNou.CodPacient = listaPacienti.Count + 1;
+            pacientNou.CodPacient = GetNextCodPacient();
             listaPacienti.Add(pacientNou);
+        }
+
+        public int GetNextCodPacient()
+        {
+            if (listaPacienti.Count == 0) return 1;
+            return listaPacienti.Max(p => p.CodPacient) + 1;
         }
 
         public string AfisarePacient(int nrPacient)
@@ -36,7 +42,7 @@ namespace NivelStocareDate
 
         public void AfisarePacienti()
         {
-            foreach (var pacient in listaPacienti)
+            foreach (Pacient pacient in listaPacienti)
             {
                 Console.WriteLine(pacient.toScreenPacient());
                 Console.WriteLine();

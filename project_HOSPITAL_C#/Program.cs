@@ -117,29 +117,21 @@ namespace project_HOSPITAL_C_
                         HostSectii.AfisareSectii();
                         break;
                     case "J":
-                        //SectieSpital[] vectorSectieSpital = adminSectii.GetSectie(out nrSectii);
-                        //AfisareSectii(vectorSectieSpital,nrSectii);
                         List<SectieSpital> listaSectii = adminSectii.GetSectii();
                         AfisareSectii(listaSectii);
                         break;
                     case "I":
-                        //int codSectie = ++pozitieVectorSpital;
                         int codSectie = ++nrSectii;
                         sectieSpitalNoua.CodSectie = codSectie;
 
                         adminSectii.AddSectii(sectieSpitalNoua);
                         break;
                     case "H":
-                        //Pacient[] vectorPacient = adminPacienti.GetPacienti(out nrPacienti);
-                        ////Console.WriteLine("menu");
-                        ////Console.WriteLine(pozitieVectorPacient);
-                        //AfisarePacienti(vectorPacient, nrPacienti);
                         List<Pacient> listaPacienti = adminPacienti.GetPacienti();
                         AfisarePacienti(listaPacienti);
 
                         break;
                     case "G":
-                        //int codPacient = ++pozitieVectorPacient;
                         int codPacient = ++nrPacienti;
                         pacientNou.CodPacient = codPacient;
                         adminPacienti.AddPacient(pacientNou);
@@ -172,25 +164,7 @@ namespace project_HOSPITAL_C_
 
             Console.ReadKey();
         }
-        //public static void AfisareSectii(SectieSpital[] vectorSectieSpital , int nrSectii )
-        //{
-        //    Console.WriteLine("Sectiile sunt:");
-        //    for(int contor =0; contor < nrSectii; contor++)
-        //    {
-        //        string infoSectieSpital = vectorSectieSpital[contor].toScreenSectie();
-        //        Console.WriteLine(infoSectieSpital);
-        //    }
-        //}
-        //public static void AfisarePacienti(Pacient[] vectorPacient , int nrPacienti)
-        //{
-        //    Console.WriteLine("Pacientii sunt:");
-        //    for (int contor =0; contor < nrPacienti; contor++)
-        //    {
 
-        //        string infoPacient = vectorPacient[contor].toScreenPacient();
-        //        Console.WriteLine(infoPacient);
-        //    }
-        //}
         public static void AfisarePacienti(List<Pacient> listaPacienti)
         {
             Console.WriteLine("Pacientii sunt:");

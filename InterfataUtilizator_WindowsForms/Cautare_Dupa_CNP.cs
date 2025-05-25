@@ -26,6 +26,7 @@ namespace InterfataUtilizator_WindowsForms
 {
     public partial class Cautare_Dupa_CNP : MetroForm
     {
+        private DataGridView rezultatePacient;
         private const int CNP_LUNGIME = 13;
         public Cautare_Dupa_CNP()
         {
@@ -43,7 +44,27 @@ namespace InterfataUtilizator_WindowsForms
 
         private void Cautare_Dupa_CNP_Load(object sender, EventArgs e)
         {
+            rezultatePacient = new DataGridView();
+            rezultatePacient.Name = "rezultatePacient";
+            rezultatePacient.Location = new Point(30, 150);
+            rezultatePacient.Size = new Size(920, 450);
+            rezultatePacient.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            rezultatePacient.ReadOnly = true;
+            rezultatePacient.AllowUserToAddRows = false;
+            rezultatePacient.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
+            rezultatePacient.Columns.Add("CodPacient", "Cod Pacient");
+            rezultatePacient.Columns.Add("Nume", "Nume");
+            rezultatePacient.Columns.Add("Prenume", "Prenume");
+            rezultatePacient.Columns.Add("Cnp", "CNP");
+            rezultatePacient.Columns.Add("Varsta", "Vârstă");
+            rezultatePacient.Columns.Add("Greutate", "Greutate");
+            rezultatePacient.Columns.Add("Inaltime", "Înălțime");
+            rezultatePacient.Columns.Add("Temperatura", "Temperatură");
+            rezultatePacient.Columns.Add("Grupa", "Grupa Sânge");
+            rezultatePacient.Columns.Add("Afectiuni", "Afectiuni");
+
+            this.Controls.Add(rezultatePacient);
         }
 
         private void metroLabel1_Click(object sender, EventArgs e)
@@ -87,23 +108,21 @@ namespace InterfataUtilizator_WindowsForms
             Pacienti_FISIERTEXT adminPacienti = new Pacienti_FISIERTEXT(caleCompletaFisierPacienti);
             Pacient pacientGasit = adminPacienti.FindCNP(cnp);
 
+            rezultatePacient.Rows.Clear();
+
             if (pacientGasit != null)
             {
-                MessageBox.Show(
-                    $"Pacient gasit:\n\n" +
-                    $"Cod Pacient: {pacientGasit.CodPacient}\n"+
-                    $"Nume: {pacientGasit.Nume}\n" +
-                    $"Prenume: {pacientGasit.Prenume}\n" +
-                    $"CNP: {pacientGasit.Cnp}\n" +
-                    $"Varsta: {pacientGasit.Varsta}\n" +
-                    $"Greutate: {pacientGasit.Greutate}\n" +
-                    $"Inaltime: {pacientGasit.Inaltime}\n" +
-                    $"Temperatura corp: {pacientGasit.TemperaturaCorp}\n" +
-                    $"Grupa de sange: {pacientGasit.Grupa}\n" +
-                    $"Afectiuni: {pacientGasit.AfectiuniMed}",
-                    "Pacient gasit",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information
+                rezultatePacient.Rows.Add(
+                    pacientGasit.CodPacient,
+                    pacientGasit.Nume,
+                    pacientGasit.Prenume,
+                    pacientGasit.Cnp,
+                    pacientGasit.Varsta,
+                    pacientGasit.Greutate,
+                    pacientGasit.Inaltime,
+                    pacientGasit.TemperaturaCorp,
+                    pacientGasit.Grupa.ToString(),
+                    pacientGasit.AfectiuniMed.ToString()
                 );
             }
             else
@@ -129,6 +148,35 @@ namespace InterfataUtilizator_WindowsForms
             }
 
             this.Close();
+        }
+
+        private void Modifica_Click(object sender, EventArgs e)
+        {
+            if (rezultatePacient.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Selectează un pacient din tabel!", "Eroare", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            DataGridViewRow rand = rezultatePacient.SelectedRows[0];
+
+            Pacient pacient = new Pacient
+            {
+                CodPacient = Convert.ToInt32(rand.Cells["CodPacient"].Value),
+                Nume = rand.Cells["Nume"].Value.ToString(),
+                Prenume = rand.Cells["Prenume"].Value.ToString(),
+                Cnp = rand.Cells["Cnp"].Value.ToString(),
+                Varsta = Convert.ToInt32(rand.Cells["Varsta"].Value),
+                Greutate = Convert.ToDouble(rand.Cells["Greutate"].Value),
+                Inaltime = Convert.ToDouble(rand.Cells["Inaltime"].Value),
+                TemperaturaCorp = Convert.ToDouble(rand.Cells["Temperatura"].Value),
+                Grupa = (GrupaSangePacient)Enum.Parse(typeof(GrupaSangePacient), rand.Cells["Grupa"].Value.ToString()),
+                AfectiuniMed = (AfectiuniMedicale)Enum.Parse(typeof(AfectiuniMedicale), rand.Cells["Afectiuni"].Value.ToString())
+            };
+
+            ModificaPacient modifica = new ModificaPacient();
+            modifica.SeteazaPacient(pacient);
+            modifica.Show();
         }
     }
 }

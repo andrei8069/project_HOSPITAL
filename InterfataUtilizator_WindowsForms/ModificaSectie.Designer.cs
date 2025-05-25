@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.metroButton1 = new MetroFramework.Controls.MetroButton();
-            this.metroButton2 = new MetroFramework.Controls.MetroButton();
+            this.metroButton1 = new System.Windows.Forms.Button();
+            this.metroButton2 = new System.Windows.Forms.Button();
             this.nume = new MetroFramework.Controls.MetroTextBox();
             this.reanimare = new MetroFramework.Controls.MetroCheckBox();
             this.radiologie = new MetroFramework.Controls.MetroCheckBox();
@@ -66,20 +66,34 @@
             // 
             // metroButton1
             // 
+            this.metroButton1.BackColor = System.Drawing.Color.Crimson;
+            this.metroButton1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.metroButton1.FlatAppearance.BorderSize = 0;
+            this.metroButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.metroButton1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.metroButton1.ForeColor = System.Drawing.Color.White;
             this.metroButton1.Location = new System.Drawing.Point(19, 586);
             this.metroButton1.Name = "metroButton1";
             this.metroButton1.Size = new System.Drawing.Size(586, 128);
             this.metroButton1.TabIndex = 69;
-            this.metroButton1.Text = "Inapoi";
+            this.metroButton1.Text = "Înapoi";
+            this.metroButton1.UseVisualStyleBackColor = false;
             this.metroButton1.Click += new System.EventHandler(this.metroButton1_Click);
             // 
             // metroButton2
             // 
+            this.metroButton2.BackColor = System.Drawing.Color.MediumSeaGreen;
+            this.metroButton2.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.metroButton2.FlatAppearance.BorderSize = 0;
+            this.metroButton2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.metroButton2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.metroButton2.ForeColor = System.Drawing.Color.White;
             this.metroButton2.Location = new System.Drawing.Point(820, 586);
             this.metroButton2.Name = "metroButton2";
             this.metroButton2.Size = new System.Drawing.Size(586, 128);
             this.metroButton2.TabIndex = 68;
-            this.metroButton2.Text = "Modifica";
+            this.metroButton2.Text = "Modifică";
+            this.metroButton2.UseVisualStyleBackColor = false;
             this.metroButton2.Click += new System.EventHandler(this.metroButton2_Click);
             // 
             // nume
@@ -424,8 +438,8 @@
 
         #endregion
 
-        private MetroFramework.Controls.MetroButton metroButton1;
-        private MetroFramework.Controls.MetroButton metroButton2;
+        private System.Windows.Forms.Button metroButton1;
+        private System.Windows.Forms.Button metroButton2;
         private MetroFramework.Controls.MetroTextBox nume;
         private MetroFramework.Controls.MetroCheckBox reanimare;
         private MetroFramework.Controls.MetroCheckBox radiologie;

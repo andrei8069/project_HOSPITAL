@@ -69,6 +69,12 @@
     <Compile Include="AdaugaSectie.Designer.cs">
       <DependentUpon>AdaugaSectie.cs</DependentUpon>
     </Compile>
+    <Compile Include="AsocierePacientSectie.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AsocierePacientSectie.Designer.cs">
+      <DependentUpon>AsocierePacientSectie.cs</DependentUpon>
+    </Compile>
     <Compile Include="Cautare_Dupa_CNP.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -112,6 +118,18 @@
     </Compile>
     <Compile Include="Sectii_Spital.Designer.cs">
       <DependentUpon>Sectii_Spital.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StergePacient.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StergePacient.Designer.cs">
+      <DependentUpon>StergePacient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StergeSectie.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StergeSectie.Designer.cs">
+      <DependentUpon>StergeSectie.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="AdaugaPacient.resx">
       <DependentUpon>AdaugaPacient.cs</DependentUpon>

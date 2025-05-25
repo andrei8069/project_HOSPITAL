@@ -21,15 +21,18 @@ using LibrarieModele;
 using NivelStocareDate;
 using static System.Collections.Specialized.BitVector32;
 using MetroFramework;
+using System.Windows.Forms.VisualStyles;
 
 namespace InterfataUtilizator_WindowsForms
 {
     public partial class Cautare_Dupa_ID : MetroForm
     {
+        
+        private DataGridView rezultateSectie;
         public Cautare_Dupa_ID()
         {
             InitializeComponent();
-            this.Text = "Cautare dupa ID";
+            this.Text = "Cautare dupa nume";
 
             this.Theme = MetroThemeStyle.Light;
             this.Style = MetroColorStyle.Teal;
@@ -42,6 +45,31 @@ namespace InterfataUtilizator_WindowsForms
 
         private void Cautare_Dupa_ID_Load(object sender, EventArgs e)
         {
+            rezultateSectie = new DataGridView();
+            rezultateSectie.Name = "rezultateSectie";
+            rezultateSectie.Location = new Point(30, 150);
+            rezultateSectie.Size = new Size(900, 500);
+            rezultateSectie.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            rezultateSectie.ReadOnly = true;
+            rezultateSectie.AllowUserToAddRows = false;
+            rezultateSectie.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+
+            rezultateSectie.Columns.Add("CodSectie", "Cod Sectie");
+            rezultateSectie.Columns.Add("NumeSectie", "Nume Sectie");
+            rezultateSectie.Columns.Add("Etaj", "Etaj");
+            rezultateSectie.Columns.Add("CapacitateMaxima", "Capacitate Maxima");
+            rezultateSectie.Columns.Add("NrPacientiInternati", "Nr. Pacienti Internati");
+            rezultateSectie.Columns.Add("TemperaturaMediu", "Temperatura Mediu");
+            rezultateSectie.Columns.Add("SuprafataSectie", "Suprafata Sectie");
+            rezultateSectie.Columns.Add("BugetSectie", "Buget Sectie");
+            rezultateSectie.Columns.Add("Status", "Status Functionare");
+            rezultateSectie.Columns.Add("Dotari", "Dotari");
+
+            this.Controls.Add(rezultateSectie);
+
+
+
 
         }
 
@@ -52,62 +80,50 @@ namespace InterfataUtilizator_WindowsForms
 
         private void metroButton1_Click(object sender, EventArgs e)
         {
-            string eroare = "";
+            string nume = metroTextBox1.Text.Trim();
             metroTextBox1.Style = MetroColorStyle.Blue;
             metroTextBox1.UseStyleColors = true;
-            // ID
-            string id = metroTextBox1.Text.Trim();
-            if (string.IsNullOrEmpty(id))
-            {
-                eroare += "Introdu un ID corespunzator!\n";
 
+            if(string.IsNullOrEmpty(nume))
+            {
+                MessageBox.Show("Introduceti un nume de sectie!", "Eroare", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 metroTextBox1.Style = MetroColorStyle.Red;
                 metroTextBox1.UseStyleColors = true;
-            }
-            if (eroare != "")
-            {   //afiseaza textul , titul ferestrei , un buton ok si un icon de avertizare
-                MessageBox.Show(eroare, "Date invalide", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             string locatieFisierSolutie = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.FullName;
-            //linia de sus ia locatia folder-ului principal al solutiei
-
-
             string numeFisierSectii = ConfigurationManager.AppSettings["NumeFisierSectii"];
-            string caleCompletaFisierSectii = locatieFisierSolutie + "\\" + numeFisierSectii;
+            string caleCompletaFisierSectii = Path.Combine(locatieFisierSolutie, numeFisierSectii);
 
             Sectii_FISIERTEXT adminSectii = new Sectii_FISIERTEXT(caleCompletaFisierSectii);
-            SectieSpital sectieGasita = adminSectii.FindSectie(id);
-            if (sectieGasita != null)
-            {
-                MessageBox.Show(
-                    $"Sectie gasita:\n\n" +
-                    $"Cod Sectie: {sectieGasita.CodSectie}\n" +
-                    $"Nume: {sectieGasita.NumeSectie}\n" +
-                    $"Etaj: {sectieGasita.Etaj}\n" +
-                    $"Capacitate Maxima: {sectieGasita.CapacitateMaxima}\n" +
-                    $"Nr. Pacienti Internati: {sectieGasita.NrPacientiInternati}\n" +
-                    $"Temperatura Mediu: {sectieGasita.TemperaturaMediu}\n" +
-                    $"Suprafata: {sectieGasita.SuprafataSectie}\n" +
-                    $"Buget: {sectieGasita.BugetSectie}\n" +
-                    $"Status Functionare: {sectieGasita.Status}\n" +
-                    $"Dotari: {sectieGasita.DotariSec}",
-                    "Sectie gasita",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information
-                );
-            }
-            else
-            {
-                MessageBox.Show(
-                    "Nu a fost gasita nicio sectie cu ID-ul introdus.",
-                    "Sectie inexistenta",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning
-                );
-            }
+            List<SectieSpital> rezultate = adminSectii.FindSectieDupaNume(nume);
 
+            rezultateSectie.Rows.Clear();
+
+            if (rezultate.Count > 0)
+            {
+                foreach (SectieSpital sectie in rezultate)
+                {
+                    rezultateSectie.Rows.Add(
+                        sectie.CodSectie,
+                        sectie.NumeSectie,
+                        sectie.Etaj,
+                        sectie.CapacitateMaxima,
+                        sectie.NrPacientiInternati,
+                        sectie.TemperaturaMediu,
+                        sectie.SuprafataSectie,
+                        sectie.BugetSectie,
+                        sectie.Status,
+                        sectie.DotariSec
+                        );
+               }
+            } else
+            {
+                MessageBox.Show("Nu s-a gasit nicio sectie cu acest nume!", "Eroare", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                metroTextBox1.Style = MetroColorStyle.Red;
+                metroTextBox1.UseStyleColors = true;
+            }
         }
 
         private void metroButton2_Click(object sender, EventArgs e)
@@ -127,6 +143,43 @@ namespace InterfataUtilizator_WindowsForms
             }
 
             this.Close();
+        }
+
+        private void metroLabel1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Modifica_Click(object sender, EventArgs e)
+        {
+            if(rezultateSectie.SelectedRows.Count ==0 )
+            {
+                MessageBox.Show("Selecteaza o sectie din tabel!","Eroare" , MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            DataGridViewRow rand = rezultateSectie.SelectedRows[0];
+
+            SectieSpital sectie = new SectieSpital
+            {
+                CodSectie = Convert.ToInt32(rand.Cells["CodSectie"].Value),
+                NumeSectie = rand.Cells["NumeSectie"].Value.ToString(),
+                Etaj = Convert.ToInt32(rand.Cells["Etaj"].Value),
+                CapacitateMaxima = Convert.ToInt32(rand.Cells["CapacitateMaxima"].Value),
+                NrPacientiInternati = Convert.ToInt32(rand.Cells["NrPacientiInternati"].Value),
+                TemperaturaMediu = Convert.ToDouble(rand.Cells["TemperaturaMediu"].Value),
+                SuprafataSectie = Convert.ToDouble(rand.Cells["SuprafataSectie"].Value),
+                BugetSectie = Convert.ToDouble(rand.Cells["BugetSectie"].Value),
+                Status = (StatusFunctionareSectie)Enum.Parse(typeof(StatusFunctionareSectie), rand.Cells["Status"].Value.ToString()),
+                DotariSec = (DotariSectie)Enum.Parse(typeof(DotariSectie), rand.Cells["Dotari"].Value.ToString())
+            };
+
+            ModificaSectie modifica = new ModificaSectie();
+            modifica.SeteazaSectie(sectie);
+            modifica.Show();
+
+
+
         }
     }
 }

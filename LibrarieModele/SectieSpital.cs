@@ -34,12 +34,6 @@ namespace LibrarieModele
         public StatusFunctionareSectie Status { get; set; }
         public DotariSectie DotariSec { get; set; }
 
-        //private static int codSectieStatic = 0;
-
-        //public static void SeteazaUltimulCod(int cod)
-        //{
-        //    codSectieStatic = cod;
-        //}
 
         public SectieSpital()
         {
@@ -48,8 +42,7 @@ namespace LibrarieModele
         }
         public SectieSpital(int codSectie,string numeSectie, int etaj, int capacitateMaxima, int nrPacientiInternati, double temperaturaMediu, double suprafataSectie, double bugetSectie,StatusFunctionareSectie status, DotariSectie dotari)
         {
-            //codSectieStatic++;
-            //CodSectie = codSectieStatic;
+
             this.CodSectie = codSectie;
             this.NumeSectie = numeSectie;
             this.Etaj = etaj;
@@ -102,9 +95,6 @@ namespace LibrarieModele
                 SuprafataSectie,
                 BugetSectie,
                 Status,
-                //Enum.GetName(typeof(StatusFunctionareSectie),Status) ,
-                //Enum.GetName(typeof(DotariSectie),DotariSec)
-                //DotariSec.ToString()
                 DotariSec
                 );
             return obiectSectieSpitalPentruFisier;

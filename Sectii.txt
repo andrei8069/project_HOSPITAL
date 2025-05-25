@@ -1,7 +1,3 @@
-1;asa;0;122;23;25;100;1000000;Renovare;Monitorizare, Izolare
-2;asa;3;122;12;23;144;12342;Renovare;Ventilatie
-3;cardio;2;24;23;25;100;12345;Renovare;Monitorizare, Izolare
-4;pediatrie;0;0;0;0;0;0;Nespecificat;Nespecificat
-5;reuatw;0;23;4;25;123;123456;Inchisa;Monitorizare, Radiologie
-6;as;0;23;12;34;123;1234;Renovare;Monitorizare, Izolare
-7;asa;12;23;2;34;234;2233;InLucru;Monitorizare, Izolare
+3;Stomatologie;7;345;23;24;234;23882;Open;Izolare
+4;Oncologie;3;56;32;26;345;89765;InLucru;Izolare
+5;Pediatrie;3;234;1;25;896;45854858;Open;Monitorizare

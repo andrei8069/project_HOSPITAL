@@ -78,6 +78,35 @@ namespace InterfataUtilizator_WindowsForms
             this.Close();
         }
 
+        public void SeteazaSectie(SectieSpital sectie)
+        {
+            cod.Value = sectie.CodSectie;
+            nume.Text = sectie.NumeSectie;
+            etaj.Value = sectie.Etaj;
+            capacitate.Text = sectie.CapacitateMaxima.ToString();
+            nrPacienti.Text = sectie.NrPacientiInternati.ToString();
+            temperatura.Text = sectie.TemperaturaMediu.ToString();
+            suprafata.Text = sectie.SuprafataSectie.ToString();
+            buget.Text = sectie.BugetSectie.ToString();
+
+            foreach(var control in Controls)
+            {
+                if (control is RadioButton rb && rb.Text == sectie.Status.ToString())
+                {
+                    rb.Checked = true;
+                }
+            }
+
+            foreach (var control in Controls)
+            {
+                if(control is CheckBox cb && Enum.TryParse(cb.Text, out DotariSectie dotare))
+                {
+                   cb.Checked = sectie.DotariSec.HasFlag(dotare);
+                }
+            }
+
+        }
+
         private void metroButton2_Click(object sender, EventArgs e)
         {
             int codSectie = (int)cod.Value;
@@ -87,160 +116,136 @@ namespace InterfataUtilizator_WindowsForms
 
             Sectii_FISIERTEXT adminSectii = new Sectii_FISIERTEXT(caleFisier);
             List<SectieSpital> sectii = adminSectii.GetSectii();
-            int nrSectii = sectii.Count;
+            SectieSpital sectieGasita = sectii.FirstOrDefault(s => s.CodSectie == codSectie);
 
-
-            bool gasit = false;
-            for (int i = 0; i < nrSectii; i++)
+            if (sectieGasita == null)
             {
-                if (sectii[i].CodSectie == codSectie)
+                MessageBox.Show("Nu există o secție cu acest cod.", "Eroare", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // preluare status selectat si dotari bifate
+            string statusSelectat = Controls.OfType<RadioButton>().FirstOrDefault(rb => rb.Checked)?.Text;
+            List<string> dotariSelectate = Controls.OfType<CheckBox>().Where(cb => cb.Checked).Select(cb => cb.Text).ToList();
+
+            // validare partiala
+            var rezultat = adminSectii.VerificaCampuriModificateSectie(
+                nume.Text.Trim(), etaj.Value.ToString(), capacitate.Text.Trim(), nrPacienti.Text.Trim(),
+                temperatura.Text.Trim(), suprafata.Text.Trim(), buget.Text.Trim(),
+                statusSelectat, dotariSelectate, sectii, codSectie);
+
+            if (!rezultat.valid)
+            {
+                MessageBox.Show(rezultat.mesaj, "Date invalide", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            bool modificat = false;
+
+            if (!string.IsNullOrWhiteSpace(nume.Text) && nume.Text.Trim() != sectieGasita.NumeSectie)
+            {
+                sectieGasita.NumeSectie = nume.Text.Trim();
+                modificat = true;
+            }
+
+            if ((int)etaj.Value != sectieGasita.Etaj)
+            {
+                sectieGasita.Etaj = (int)etaj.Value;
+                modificat = true;
+            }
+
+            if (!string.IsNullOrWhiteSpace(capacitate.Text) &&
+                int.TryParse(capacitate.Text.Trim(), out int capacitateNoua) &&
+                capacitateNoua != sectieGasita.CapacitateMaxima)
+            {
+                sectieGasita.CapacitateMaxima = capacitateNoua;
+                modificat = true;
+            }
+
+            if (!string.IsNullOrWhiteSpace(nrPacienti.Text) &&
+                int.TryParse(nrPacienti.Text.Trim(), out int nrPacientiNou) &&
+                nrPacientiNou != sectieGasita.NrPacientiInternati)
+            {
+                sectieGasita.NrPacientiInternati = nrPacientiNou;
+                modificat = true;
+            }
+
+            if (!string.IsNullOrWhiteSpace(temperatura.Text) &&
+                double.TryParse(temperatura.Text.Trim(), out double tempNoua) &&
+                tempNoua != sectieGasita.TemperaturaMediu)
+            {
+                sectieGasita.TemperaturaMediu = tempNoua;
+                modificat = true;
+            }
+
+            if (!string.IsNullOrWhiteSpace(suprafata.Text) &&
+                double.TryParse(suprafata.Text.Trim(), out double suprafNoua) &&
+                suprafNoua != sectieGasita.SuprafataSectie)
+            {
+                sectieGasita.SuprafataSectie = suprafNoua;
+                modificat = true;
+            }
+
+            if (!string.IsNullOrWhiteSpace(buget.Text) &&
+                double.TryParse(buget.Text.Trim(), out double bugetNou) &&
+                bugetNou != sectieGasita.BugetSectie)
+            {
+                sectieGasita.BugetSectie = bugetNou;
+                modificat = true;
+            }
+
+            if (!string.IsNullOrWhiteSpace(statusSelectat) &&
+                Enum.TryParse(statusSelectat, out StatusFunctionareSectie statusNou) &&
+                statusNou != sectieGasita.Status)
+            {
+                sectieGasita.Status = statusNou;
+                modificat = true;
+            }
+
+            DotariSectie dotariNou = DotariSectie.Nespecificat;
+            foreach (string d in dotariSelectate)
+                if (Enum.TryParse(d, out DotariSectie dotare))
+                    dotariNou |= dotare;
+
+            if (dotariSelectate.Count > 0 && dotariNou != sectieGasita.DotariSec)
+            {
+                sectieGasita.DotariSec = dotariNou;
+                modificat = true;
+            }
+
+            if (!modificat)
+            {
+                MessageBox.Show("Nu ați completat niciun câmp sau toate datele sunt identice!", "Fără modificări", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            // salvare
+            for (int i = 0; i < sectii.Count; i++)
+                if (sectii[i].CodSectie == sectieGasita.CodSectie)
                 {
-                    gasit = true;
-                    SectieSpital modificat = sectii[i];
-                    bool modificatMacarUnCamp = false;
-                    string eroare = "";
-
-                    if (!string.IsNullOrWhiteSpace(nume.Text) && nume.Text != modificat.NumeSectie)
-                    {
-                        if (nume.Text.Length < 2 || nume.Text.Length > 50)
-                            eroare += "Numele sectiei trebuie sa aiba intre 2 si 50 caractere.\n";
-                        else
-                        {
-                            modificat.NumeSectie = nume.Text;
-                            modificatMacarUnCamp = true;
-                        }
-                    }
-
-                    if ((int)etaj.Value != modificat.Etaj)
-                    {
-                        if ((int)etaj.Value < 0 || (int)etaj.Value > 20)
-                            eroare += "Etajul trebuie sa fie intre 0 si 20.\n";
-                        else
-                        {
-                            modificat.Etaj = (int)etaj.Value;
-                            modificatMacarUnCamp = true;
-                        }
-                    }
-
-                    if (!string.IsNullOrWhiteSpace(capacitate.Text) && int.TryParse(capacitate.Text, out int capacitateNoua))
-                    {
-                        if (capacitateNoua < 1 || capacitateNoua > 500)
-                            eroare += "Capacitatea trebuie sa fie intre 1 si 500.\n";
-                        else if (capacitateNoua != modificat.CapacitateMaxima)
-                        {
-                            modificat.CapacitateMaxima = capacitateNoua;
-                            modificatMacarUnCamp = true;
-                        }
-                    }
-
-                    if (!string.IsNullOrWhiteSpace(nrPacienti.Text) && int.TryParse(nrPacienti.Text, out int nrPacientiNou))
-                    {
-                        if (nrPacientiNou < 0 || nrPacientiNou > modificat.CapacitateMaxima)
-                            eroare += "Numarul de pacienti trebuie sa fie intre 0 si capacitatea maxima.\n";
-                        else if (nrPacientiNou != modificat.NrPacientiInternati)
-                        {
-                            modificat.NrPacientiInternati = nrPacientiNou;
-                            modificatMacarUnCamp = true;
-                        }
-                    }
-
-                    if (!string.IsNullOrWhiteSpace(temperatura.Text) && double.TryParse(temperatura.Text, out double tempNoua))
-                    {
-                        if (tempNoua < 10.0 || tempNoua > 35.0)
-                            eroare += "Temperatura trebuie sa fie intre 10.0 si 35.0.\n";
-                        else if (tempNoua != modificat.TemperaturaMediu)
-                        {
-                            modificat.TemperaturaMediu = tempNoua;
-                            modificatMacarUnCamp = true;
-                        }
-                    }
-
-                    if (!string.IsNullOrWhiteSpace(suprafata.Text) && double.TryParse(suprafata.Text, out double suprafataNoua))
-                    {
-                        if (suprafataNoua < 20.0 || suprafataNoua > 1000.0)
-                            eroare += "Suprafata trebuie sa fie intre 20.0 si 1000.0.\n";
-                        else if (suprafataNoua != modificat.SuprafataSectie)
-                        {
-                            modificat.SuprafataSectie = suprafataNoua;
-                            modificatMacarUnCamp = true;
-                        }
-                    }
-
-                    if (!string.IsNullOrWhiteSpace(buget.Text) && double.TryParse(buget.Text, out double bugetNou))
-                    {
-                        if (bugetNou < 0)
-                            eroare += "Bugetul trebuie sa fie pozitiv.\n";
-                        else if (bugetNou != modificat.BugetSectie)
-                        {
-                            modificat.BugetSectie = bugetNou;
-                            modificatMacarUnCamp = true;
-                        }
-                    }
-
-                    foreach (var ctrl in Controls)
-                    {
-                        if (ctrl is RadioButton rb && rb.Checked)
-                        {
-                            if (Enum.TryParse(rb.Text, out StatusFunctionareSectie statusNou) && statusNou != modificat.Status)
-                            {
-                                modificat.Status = statusNou;
-                                modificatMacarUnCamp = true;
-                            }
-                        }
-                    }
-
-                    DotariSectie dotariNou = DotariSectie.Nespecificat;
-                    foreach (var ctrl in Controls)
-                    {
-                        if (ctrl is CheckBox cb && cb.Checked && Enum.TryParse(cb.Text, out DotariSectie dotare))
-                        {
-                            dotariNou |= dotare;
-                        }
-                    }
-                    if (dotariNou != DotariSectie.Nespecificat && dotariNou != modificat.DotariSec)
-                    {
-                        modificat.DotariSec = dotariNou;
-                        modificatMacarUnCamp = true;
-                    }
-
-                    if (!string.IsNullOrEmpty(eroare))
-                    {
-                        MessageBox.Show(eroare, "Date invalide", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-
-                    if (!modificatMacarUnCamp)
-                    {
-                        MessageBox.Show("Trebuie să modificați cel puțin un câmp!", "Avertisment", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-
-                    sectii[i] = modificat;
-                    File.WriteAllLines(caleFisier, sectii.Select(s => s.ConversieLaSir_PentruFisier()));
-
-                    nume.ResetText();
-                    etaj.ResetText();
-                    capacitate.ResetText();
-                    nrPacienti.ResetText();
-                    temperatura.ResetText();
-                    suprafata.ResetText();
-                    buget.ResetText();
-                    foreach (var ctrl in Controls)
-                    {
-                        if (ctrl is RadioButton rb) rb.Checked = false;
-                        if (ctrl is CheckBox cb) cb.Checked = false;
-                    }
-
-                    MessageBox.Show("Sectia a fost modificata cu succes.", "Succes", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
+                    sectii[i] = sectieGasita;
+                    break;
                 }
+
+            File.WriteAllLines(caleFisier, sectii.Select(s => s.ConversieLaSir_PentruFisier()));
+
+            // reset UI
+            nume.ResetText();
+            etaj.ResetText();
+            capacitate.ResetText();
+            nrPacienti.ResetText();
+            temperatura.ResetText();
+            suprafata.ResetText();
+            buget.ResetText();
+            foreach (var ctrl in Controls)
+            {
+                if (ctrl is RadioButton rb) rb.Checked = false;
+                if (ctrl is CheckBox cb) cb.Checked = false;
             }
 
-            if (!gasit)
-            {
-                MessageBox.Show("Nu exista o sectie cu acest cod.", "Eroare", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            MessageBox.Show("Secția a fost modificată cu succes.", "Succes", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
 
 
 

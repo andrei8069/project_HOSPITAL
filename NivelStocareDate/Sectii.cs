@@ -18,8 +18,14 @@ namespace NivelStocareDate
 
         public void AdaugareSectii(SectieSpital sectieSpitalNoua)
         {
-            sectieSpitalNoua.CodSectie = listaSectii.Count + 1;
+            sectieSpitalNoua.CodSectie = GetNextCodSectie();
             listaSectii.Add(sectieSpitalNoua);
+        }
+
+        public int GetNextCodSectie()
+        {
+            if (listaSectii.Count == 0) return 1;
+            return listaSectii.Max(s => s.CodSectie) + 1;
         }
 
         public string AfisareSectie(int nrSectie)
@@ -36,7 +42,7 @@ namespace NivelStocareDate
 
         public void AfisareSectii()
         {
-            foreach (var sectie in listaSectii)
+            foreach (SectieSpital sectie in listaSectii)
             {
                 Console.WriteLine(sectie.toScreenSectie());
                 Console.WriteLine();

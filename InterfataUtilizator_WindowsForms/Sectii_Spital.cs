@@ -29,16 +29,16 @@ namespace InterfataUtilizator_WindowsForms
     public partial class Sectii_Spital : MetroForm
     {
         //button inapoi
-        private MetroButton btnInapoi;
+        private Button btnInapoi;
 
         //cauta dupa id
-        private MetroButton btnSearchID;
+        private Button btnSearchID;
 
         //refresh date
-        private MetroButton btnRefreshDate;
+        private Button btnRefreshDate;
 
         //modifica sectie aleasa
-        private MetroButton btnModifySectie;
+        private Button btnModifySectie;
 
         //SECTII
         Sectii_FISIERTEXT adminSectii;
@@ -46,7 +46,15 @@ namespace InterfataUtilizator_WindowsForms
        // private MetroLabel lblTitluSectii;
 
         //buton adauga sectie
-        private MetroButton btnAdaugaSectii;
+        private Button btnAdaugaSectii;
+
+        //buton asociere pacient-sectie
+        private Button btnAsocierePacientSectie;
+
+        //buton sterge sectie
+        private Button btnStergeSectie;
+
+
 
         //afiseaza doar numele la etichete
         private MetroLabel lblCodSectie;
@@ -74,16 +82,7 @@ namespace InterfataUtilizator_WindowsForms
         private MetroLabel[] lblsStatusFunctionare;
         private MetroLabel[] lblsDotari;
 
-        //private MetroTextBox txtNumeSectie;
-        //private MetroTextBox txtEtaj;
-        //private MetroTextBox txtCapacitateMaxima;
-        //private MetroTextBox txtNrPacientiInternati;
-        //private MetroTextBox txtTemperaturaMediu;
-        //private MetroTextBox txtSuprafataSectie;
-        //private MetroTextBox txtBugetSectie;
 
-        //private ComboBox txtStatusFunctionare;
-        //private ListBox txtDotari;
 
         //constante pt valori bune sectii
         private const int LUNGIME_MIN_NUME_SECTIE = 2;
@@ -110,12 +109,6 @@ namespace InterfataUtilizator_WindowsForms
         {
 
             InitializeComponent();
-
-            // adaugam MetroStyleManager
-            this.StyleManager = new MetroStyleManager();
-            this.StyleManager.Theme = MetroThemeStyle.Light;
-            this.StyleManager.Style = MetroColorStyle.Teal;
-
             InitializareInterfata();
         }
 
@@ -142,7 +135,8 @@ namespace InterfataUtilizator_WindowsForms
             List<SectieSpital> sectii = adminSectii.GetSectii();
             int nrSectii = sectii.Count;
 
-
+            this.Theme = MetroThemeStyle.Light;
+            this.Style = MetroColorStyle.Default;
 
             this.Size = new Size(1000, 600);
             this.StartPosition = FormStartPosition.CenterScreen;
@@ -153,48 +147,98 @@ namespace InterfataUtilizator_WindowsForms
             this.Text = "Secții";
             this.BackColor = Color.FromArgb(230, 245, 255);
 
-            //MetroButton refresh
-            btnRefreshDate = new MetroButton();
+            //Button refresh
+            btnRefreshDate = new Button();
             btnRefreshDate.Width = LATIME_CONTROL;
             btnRefreshDate.Text = "Refresh";
             btnRefreshDate.Left = 0 * DIMENSIUNE_PAS_X;
             btnRefreshDate.Top = 3 * DIMENSIUNE_PAS_Y;
             btnRefreshDate.AutoSize = true;
+            btnRefreshDate.BackColor = Color.SteelBlue;
+            btnRefreshDate.ForeColor = Color.White;
+            btnRefreshDate.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            btnRefreshDate.FlatStyle = FlatStyle.Flat;
+            btnRefreshDate.FlatAppearance.BorderSize = 0;
+            btnRefreshDate.Cursor = Cursors.Hand;
             btnRefreshDate.Click += BtnRefreshDate_Click;
-            //metrostyle pt buton refresh
-            btnRefreshDate.Theme = MetroThemeStyle.Light;
-            btnRefreshDate.Style = MetroColorStyle.Blue;
             this.Controls.Add(btnRefreshDate);
 
 
-            btnSearchID = new MetroButton();
+            btnSearchID = new Button();
             btnSearchID.Width = LATIME_CONTROL;
-            btnSearchID.Text = "Cautare";
+            btnSearchID.Text = "Căutare";
             btnSearchID.Left = 0;
             btnSearchID.Top = 4 * DIMENSIUNE_PAS_Y;
             btnSearchID.AutoSize = true;
+            btnSearchID.BackColor = Color.SteelBlue;
+            btnSearchID.ForeColor = Color.White;
+            btnSearchID.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            btnSearchID.FlatStyle = FlatStyle.Flat;
+            btnSearchID.FlatAppearance.BorderSize = 0;
+            btnSearchID.Cursor = Cursors.Hand;
             btnSearchID.Click += BtnSearchID_Click;
             this.Controls.Add(btnSearchID);
 
 
             
 
-            btnModifySectie = new MetroButton();
+            btnModifySectie = new Button();
             btnModifySectie.Width = LATIME_CONTROL;
-            btnModifySectie.Text = "Modifica";
+            btnModifySectie.Text = "Modifică";
             btnModifySectie.Left = 0;
             btnModifySectie.Top = 5 * DIMENSIUNE_PAS_Y;
             btnModifySectie.AutoSize = true;
+            btnModifySectie.BackColor = Color.SteelBlue;
+            btnModifySectie.ForeColor = Color.White;
+            btnModifySectie.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            btnModifySectie.FlatStyle = FlatStyle.Flat;
+            btnModifySectie.FlatAppearance.BorderSize = 0;
+            btnModifySectie.Cursor = Cursors.Hand;
             btnModifySectie.Click += BtnModifySectie_Click;
             this.Controls.Add(btnModifySectie);
 
+            btnAsocierePacientSectie = new Button();
+            btnAsocierePacientSectie.Width = LATIME_CONTROL;
+            btnAsocierePacientSectie.Text = "Asociere";
+            btnAsocierePacientSectie.Left = 0;
+            btnAsocierePacientSectie.Top = 6 * DIMENSIUNE_PAS_Y;
+            btnAsocierePacientSectie.AutoSize = true;
+            btnAsocierePacientSectie.BackColor = Color.SteelBlue;
+            btnAsocierePacientSectie.ForeColor = Color.White;
+            btnAsocierePacientSectie.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            btnAsocierePacientSectie.FlatStyle = FlatStyle.Flat;
+            btnAsocierePacientSectie.FlatAppearance.BorderSize = 0;
+            btnAsocierePacientSectie.Cursor = Cursors.Hand;
+            btnAsocierePacientSectie.Click += BtnAsocierePacientSectie_Click;
+            this.Controls.Add(btnAsocierePacientSectie);
 
-            btnInapoi = new MetroButton();
+            btnStergeSectie = new Button();
+            btnStergeSectie.Width = LATIME_CONTROL;
+            btnStergeSectie.Text = "Șterge";
+            btnStergeSectie.Left = 0;
+            btnStergeSectie.Top = 7 * DIMENSIUNE_PAS_Y;
+            btnStergeSectie.AutoSize = true;
+            btnStergeSectie.BackColor = Color.Red;
+            btnStergeSectie.ForeColor = Color.White;
+            btnStergeSectie.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            btnStergeSectie.FlatStyle = FlatStyle.Flat;
+            btnStergeSectie.FlatAppearance.BorderSize = 0;
+            btnStergeSectie.Cursor = Cursors.Hand;
+            btnStergeSectie.Click += BtnStergeSectie_Click;
+            this.Controls.Add(btnStergeSectie);
+
+            btnInapoi = new Button();
             btnInapoi.Width = LATIME_CONTROL;
-            btnInapoi.Text = "Inapoi";
+            btnInapoi.Text = "Înapoi";
             btnInapoi.Left = 0;
-            btnInapoi.Top = 6 * DIMENSIUNE_PAS_Y;
+            btnInapoi.Top = 8 * DIMENSIUNE_PAS_Y;
             btnInapoi.AutoSize = true;
+            btnInapoi.BackColor = Color.Crimson;
+            btnInapoi.ForeColor = Color.White;
+            btnInapoi.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            btnInapoi.FlatStyle = FlatStyle.Flat;
+            btnInapoi.FlatAppearance.BorderSize = 0;
+            btnInapoi.Cursor = Cursors.Hand;
             btnInapoi.Click += BtnInapoi_Click;
             this.Controls.Add(btnInapoi);
 
@@ -203,248 +247,117 @@ namespace InterfataUtilizator_WindowsForms
 
             //SECTIILE
 
-            //lblTitluSectii = new MetroLabel();
-            //lblTitluSectii.Text = "Secții Spital:";
-            //lblTitluSectii.Left = 0;
-            //lblTitluSectii.AutoSize = true;
-            //lblTitluSectii.Top = axaY * DIMENSIUNE_PAS_Y;
-            //lblTitluSectii.Theme = MetroThemeStyle.Light;
-            //lblTitluSectii.Style = MetroColorStyle.Blue;
-            //this.Controls.Add(lblTitluSectii);
 
-            btnAdaugaSectii = new MetroButton();
+
+            btnAdaugaSectii = new Button();
             btnAdaugaSectii.Width = LATIME_CONTROL;
-            btnAdaugaSectii.Text = "Adauga";
+            btnAdaugaSectii.Text = "Adaugă";
             btnAdaugaSectii.Left = 0;
             btnAdaugaSectii.Top = 2 * DIMENSIUNE_PAS_Y;
             btnAdaugaSectii.AutoSize = true;
+            btnAdaugaSectii.BackColor = Color.SteelBlue;
+            btnAdaugaSectii.ForeColor = Color.White;
+            btnAdaugaSectii.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            btnAdaugaSectii.FlatStyle = FlatStyle.Flat;
+            btnAdaugaSectii.FlatAppearance.BorderSize = 0;
+            btnAdaugaSectii.Cursor = Cursors.Hand;
             btnAdaugaSectii.Click += BtnAdaugaSectii_Click;
-            btnAdaugaSectii.Theme = MetroThemeStyle.Light;
-            btnAdaugaSectii.Style = MetroColorStyle.Blue;
             this.Controls.Add(btnAdaugaSectii);
 
 
-            //// Etichete pentru sectii
-            //lblCodSectie = new MetroLabel();
-            //lblCodSectie.Width = LATIME_CONTROL;
-            //lblCodSectie.Text = "Cod";
-            //lblCodSectie.Left = 1 * DIMENSIUNE_PAS_X;
-            //lblCodSectie.Top = 1 * DIMENSIUNE_PAS_Y;
-            //lblCodSectie.Theme = MetroThemeStyle.Light;
-            //lblCodSectie.Style = MetroColorStyle.Blue;
-            //this.Controls.Add(lblCodSectie);
+            // Etichete pentru sectii
+            lblCodSectie = new MetroLabel();
+            lblCodSectie.Width = LATIME_CONTROL;
+            lblCodSectie.Text = "Cod";
+            lblCodSectie.Left = 1 * DIMENSIUNE_PAS_X;
+            lblCodSectie.Top = 1 * DIMENSIUNE_PAS_Y;
+            lblCodSectie.Theme = MetroThemeStyle.Light;
+            lblCodSectie.Style = MetroColorStyle.Blue;
+            this.Controls.Add(lblCodSectie);
 
-            //lblNumeSectie = new MetroLabel();
-            //lblNumeSectie.Width = LATIME_CONTROL;
-            //lblNumeSectie.Text = "Nume";
-            //lblNumeSectie.Left = 2 * DIMENSIUNE_PAS_X;
-            //lblNumeSectie.Top = 1 * DIMENSIUNE_PAS_Y;
-            //lblNumeSectie.Theme = MetroThemeStyle.Light;
-            //lblNumeSectie.Style = MetroColorStyle.Blue;
-            //this.Controls.Add(lblNumeSectie);
+            lblNumeSectie = new MetroLabel();
+            lblNumeSectie.Width = LATIME_CONTROL;
+            lblNumeSectie.Text = "Nume";
+            lblNumeSectie.Left = 2 * DIMENSIUNE_PAS_X;
+            lblNumeSectie.Top = 1 * DIMENSIUNE_PAS_Y;
+            lblNumeSectie.Theme = MetroThemeStyle.Light;
+            lblNumeSectie.Style = MetroColorStyle.Blue;
+            this.Controls.Add(lblNumeSectie);
 
-            //lblEtaj = new MetroLabel();
-            //lblEtaj.Width = LATIME_CONTROL;
-            //lblEtaj.Text = "Etaj";
-            //lblEtaj.Left = 3 * DIMENSIUNE_PAS_X;
-            //lblEtaj.Top = 1 * DIMENSIUNE_PAS_Y;
-            //lblEtaj.Theme = MetroThemeStyle.Light;
-            //lblEtaj.Style = MetroColorStyle.Blue;
-            //this.Controls.Add(lblEtaj);
+            lblEtaj = new MetroLabel();
+            lblEtaj.Width = LATIME_CONTROL;
+            lblEtaj.Text = "Etaj";
+            lblEtaj.Left = 3 * DIMENSIUNE_PAS_X;
+            lblEtaj.Top = 1 * DIMENSIUNE_PAS_Y;
+            lblEtaj.Theme = MetroThemeStyle.Light;
+            lblEtaj.Style = MetroColorStyle.Blue;
+            this.Controls.Add(lblEtaj);
 
-            //lblCapacitateMaxima = new MetroLabel();
-            //lblCapacitateMaxima.Width = LATIME_CONTROL;
-            //lblCapacitateMaxima.Text = "Capacitate";
-            //lblCapacitateMaxima.Left = 4 * DIMENSIUNE_PAS_X;
-            //lblCapacitateMaxima.Top = 1 * DIMENSIUNE_PAS_Y;
-            //lblCapacitateMaxima.Theme = MetroThemeStyle.Light;
-            //lblCapacitateMaxima.Style = MetroColorStyle.Blue;
-            //this.Controls.Add(lblCapacitateMaxima);
+            lblCapacitateMaxima = new MetroLabel();
+            lblCapacitateMaxima.Width = LATIME_CONTROL;
+            lblCapacitateMaxima.Text = "Capacitate";
+            lblCapacitateMaxima.Left = 4 * DIMENSIUNE_PAS_X;
+            lblCapacitateMaxima.Top = 1 * DIMENSIUNE_PAS_Y;
+            lblCapacitateMaxima.Theme = MetroThemeStyle.Light;
+            lblCapacitateMaxima.Style = MetroColorStyle.Blue;
+            this.Controls.Add(lblCapacitateMaxima);
 
-            //lblNrPacientiInternati = new MetroLabel();
-            //lblNrPacientiInternati.Width = LATIME_CONTROL;
-            //lblNrPacientiInternati.Text = "NrPacienti";
-            //lblNrPacientiInternati.Left = 5 * DIMENSIUNE_PAS_X;
-            //lblNrPacientiInternati.Top = 1 * DIMENSIUNE_PAS_Y;
-            //lblNrPacientiInternati.Theme = MetroThemeStyle.Light;
-            //lblNrPacientiInternati.Style = MetroColorStyle.Blue;
-            //this.Controls.Add(lblNrPacientiInternati);
+            lblNrPacientiInternati = new MetroLabel();
+            lblNrPacientiInternati.Width = LATIME_CONTROL;
+            lblNrPacientiInternati.Text = "NrPacienti";
+            lblNrPacientiInternati.Left = 5 * DIMENSIUNE_PAS_X;
+            lblNrPacientiInternati.Top = 1 * DIMENSIUNE_PAS_Y;
+            lblNrPacientiInternati.Theme = MetroThemeStyle.Light;
+            lblNrPacientiInternati.Style = MetroColorStyle.Blue;
+            this.Controls.Add(lblNrPacientiInternati);
 
-            //lblTemperaturaMediu = new MetroLabel();
-            //lblTemperaturaMediu.Width = LATIME_CONTROL;
-            //lblTemperaturaMediu.Text = "Temperatura";
-            //lblTemperaturaMediu.Left = 6 * DIMENSIUNE_PAS_X;
-            //lblTemperaturaMediu.Top = 1 * DIMENSIUNE_PAS_Y;
-            //lblTemperaturaMediu.Theme = MetroThemeStyle.Light;
-            //lblTemperaturaMediu.Style = MetroColorStyle.Blue;
-            //this.Controls.Add(lblTemperaturaMediu);
+            lblTemperaturaMediu = new MetroLabel();
+            lblTemperaturaMediu.Width = LATIME_CONTROL;
+            lblTemperaturaMediu.Text = "Temperatura";
+            lblTemperaturaMediu.Left = 6 * DIMENSIUNE_PAS_X;
+            lblTemperaturaMediu.Top = 1 * DIMENSIUNE_PAS_Y;
+            lblTemperaturaMediu.Theme = MetroThemeStyle.Light;
+            lblTemperaturaMediu.Style = MetroColorStyle.Blue;
+            this.Controls.Add(lblTemperaturaMediu);
 
-            //lblSuprafataSectie = new MetroLabel();
-            //lblSuprafataSectie.Width = LATIME_CONTROL;
-            //lblSuprafataSectie.Text = "Suprafata";
-            //lblSuprafataSectie.Left = 7 * DIMENSIUNE_PAS_X;
-            //lblSuprafataSectie.Top = 1 * DIMENSIUNE_PAS_Y;
-            //lblSuprafataSectie.Theme = MetroThemeStyle.Light;
-            //lblSuprafataSectie.Style = MetroColorStyle.Blue;
-            //this.Controls.Add(lblSuprafataSectie);
+            lblSuprafataSectie = new MetroLabel();
+            lblSuprafataSectie.Width = LATIME_CONTROL;
+            lblSuprafataSectie.Text = "Suprafata";
+            lblSuprafataSectie.Left = 7 * DIMENSIUNE_PAS_X;
+            lblSuprafataSectie.Top = 1 * DIMENSIUNE_PAS_Y;
+            lblSuprafataSectie.Theme = MetroThemeStyle.Light;
+            lblSuprafataSectie.Style = MetroColorStyle.Blue;
+            this.Controls.Add(lblSuprafataSectie);
 
-            //lblBugetSectie = new MetroLabel();
-            //lblBugetSectie.Width = LATIME_CONTROL;
-            //lblBugetSectie.Text = "Buget";
-            //lblBugetSectie.Left = 8 * DIMENSIUNE_PAS_X;
-            //lblBugetSectie.Top = 1 * DIMENSIUNE_PAS_Y;
-            //lblBugetSectie.Theme = MetroThemeStyle.Light;
-            //lblBugetSectie.Style = MetroColorStyle.Blue;
-            //this.Controls.Add(lblBugetSectie);
+            lblBugetSectie = new MetroLabel();
+            lblBugetSectie.Width = LATIME_CONTROL;
+            lblBugetSectie.Text = "Buget";
+            lblBugetSectie.Left = 8 * DIMENSIUNE_PAS_X;
+            lblBugetSectie.Top = 1 * DIMENSIUNE_PAS_Y;
+            lblBugetSectie.Theme = MetroThemeStyle.Light;
+            lblBugetSectie.Style = MetroColorStyle.Blue;
+            this.Controls.Add(lblBugetSectie);
 
-            //lblStatusFunctionare = new MetroLabel();
-            //lblStatusFunctionare.Width = LATIME_CONTROL;
-            //lblStatusFunctionare.Text = "Status";
-            //lblStatusFunctionare.Left = 9 * DIMENSIUNE_PAS_X;
-            //lblStatusFunctionare.Top = 1 * DIMENSIUNE_PAS_Y;
-            //lblStatusFunctionare.Theme = MetroThemeStyle.Light;
-            //lblStatusFunctionare.Style = MetroColorStyle.Blue;
-            //this.Controls.Add(lblStatusFunctionare);
+            lblStatusFunctionare = new MetroLabel();
+            lblStatusFunctionare.Width = LATIME_CONTROL;
+            lblStatusFunctionare.Text = "Status";
+            lblStatusFunctionare.Left = 9 * DIMENSIUNE_PAS_X;
+            lblStatusFunctionare.Top = 1 * DIMENSIUNE_PAS_Y;
+            lblStatusFunctionare.Theme = MetroThemeStyle.Light;
+            lblStatusFunctionare.Style = MetroColorStyle.Blue;
+            this.Controls.Add(lblStatusFunctionare);
 
-            //lblDotari = new MetroLabel();
-            //lblDotari.Width = LATIME_CONTROL;
-            //lblDotari.Text = "Dotari";
-            //lblDotari.Left = 10 * DIMENSIUNE_PAS_X;
-            //lblDotari.Top = 1 * DIMENSIUNE_PAS_Y;
-            //lblDotari.Theme = MetroThemeStyle.Light;
-            //lblDotari.Style = MetroColorStyle.Blue;
-            //this.Controls.Add(lblDotari);
+            lblDotari = new MetroLabel();
+            lblDotari.Width = LATIME_CONTROL;
+            lblDotari.Text = "Dotari";
+            lblDotari.Left = 10 * DIMENSIUNE_PAS_X;
+            lblDotari.Top = 1 * DIMENSIUNE_PAS_Y;
+            lblDotari.Theme = MetroThemeStyle.Light;
+            lblDotari.Style = MetroColorStyle.Blue;
+            this.Controls.Add(lblDotari);
 
-            // Controale pentru sectii
+            
 
-            //txtNumeSectie = new MetroTextBox();
-            //txtNumeSectie.Left = 2 * DIMENSIUNE_PAS_X;
-            //txtNumeSectie.Top = 2 * DIMENSIUNE_PAS_Y;
-            //txtNumeSectie.Width = LATIME_CONTROL;
-            //txtNumeSectie.Theme = MetroThemeStyle.Light;
-            //txtNumeSectie.Style = MetroColorStyle.Blue;
-            //txtNumeSectie.UseStyleColors = true;
-            //this.Controls.Add(txtNumeSectie);
-
-            //txtEtaj = new MetroTextBox();
-            //txtEtaj.Left = 3 * DIMENSIUNE_PAS_X;
-            //txtEtaj.Top = 2 * DIMENSIUNE_PAS_Y;
-            //txtEtaj.Width = LATIME_CONTROL;
-            //txtEtaj.Theme = MetroThemeStyle.Light;
-            //txtEtaj.Style = MetroColorStyle.Blue;
-            //txtEtaj.UseStyleColors = true;
-            //this.Controls.Add(txtEtaj);
-
-            //txtCapacitateMaxima = new MetroTextBox();
-            //txtCapacitateMaxima.Left = 4 * DIMENSIUNE_PAS_X;
-            //txtCapacitateMaxima.Top = 2 * DIMENSIUNE_PAS_Y;
-            //txtCapacitateMaxima.Width = LATIME_CONTROL;
-            //txtCapacitateMaxima.Theme = MetroThemeStyle.Light;
-            //txtCapacitateMaxima.Style = MetroColorStyle.Blue;
-            //txtCapacitateMaxima.UseStyleColors = true;
-            //this.Controls.Add(txtCapacitateMaxima);
-
-            //txtNrPacientiInternati = new MetroTextBox();
-            //txtNrPacientiInternati.Left = 5 * DIMENSIUNE_PAS_X;
-            //txtNrPacientiInternati.Top = 2 * DIMENSIUNE_PAS_Y;
-            //txtNrPacientiInternati.Width = LATIME_CONTROL;
-            //txtNrPacientiInternati.Theme = MetroThemeStyle.Light;
-            //txtNrPacientiInternati.Style = MetroColorStyle.Blue;
-            //txtNrPacientiInternati.UseStyleColors = true;
-            //this.Controls.Add(txtNrPacientiInternati);
-
-            //txtTemperaturaMediu = new MetroTextBox();
-            //txtTemperaturaMediu.Left = 6 * DIMENSIUNE_PAS_X;
-            //txtTemperaturaMediu.Top = 2 * DIMENSIUNE_PAS_Y;
-            //txtTemperaturaMediu.Width = LATIME_CONTROL;
-            //txtTemperaturaMediu.Theme = MetroThemeStyle.Light;
-            //txtTemperaturaMediu.Style = MetroColorStyle.Blue;
-            //txtTemperaturaMediu.UseStyleColors = true;
-            //this.Controls.Add(txtTemperaturaMediu);
-
-            //txtSuprafataSectie = new MetroTextBox();
-            //txtSuprafataSectie.Left = 7 * DIMENSIUNE_PAS_X;
-            //txtSuprafataSectie.Top = 2 * DIMENSIUNE_PAS_Y;
-            //txtSuprafataSectie.Width = LATIME_CONTROL;
-            //txtSuprafataSectie.Theme = MetroThemeStyle.Light;
-            //txtSuprafataSectie.Style = MetroColorStyle.Blue;
-            //txtSuprafataSectie.UseStyleColors = true;
-            //this.Controls.Add(txtSuprafataSectie);
-
-            //txtBugetSectie = new MetroTextBox();
-            //txtBugetSectie.Left = 8 * DIMENSIUNE_PAS_X;
-            //txtBugetSectie.Top = 2 * DIMENSIUNE_PAS_Y;
-            //txtBugetSectie.Width = LATIME_CONTROL;
-            //txtBugetSectie.Theme = MetroThemeStyle.Light;
-            //txtBugetSectie.Style = MetroColorStyle.Blue;
-            //txtBugetSectie.UseStyleColors = true;
-            //this.Controls.Add(txtBugetSectie);
-
-            //txtStatusFunctionare = new ComboBox();
-            //txtStatusFunctionare.Left = 9 * DIMENSIUNE_PAS_X;
-            //txtStatusFunctionare.Top = 2 * DIMENSIUNE_PAS_Y;
-            //txtStatusFunctionare.Width = LATIME_CONTROL;
-            //txtStatusFunctionare.Items.AddRange(Enum.GetNames(typeof(StatusFunctionareSectie)));
-            //this.Controls.Add(txtStatusFunctionare);
-
-
-            //txtDotari = new ListBox();
-            //txtDotari.Left = 10 * DIMENSIUNE_PAS_X;
-            //txtDotari.Top = 2 * DIMENSIUNE_PAS_Y;
-            //txtDotari.Width = LATIME_CONTROL;
-            //txtDotari.Height = 3 * DIMENSIUNE_PAS_Y;
-            //txtDotari.SelectionMode = SelectionMode.MultiSimple;
-            //txtDotari.Items.AddRange(Enum.GetNames(typeof(DotariSectie)));
-            //this.Controls.Add(txtDotari);
-
-            dataGridViewSectii = new DataGridView();
-            dataGridViewSectii.Location = new Point(130, 50); // Poziția pe form
-            dataGridViewSectii.Size = new Size(1500, 500);   // Dimensiunea
-            dataGridViewSectii.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill; // Ajustează coloanele
-            dataGridViewSectii.ReadOnly = true;             // Doar pentru afișare
-            dataGridViewSectii.AllowUserToAddRows = false;  // Dezactivează adăugarea rândurilor
-            dataGridViewSectii.SelectionMode = DataGridViewSelectionMode.FullRowSelect; // Selectare pe rând
-            dataGridViewSectii.RowTemplate.Height = 50; // Setează o înălțime mai mare pentru rânduri
-            dataGridViewSectii.ColumnHeadersHeight = 70; // Setează înălțimea antetului la 40px
-            dataGridViewSectii.EnableHeadersVisualStyles = false; // Dezactivează stilurile implicite
-
-            // Stilizare antet coloane
-            dataGridViewSectii.ColumnHeadersDefaultCellStyle.BackColor = Color.White; // pastel albastru
-            dataGridViewSectii.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
-            dataGridViewSectii.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 12, FontStyle.Bold);
-
-
-            // Stilizare rânduri
-            dataGridViewSectii.DefaultCellStyle.BackColor = Color.White; // Fundal alb pentru rânduri normale
-            dataGridViewSectii.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(240, 240, 240); // Gri deschis pentru rânduri alternative
-            dataGridViewSectii.DefaultCellStyle.ForeColor = Color.Black; // Text negru
-            dataGridViewSectii.DefaultCellStyle.SelectionBackColor = Color.FromArgb(200, 230, 255); // Albastru pastel
-            dataGridViewSectii.DefaultCellStyle.SelectionForeColor = Color.Black;
-
-
-            // Stilizare grilă
-            dataGridViewSectii.GridColor = Color.LightGray; // Linii grilă gri deschis
-
-            // Eliminare borduri celule (opțional)
-            dataGridViewSectii.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal; // Linie orizontală subțire
-
-            dataGridViewSectii.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewSectii.BackgroundColor = Color.White;
-
-
-
-            dataGridViewSectii.Columns.Add("CodSectie", "Cod Secție");
-            dataGridViewSectii.Columns.Add("NumeSectie", "Nume Secție");
-            dataGridViewSectii.Columns.Add("Etaj", "Etaj");
-            dataGridViewSectii.Columns.Add("CapacitateMaxima", "Capacitate Maximă");
-            dataGridViewSectii.Columns.Add("NrPacientiInternati", "Nr. Pacienți Internați");
-            dataGridViewSectii.Columns.Add("TemperaturaMediu", "Temperatura Mediu");
-            dataGridViewSectii.Columns.Add("SuprafataSectie", "Suprafață");
-            dataGridViewSectii.Columns.Add("BugetSectie", "Buget");
-            dataGridViewSectii.Columns.Add("Status", "Status");
-            dataGridViewSectii.Columns.Add("Dotari", "Dotări");
-
-            this.Controls.Add(dataGridViewSectii);
 
         }
 
@@ -497,169 +410,19 @@ namespace InterfataUtilizator_WindowsForms
             adaugatorSectie.Show();
         }
 
-        //private void BtnAdaugaSectii_Click(object sender, EventArgs e)
-        //{
-        //    string eroare = "";
+        private void BtnAsocierePacientSectie_Click(object sender, EventArgs e)
+        {
+            AsocierePacientSectie formAsociere = new AsocierePacientSectie();
+            formAsociere.Show();
+        }
 
-        //    lblNumeSectie.Style = MetroColorStyle.Blue;
-        //    lblNumeSectie.UseStyleColors = true;
+        private void BtnStergeSectie_Click(object sender, EventArgs e)
+        {
+            StergeSectie formSterge = new StergeSectie();
+            formSterge.Show();
+        }
 
-        //    lblEtaj.Style = MetroColorStyle.Blue;
-        //    lblEtaj.UseStyleColors = true;
-
-        //    lblCapacitateMaxima.Style = MetroColorStyle.Blue;
-        //    lblCapacitateMaxima.UseStyleColors = true;
-
-        //    lblNrPacientiInternati.Style = MetroColorStyle.Blue;
-        //    lblNrPacientiInternati.UseStyleColors = true;
-
-        //    lblTemperaturaMediu.Style = MetroColorStyle.Blue;
-        //    lblTemperaturaMediu.UseStyleColors = true;
-
-        //    lblSuprafataSectie.Style = MetroColorStyle.Blue;
-        //    lblSuprafataSectie.UseStyleColors = true;
-
-        //    lblBugetSectie.Style = MetroColorStyle.Blue;
-        //    lblBugetSectie.UseStyleColors = true;
-
-        //    lblStatusFunctionare.Style = MetroColorStyle.Blue;
-        //    lblStatusFunctionare.UseStyleColors = true;
-
-        //    lblDotari.Style = MetroColorStyle.Blue;
-        //    lblDotari.UseStyleColors = true;
-
-
-        //    // Nume sectie
-        //    string numeSectie = txtNumeSectie.Text.Trim();
-        //    if (numeSectie.Length < LUNGIME_MIN_NUME_SECTIE || numeSectie.Length > LUNGIME_MAX_NUME_SECTIE)
-        //    {
-        //        eroare += $"Numele sectiei trebuie sa aiba intre {LUNGIME_MIN_NUME_SECTIE} si {LUNGIME_MAX_NUME_SECTIE} caractere.\n";
-
-        //        lblNumeSectie.Style = MetroColorStyle.Red;
-        //        lblNumeSectie.UseStyleColors = true;
-        //    }
-
-
-        //    // Etaj
-        //    int etaj;
-        //    if (!int.TryParse(txtEtaj.Text.Trim(), out etaj) || etaj < ETAJ_MIN || etaj > ETAJ_MAX)
-        //    {
-        //        eroare += $"Etajul trebuie sa fie intre {ETAJ_MIN} si {ETAJ_MAX}.\n";
-
-        //        lblEtaj.Style = MetroColorStyle.Red;
-        //        lblEtaj.UseStyleColors = true;
-        //    }
-
-
-        //    // Capacitate
-        //    int capacitate;
-        //    if (!int.TryParse(txtCapacitateMaxima.Text.Trim(), out capacitate) || capacitate < CAPACITATE_MIN || capacitate > CAPACITATE_MAX)
-        //    {
-        //        eroare += $"Capacitatea trebuie sa fie intre {CAPACITATE_MIN} si {CAPACITATE_MAX}.\n";
-
-        //        lblCapacitateMaxima.Style = MetroColorStyle.Red;
-        //        lblCapacitateMaxima.UseStyleColors = true;
-        //    }
-
-
-        //    // Numar pacienti
-        //    int nrPacienti;
-        //    if (!int.TryParse(txtNrPacientiInternati.Text.Trim(), out nrPacienti) || nrPacienti < NR_PACIENTI_MIN || nrPacienti > capacitate)
-        //    {
-        //        eroare += $"Numarul de pacienti trebuie sa fie intre {NR_PACIENTI_MIN} si capacitatea maxima ({capacitate}).\n";
-
-        //        lblNrPacientiInternati.Style = MetroColorStyle.Red;
-        //        lblNrPacientiInternati.UseStyleColors = true;
-        //    }
-
-
-        //    // Temperatura
-        //    double temperatura;
-        //    if (!double.TryParse(txtTemperaturaMediu.Text.Trim(), out temperatura) || temperatura < TEMPERATURA_MIN || temperatura > TEMPERATURA_MAX)
-        //    {
-        //        eroare += $"Temperatura trebuie sa fie intre {TEMPERATURA_MIN} si {TEMPERATURA_MAX} grade.\n";
-
-        //        lblTemperaturaMediu.Style = MetroColorStyle.Red;
-        //        lblTemperaturaMediu.UseStyleColors = true;
-        //    }
-
-
-        //    // Suprafata
-        //    double suprafata;
-        //    if (!double.TryParse(txtSuprafataSectie.Text.Trim(), out suprafata) || suprafata < SUPRAFATA_MIN || suprafata > SUPRAFATA_MAX)
-        //    {
-        //        eroare += $"Suprafata trebuie sa fie intre {SUPRAFATA_MIN} si {SUPRAFATA_MAX} mp.\n";
-
-        //        lblSuprafataSectie.Style = MetroColorStyle.Red;
-        //        lblSuprafataSectie.UseStyleColors = true;
-        //    }
-
-
-        //    // Buget
-        //    double buget;
-        //    if (!double.TryParse(txtBugetSectie.Text.Trim(), out buget) || buget < BUGET_MIN)
-        //    {
-        //        eroare += "Bugetul trebuie sa fie pozitiv.\n";
-
-        //        lblBugetSectie.Style = MetroColorStyle.Red;
-        //        lblBugetSectie.UseStyleColors = true;
-        //    }
-
-
-        //    // Status Functionare
-        //    StatusFunctionareSectie status = StatusFunctionareSectie.Nespecificat;
-        //    if (!Enum.TryParse(txtStatusFunctionare.Text, out status))
-        //    {
-        //        eroare += "Selectati statusul sectiei.\n";
-        //        lblStatusFunctionare.Style = MetroColorStyle.Red;
-        //        lblStatusFunctionare.UseStyleColors = true;
-        //    }
-
-
-
-        //    DotariSectie dotari = DotariSectie.Nespecificat;
-        //    if (txtDotari.SelectedItems.Count == 0)
-        //    {
-        //        eroare += "Selecteaza cel putin o dotare pentru sectie.\n";
-        //        lblDotari.Style = MetroColorStyle.Red;
-        //        lblDotari.UseStyleColors = true;
-        //    }
-        //    else
-        //    {
-        //        foreach (var item in txtDotari.SelectedItems)
-        //        {
-        //            if (Enum.TryParse(item.ToString(), out DotariSectie dot))
-        //            {
-        //                dotari |= dot;
-        //            }
-        //        }
-        //    }
-
-
-
-        //    if (eroare != "")
-        //    {
-        //        MessageBox.Show(eroare, "Date invalide", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        //        return;
-        //    }
-
-        //    int nrSectii = 0;
-        //    SectieSpital[] sectii = adminSectii.GetSectie(out nrSectii);
-
-        //    SectieSpital sectie = new SectieSpital(nrSectii + 1, numeSectie, etaj, capacitate, nrPacienti, temperatura, suprafata, buget, status, dotari);
-        //    adminSectii.AddSectii(sectie);
-
-        //    txtNumeSectie.ResetText();
-        //    txtEtaj.ResetText();
-        //    txtCapacitateMaxima.ResetText();
-        //    txtNrPacientiInternati.ResetText();
-        //    txtTemperaturaMediu.ResetText();
-        //    txtSuprafataSectie.ResetText();
-        //    txtBugetSectie.ResetText();
-        //    txtStatusFunctionare.ResetText();
-        //    txtDotari.ClearSelected();
-
-        //}
+        
 
         private void StergeEticheteSectii()
         {
@@ -691,158 +454,139 @@ namespace InterfataUtilizator_WindowsForms
 
         private void AfiseazaSectii()
         {
-            //StergeEticheteSectii();
-            //List<SectieSpital> sectii = adminSectii.GetSectii();
-            //int nrSectii = sectii.Count;
-
-
-
-
-            //lblsCodSectie = new MetroLabel[nrSectii];
-            //lblsNumeSectie = new MetroLabel[nrSectii];
-            //lblsEtaj = new MetroLabel[nrSectii];
-            //lblsCapacitateMaxima = new MetroLabel[nrSectii];
-            //lblsNrPacientiInternati = new MetroLabel[nrSectii];
-            //lblsTemperaturaMediu = new MetroLabel[nrSectii];
-            //lblsSuprafataSectie = new MetroLabel[nrSectii];
-            //lblsBugetSectie = new MetroLabel[nrSectii];
-            //lblsStatusFunctionare = new MetroLabel[nrSectii];
-            //lblsDotari = new MetroLabel[nrSectii];
-
-            //int i = 0;
-            //int axaY = 2;
-            //foreach (SectieSpital sectieSpital in sectii)
-            //{
-            //    lblsCodSectie[i] = new MetroLabel();
-            //    lblsCodSectie[i].Width = LATIME_CONTROL;
-            //    lblsCodSectie[i].Text = sectieSpital.CodSectie.ToString();
-            //    lblsCodSectie[i].Left = 1 * DIMENSIUNE_PAS_X;
-            //    lblsCodSectie[i].Top = (i + axaY) * DIMENSIUNE_PAS_Y;
-            //    lblsCodSectie[i].BackColor = Color.White;
-            //    //   lblsCodSectie[i].BorderStyle = BorderStyle.FixedSingle;
-            //    this.Controls.Add(lblsCodSectie[i]);
-
-            //    lblsNumeSectie[i] = new MetroLabel();
-            //    lblsNumeSectie[i].Width = LATIME_CONTROL;
-            //    lblsNumeSectie[i].Text = sectieSpital.NumeSectie;
-            //    lblsNumeSectie[i].Left = 2 * DIMENSIUNE_PAS_X;
-            //    lblsNumeSectie[i].Top = (i + axaY) * DIMENSIUNE_PAS_Y;
-            //    lblsNumeSectie[i].BackColor = Color.White;
-            //    //   lblsNumeSectie[i].BorderStyle = BorderStyle.FixedSingle;
-            //    this.Controls.Add(lblsNumeSectie[i]);
-
-
-            //    lblsEtaj[i] = new MetroLabel();
-            //    lblsEtaj[i].Width = LATIME_CONTROL;
-            //    lblsEtaj[i].Text = sectieSpital.Etaj.ToString();
-            //    lblsEtaj[i].Left = 3 * DIMENSIUNE_PAS_X;
-            //    lblsEtaj[i].Top = (i + axaY) * DIMENSIUNE_PAS_Y;
-            //    lblsEtaj[i].BackColor = Color.White;
-            //    //   lblsEtaj[i].BorderStyle = BorderStyle.FixedSingle;
-            //    this.Controls.Add(lblsEtaj[i]);
-
-            //    lblsCapacitateMaxima[i] = new MetroLabel();
-            //    lblsCapacitateMaxima[i].Width = LATIME_CONTROL;
-            //    lblsCapacitateMaxima[i].Text = sectieSpital.CapacitateMaxima.ToString();
-            //    lblsCapacitateMaxima[i].Left = 4 * DIMENSIUNE_PAS_X;
-            //    lblsCapacitateMaxima[i].Top = (i + axaY) * DIMENSIUNE_PAS_Y;
-            //    lblsCapacitateMaxima[i].BackColor = Color.White;
-            //    //   lblsCapacitateMaxima[i].BorderStyle = BorderStyle.FixedSingle;
-            //    this.Controls.Add(lblsCapacitateMaxima[i]);
-
-
-            //    lblsNrPacientiInternati[i] = new MetroLabel();
-            //    lblsNrPacientiInternati[i].Width = LATIME_CONTROL;
-            //    lblsNrPacientiInternati[i].Text = sectieSpital.NrPacientiInternati.ToString();
-            //    lblsNrPacientiInternati[i].Left = 5 * DIMENSIUNE_PAS_X;
-            //    lblsNrPacientiInternati[i].Top = (i + axaY) * DIMENSIUNE_PAS_Y;
-            //    lblsNrPacientiInternati[i].BackColor = Color.White;
-            //    //  lblsNrPacientiInternati[i].BorderStyle = BorderStyle.FixedSingle;
-            //    this.Controls.Add(lblsNrPacientiInternati[i]);
-
-            //    lblsTemperaturaMediu[i] = new MetroLabel();
-            //    lblsTemperaturaMediu[i].Width = LATIME_CONTROL;
-            //    lblsTemperaturaMediu[i].Text = sectieSpital.TemperaturaMediu.ToString();
-            //    lblsTemperaturaMediu[i].Left = 6 * DIMENSIUNE_PAS_X;
-            //    lblsTemperaturaMediu[i].Top = (i + axaY) * DIMENSIUNE_PAS_Y;
-            //    lblsTemperaturaMediu[i].BackColor = Color.White;
-            //    //   lblsTemperaturaMediu[i].BorderStyle = BorderStyle.FixedSingle;
-            //    this.Controls.Add(lblsTemperaturaMediu[i]);
-
-
-            //    lblsSuprafataSectie[i] = new MetroLabel();
-            //    lblsSuprafataSectie[i].Width = LATIME_CONTROL;
-            //    lblsSuprafataSectie[i].Text = sectieSpital.SuprafataSectie.ToString();
-            //    lblsSuprafataSectie[i].Left = 7 * DIMENSIUNE_PAS_X;
-            //    lblsSuprafataSectie[i].Top = (i + axaY) * DIMENSIUNE_PAS_Y;
-            //    lblsSuprafataSectie[i].BackColor = Color.White;
-            //    //    lblsSuprafataSectie[i].BorderStyle = BorderStyle.FixedSingle;
-            //    this.Controls.Add(lblsSuprafataSectie[i]);
-
-
-            //    lblsBugetSectie[i] = new MetroLabel();
-            //    lblsBugetSectie[i].Width = LATIME_CONTROL;
-            //    lblsBugetSectie[i].Text = sectieSpital.BugetSectie.ToString();
-            //    lblsBugetSectie[i].Left = 8 * DIMENSIUNE_PAS_X;
-            //    lblsBugetSectie[i].Top = (i + axaY) * DIMENSIUNE_PAS_Y;
-            //    lblsBugetSectie[i].BackColor = Color.White;
-            //    //    lblsBugetSectie[i].BorderStyle = BorderStyle.FixedSingle;
-            //    this.Controls.Add(lblsBugetSectie[i]);
-
-
-            //    //lblsStatusFunctionare 
-            //    // lblsDotari
-
-            //    lblsStatusFunctionare[i] = new MetroLabel();
-            //    lblsStatusFunctionare[i].Width = LATIME_CONTROL;
-            //    lblsStatusFunctionare[i].Text = sectieSpital.Status.ToString();
-            //    lblsStatusFunctionare[i].Left = 9 * DIMENSIUNE_PAS_X;
-            //    lblsStatusFunctionare[i].Top = (i + axaY) * DIMENSIUNE_PAS_Y;
-            //    lblsStatusFunctionare[i].BackColor = Color.White;
-            //    //   lblsStatusFunctionare[i].BorderStyle = BorderStyle.FixedSingle;
-            //    this.Controls.Add(lblsStatusFunctionare[i]);
-
-
-            //    lblsDotari[i] = new MetroLabel();
-            //    lblsDotari[i].Width = LATIME_CONTROL;
-            //    lblsDotari[i].Text = sectieSpital.DotariSec.ToString();
-            //    lblsDotari[i].Left = 10 * DIMENSIUNE_PAS_X;
-            //    lblsDotari[i].Top = (i + axaY) * DIMENSIUNE_PAS_Y;
-            //    lblsDotari[i].BackColor = Color.White;
-            //    //   lblsDotari[i].BorderStyle = BorderStyle.FixedSingle;
-            //    lblsDotari[i].AutoSize = true;
-            //    this.Controls.Add(lblsDotari[i]);
-
-            //    i++;
-
-
-
-
-            //}
-
-            // Resetăm DataGridView
-            dataGridViewSectii.Rows.Clear();
-
-            // Obținem lista de secții
+            StergeEticheteSectii();
             List<SectieSpital> sectii = adminSectii.GetSectii();
+            int nrSectii = sectii.Count;
 
-            // Adăugăm rânduri în DataGridView
-            foreach (SectieSpital sectie in sectii)
+
+
+
+            lblsCodSectie = new MetroLabel[nrSectii];
+            lblsNumeSectie = new MetroLabel[nrSectii];
+            lblsEtaj = new MetroLabel[nrSectii];
+            lblsCapacitateMaxima = new MetroLabel[nrSectii];
+            lblsNrPacientiInternati = new MetroLabel[nrSectii];
+            lblsTemperaturaMediu = new MetroLabel[nrSectii];
+            lblsSuprafataSectie = new MetroLabel[nrSectii];
+            lblsBugetSectie = new MetroLabel[nrSectii];
+            lblsStatusFunctionare = new MetroLabel[nrSectii];
+            lblsDotari = new MetroLabel[nrSectii];
+
+            int i = 0;
+            int axaY = 2;
+            foreach (SectieSpital sectieSpital in sectii)
             {
-                dataGridViewSectii.Rows.Add(
-                    sectie.CodSectie,
-                    sectie.NumeSectie,
-                    sectie.Etaj,
-                    sectie.CapacitateMaxima,
-                    sectie.NrPacientiInternati,
-                    sectie.TemperaturaMediu,
-                    sectie.SuprafataSectie,
-                    sectie.BugetSectie,
-                    sectie.Status,
-                    sectie.DotariSec
-                );
+                lblsCodSectie[i] = new MetroLabel();
+                lblsCodSectie[i].Width = LATIME_CONTROL;
+                lblsCodSectie[i].Text = sectieSpital.CodSectie.ToString();
+                lblsCodSectie[i].Left = 1 * DIMENSIUNE_PAS_X;
+                lblsCodSectie[i].Top = (i + axaY) * DIMENSIUNE_PAS_Y;
+                lblsCodSectie[i].BackColor = Color.White;
+                //   lblsCodSectie[i].BorderStyle = BorderStyle.FixedSingle;
+                this.Controls.Add(lblsCodSectie[i]);
+
+                lblsNumeSectie[i] = new MetroLabel();
+                lblsNumeSectie[i].Width = LATIME_CONTROL;
+                lblsNumeSectie[i].Text = sectieSpital.NumeSectie;
+                lblsNumeSectie[i].Left = 2 * DIMENSIUNE_PAS_X;
+                lblsNumeSectie[i].Top = (i + axaY) * DIMENSIUNE_PAS_Y;
+                lblsNumeSectie[i].BackColor = Color.White;
+                //   lblsNumeSectie[i].BorderStyle = BorderStyle.FixedSingle;
+                this.Controls.Add(lblsNumeSectie[i]);
+
+
+                lblsEtaj[i] = new MetroLabel();
+                lblsEtaj[i].Width = LATIME_CONTROL;
+                lblsEtaj[i].Text = sectieSpital.Etaj.ToString();
+                lblsEtaj[i].Left = 3 * DIMENSIUNE_PAS_X;
+                lblsEtaj[i].Top = (i + axaY) * DIMENSIUNE_PAS_Y;
+                lblsEtaj[i].BackColor = Color.White;
+                //   lblsEtaj[i].BorderStyle = BorderStyle.FixedSingle;
+                this.Controls.Add(lblsEtaj[i]);
+
+                lblsCapacitateMaxima[i] = new MetroLabel();
+                lblsCapacitateMaxima[i].Width = LATIME_CONTROL;
+                lblsCapacitateMaxima[i].Text = sectieSpital.CapacitateMaxima.ToString();
+                lblsCapacitateMaxima[i].Left = 4 * DIMENSIUNE_PAS_X;
+                lblsCapacitateMaxima[i].Top = (i + axaY) * DIMENSIUNE_PAS_Y;
+                lblsCapacitateMaxima[i].BackColor = Color.White;
+                //   lblsCapacitateMaxima[i].BorderStyle = BorderStyle.FixedSingle;
+                this.Controls.Add(lblsCapacitateMaxima[i]);
+
+
+                lblsNrPacientiInternati[i] = new MetroLabel();
+                lblsNrPacientiInternati[i].Width = LATIME_CONTROL;
+                lblsNrPacientiInternati[i].Text = sectieSpital.NrPacientiInternati.ToString();
+                lblsNrPacientiInternati[i].Left = 5 * DIMENSIUNE_PAS_X;
+                lblsNrPacientiInternati[i].Top = (i + axaY) * DIMENSIUNE_PAS_Y;
+                lblsNrPacientiInternati[i].BackColor = Color.White;
+                //  lblsNrPacientiInternati[i].BorderStyle = BorderStyle.FixedSingle;
+                this.Controls.Add(lblsNrPacientiInternati[i]);
+
+                lblsTemperaturaMediu[i] = new MetroLabel();
+                lblsTemperaturaMediu[i].Width = LATIME_CONTROL;
+                lblsTemperaturaMediu[i].Text = sectieSpital.TemperaturaMediu.ToString();
+                lblsTemperaturaMediu[i].Left = 6 * DIMENSIUNE_PAS_X;
+                lblsTemperaturaMediu[i].Top = (i + axaY) * DIMENSIUNE_PAS_Y;
+                lblsTemperaturaMediu[i].BackColor = Color.White;
+                //   lblsTemperaturaMediu[i].BorderStyle = BorderStyle.FixedSingle;
+                this.Controls.Add(lblsTemperaturaMediu[i]);
+
+
+                lblsSuprafataSectie[i] = new MetroLabel();
+                lblsSuprafataSectie[i].Width = LATIME_CONTROL;
+                lblsSuprafataSectie[i].Text = sectieSpital.SuprafataSectie.ToString();
+                lblsSuprafataSectie[i].Left = 7 * DIMENSIUNE_PAS_X;
+                lblsSuprafataSectie[i].Top = (i + axaY) * DIMENSIUNE_PAS_Y;
+                lblsSuprafataSectie[i].BackColor = Color.White;
+                //    lblsSuprafataSectie[i].BorderStyle = BorderStyle.FixedSingle;
+                this.Controls.Add(lblsSuprafataSectie[i]);
+
+
+                lblsBugetSectie[i] = new MetroLabel();
+                lblsBugetSectie[i].Width = LATIME_CONTROL;
+                lblsBugetSectie[i].Text = sectieSpital.BugetSectie.ToString();
+                lblsBugetSectie[i].Left = 8 * DIMENSIUNE_PAS_X;
+                lblsBugetSectie[i].Top = (i + axaY) * DIMENSIUNE_PAS_Y;
+                lblsBugetSectie[i].BackColor = Color.White;
+                //    lblsBugetSectie[i].BorderStyle = BorderStyle.FixedSingle;
+                this.Controls.Add(lblsBugetSectie[i]);
+
+
+                //lblsStatusFunctionare 
+                // lblsDotari
+
+                lblsStatusFunctionare[i] = new MetroLabel();
+                lblsStatusFunctionare[i].Width = LATIME_CONTROL;
+                lblsStatusFunctionare[i].Text = sectieSpital.Status.ToString();
+                lblsStatusFunctionare[i].Left = 9 * DIMENSIUNE_PAS_X;
+                lblsStatusFunctionare[i].Top = (i + axaY) * DIMENSIUNE_PAS_Y;
+                lblsStatusFunctionare[i].BackColor = Color.White;
+                //   lblsStatusFunctionare[i].BorderStyle = BorderStyle.FixedSingle;
+                this.Controls.Add(lblsStatusFunctionare[i]);
+
+
+                lblsDotari[i] = new MetroLabel();
+                lblsDotari[i].Width = LATIME_CONTROL;
+                lblsDotari[i].Text = sectieSpital.DotariSec.ToString();
+                lblsDotari[i].Left = 10 * DIMENSIUNE_PAS_X;
+                lblsDotari[i].Top = (i + axaY) * DIMENSIUNE_PAS_Y;
+                lblsDotari[i].BackColor = Color.White;
+                //   lblsDotari[i].BorderStyle = BorderStyle.FixedSingle;
+                lblsDotari[i].AutoSize = true;
+                this.Controls.Add(lblsDotari[i]);
+
+                i++;
+
+
+
+
             }
+
+
         }
+
+
     }
 }
 

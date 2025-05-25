@@ -9,6 +9,7 @@ using MetroFramework.Controls;
 using MetroFramework.Forms;
 using LibrarieModele;
 using NivelStocareDate;
+using System.Linq;
 
 namespace InterfataUtilizator_WindowsForms
 {
@@ -18,7 +19,7 @@ namespace InterfataUtilizator_WindowsForms
         private MetroTextBox txtNume, txtPrenume, txtCnp, txtVarsta, txtGreutate, txtInaltime, txtTemperatura;
         private ComboBox cmbGrupaSange;
         private ListBox lstAfectiuni;
-        private MetroButton btnAdauga, btnInapoi;
+        private Button btnAdauga, btnInapoi;
 
         // Label-uri
         private MetroLabel lblNume, lblPrenume, lblCnp, lblVarsta, lblGreutate, lblInaltime, lblTemperatura, lblGrupa, lblAfectiuni;
@@ -27,12 +28,6 @@ namespace InterfataUtilizator_WindowsForms
         private const int CONTROL_WIDTH = 200;
         private const int LINE_HEIGHT = 40;
 
-        // Validare
-        private const int CNP_LUNGIME = 13;
-        private const int VARSTA_MIN = 0, VARSTA_MAX = 120;
-        private const double GREUTATE_MIN = 2.0, GREUTATE_MAX = 300.0;
-        private const double INALTIME_MIN = 30.0, INALTIME_MAX = 250.0;
-        private const double TEMP_MIN = 30.0, TEMP_MAX = 45.0;
 
         private Pacienti_FISIERTEXT adminPacienti;
 
@@ -126,25 +121,37 @@ namespace InterfataUtilizator_WindowsForms
             this.Controls.Add(lstAfectiuni);
 
             y += 120;
-            btnAdauga = new MetroButton()
+            btnAdauga = new Button()
             {
                 Text = "Adaugă",
                 Width = 120,
-                Height = 35,
+                Height = 50,
                 Left = xInput,
-                Top = y
+                Top = y,
+                BackColor = Color.MediumSeaGreen,
+                ForeColor = Color.White,
+                Font = new Font("Segoe UI", 10, FontStyle.Bold),
+                FlatStyle = FlatStyle.Flat,
+                Cursor = Cursors.Hand
             };
+            btnAdauga.FlatAppearance.BorderSize = 0;
             btnAdauga.Click += BtnAdauga_Click;
             this.Controls.Add(btnAdauga);
 
-            btnInapoi = new MetroButton()
+            btnInapoi = new Button()
             {
                 Text = "Înapoi",
                 Width = 120,
-                Height = 35,
+                Height = 50,
                 Left = xInput + 140,
-                Top = y
+                Top = y,
+                BackColor = Color.Crimson,
+                ForeColor = Color.White,
+                Font = new Font("Segoe UI", 10, FontStyle.Bold),
+                FlatStyle = FlatStyle.Flat,
+                Cursor = Cursors.Hand
             };
+            btnInapoi.FlatAppearance.BorderSize = 0;
             btnInapoi.Click += BtnInapoi_Click;
             this.Controls.Add(btnInapoi);
         }
@@ -195,58 +202,57 @@ namespace InterfataUtilizator_WindowsForms
 
         private void BtnAdauga_Click(object sender, EventArgs e)
         {
-            string mesaj = "";
+            List<Pacient> pacienti = adminPacienti.GetPacienti();
 
-            ColorError(lblNume, txtNume.Text.Length < 2);
-            if (txtNume.Text.Length < 2) mesaj += "Nume invalid.\n";
+            string nume = txtNume.Text.Trim();
+            string prenume = txtPrenume.Text.Trim();
+            string cnp = txtCnp.Text.Trim();
+            string varstaStr = txtVarsta.Text.Trim();
+            string greutateStr = txtGreutate.Text.Trim();
+            string inaltimeStr = txtInaltime.Text.Trim();
+            string temperaturaStr = txtTemperatura.Text.Trim();
+            string grupa = cmbGrupaSange.SelectedItem?.ToString();
+            List<string> afectiuni = lstAfectiuni.SelectedItems.Cast<string>().ToList();
 
-            ColorError(lblPrenume, txtPrenume.Text.Length < 2);
-            if (txtPrenume.Text.Length < 2) mesaj += "Prenume invalid.\n";
+            var (valid, mesaj) = adminPacienti.VerificaDatePacient(
+                nume, prenume, cnp, varstaStr, greutateStr, inaltimeStr, temperaturaStr,
+                grupa, afectiuni, pacienti
+            );
 
-            ColorError(lblCnp, txtCnp.Text.Length != CNP_LUNGIME);
-            if (txtCnp.Text.Length != CNP_LUNGIME) mesaj += "CNP invalid.\n";
+            // Validare 
+            ColorError(lblNume, string.IsNullOrWhiteSpace(nume) || nume.Length < 2);
+            ColorError(lblPrenume, string.IsNullOrWhiteSpace(prenume) || prenume.Length < 2);
+            ColorError(lblCnp, cnp.Length != 13);
+            ColorError(lblVarsta, !int.TryParse(varstaStr, out int varsta) || varsta < 0 || varsta > 120);
+            ColorError(lblGreutate, !double.TryParse(greutateStr, out double greutate) || greutate < 2 || greutate > 300);
+            ColorError(lblInaltime, !double.TryParse(inaltimeStr, out double inaltime) || inaltime < 30 || inaltime > 250);
+            ColorError(lblTemperatura, !double.TryParse(temperaturaStr, out double temp) || temp < 30 || temp > 45);
+            ColorError(lblGrupa, string.IsNullOrEmpty(grupa));
+            ColorError(lblAfectiuni, afectiuni.Count == 0);
 
-            ColorError(lblVarsta, !int.TryParse(txtVarsta.Text, out int varsta) || varsta < VARSTA_MIN || varsta > VARSTA_MAX);
-            if (varsta < VARSTA_MIN || varsta > VARSTA_MAX) mesaj += $"Vârsta între {VARSTA_MIN}-{VARSTA_MAX}.\n";
-
-            ColorError(lblGreutate, !double.TryParse(txtGreutate.Text, out double greutate) || greutate < GREUTATE_MIN || greutate > GREUTATE_MAX);
-            if (greutate < GREUTATE_MIN || greutate > GREUTATE_MAX) mesaj += $"Greutatea între {GREUTATE_MIN}-{GREUTATE_MAX} kg.\n";
-
-            ColorError(lblInaltime, !double.TryParse(txtInaltime.Text, out double inaltime) || inaltime < INALTIME_MIN || inaltime > INALTIME_MAX);
-            if (inaltime < INALTIME_MIN || inaltime > INALTIME_MAX) mesaj += $"Înălțimea între {INALTIME_MIN}-{INALTIME_MAX} cm.\n";
-
-            ColorError(lblTemperatura, !double.TryParse(txtTemperatura.Text, out double temp) || temp < TEMP_MIN || temp > TEMP_MAX);
-            if (temp < TEMP_MIN || temp > TEMP_MAX) mesaj += $"Temperatura între {TEMP_MIN}-{TEMP_MAX} °C.\n";
-
-            ColorError(lblGrupa, cmbGrupaSange.SelectedIndex == -1);
-            if (cmbGrupaSange.SelectedIndex == -1) mesaj += "Selectează grupa de sânge.\n";
-
-            ColorError(lblAfectiuni, lstAfectiuni.SelectedItems.Count == 0);
-            if (lstAfectiuni.SelectedItems.Count == 0) mesaj += "Selectează cel puțin o afecțiune.\n";
-
-            if (mesaj != "")
+            if (!valid)
             {
                 MessageBox.Show(mesaj, "Eroare Validare", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            List<Pacient> listaPacienti = adminPacienti.GetPacienti();
-            int nrPacienti = listaPacienti.Count;
-            GrupaSangePacient grupa = (GrupaSangePacient)Enum.Parse(typeof(GrupaSangePacient), cmbGrupaSange.Text);
-            AfectiuniMedicale afectiuni = AfectiuniMedicale.Nespecificat;
-            foreach (var item in lstAfectiuni.SelectedItems)
-                if (Enum.TryParse(item.ToString(), out AfectiuniMedicale af))
-                    afectiuni |= af;
+            GrupaSangePacient grupaSange = (GrupaSangePacient)Enum.Parse(typeof(GrupaSangePacient), grupa);
 
-            var pacient = new Pacient(nrPacienti + 1,
-                txtNume.Text.Trim(), txtPrenume.Text.Trim(), txtCnp.Text.Trim(),
+            AfectiuniMedicale afectiuniMed = AfectiuniMedicale.Nespecificat;
+            foreach (var af in afectiuni)
+                if (Enum.TryParse(af, out AfectiuniMedicale afVal))
+                    afectiuniMed |= afVal;
+
+            Pacient pacient = new Pacient(adminPacienti.GetNextCodPacient(),
+                nume, prenume, cnp,
                 varsta, greutate, inaltime, temp,
-                grupa, afectiuni);
+                grupaSange, afectiuniMed);
 
             adminPacienti.AddPacient(pacient);
             MessageBox.Show("Pacient adăugat cu succes!", "Succes", MessageBoxButtons.OK, MessageBoxIcon.Information);
             ResetForm();
         }
+
 
         private void ResetForm()
         {

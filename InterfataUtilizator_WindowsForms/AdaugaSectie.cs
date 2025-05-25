@@ -17,7 +17,7 @@ namespace InterfataUtilizator_WindowsForms
         private MetroTextBox txtNume, txtEtaj, txtCapacitate, txtNrPacienti, txtTemperatura, txtSuprafata, txtBuget;
         private ComboBox cmbStatus;
         private ListBox lstDotari;
-        private MetroButton btnAdauga, btnInapoi;
+        private Button btnAdauga, btnInapoi;
         private MetroLabel lblNume, lblEtaj, lblCapacitate, lblNrPacienti, lblTemperatura, lblSuprafata, lblBuget, lblStatus, lblDotari;
 
         private const int LABEL_WIDTH = 140;
@@ -111,11 +111,35 @@ namespace InterfataUtilizator_WindowsForms
 
             y += 100;
 
-            btnAdauga = new MetroButton() { Text = "Adaugă", Width = 120, Left = xInput, Top = y };
+            btnAdauga = new Button() { 
+                Text = "Adaugă", 
+                Width = 120,
+                Height = 50,
+                Left = xInput, 
+                Top = y,
+                BackColor = Color.MediumSeaGreen,
+                ForeColor = Color.White,
+                Font = new Font("Segoe UI", 10, FontStyle.Bold),
+                FlatStyle = FlatStyle.Flat,
+                Cursor = Cursors.Hand
+            };
+            btnAdauga.FlatAppearance.BorderSize = 0;
             btnAdauga.Click += BtnAdauga_Click;
             this.Controls.Add(btnAdauga);
 
-            btnInapoi = new MetroButton() { Text = "Înapoi", Width = 120, Left = xInput + 140, Top = y };
+            btnInapoi = new Button() { 
+                Text = "Înapoi", 
+                Width = 120, 
+                Height = 50,
+                Left = xInput + 140, 
+                Top = y,
+                BackColor = Color.Crimson,
+                ForeColor = Color.White,
+                Font = new Font("Segoe UI", 10, FontStyle.Bold),
+                FlatStyle = FlatStyle.Flat,
+                Cursor = Cursors.Hand
+            };
+            btnInapoi.FlatAppearance.BorderSize = 0;
             btnInapoi.Click += (s, e) => this.Close();
             this.Controls.Add(btnInapoi);
         }
@@ -136,93 +160,97 @@ namespace InterfataUtilizator_WindowsForms
 
         private void BtnAdauga_Click(object sender, EventArgs e)
         {
-            string eroare = "";
             ResetLabelColors();
 
-            if (txtNume.Text.Length < MIN_NUME || txtNume.Text.Length > MAX_NUME)
-            {
-                eroare += "Nume invalid (2–50).\n";
-                ColorError(lblNume, true);
-            }
+            // Obține valori din controale
+            string numeSectie = txtNume.Text.Trim();
+            string etaj = txtEtaj.Text.Trim();
+            string capacitate = txtCapacitate.Text.Trim();
+            string nrPacienti = txtNrPacienti.Text.Trim();
+            string temperatura = txtTemperatura.Text.Trim();
+            string suprafata = txtSuprafata.Text.Trim();
+            string buget = txtBuget.Text.Trim();
+            string status = cmbStatus.SelectedItem?.ToString();
 
-            if (!int.TryParse(txtEtaj.Text, out int etaj) || etaj < ETAJ_MIN || etaj > ETAJ_MAX)
-            {
-                eroare += "Etaj invalid.\n";
-                ColorError(lblEtaj, true);
-            }
+            List<string> dotariSelectate = new List<string>();
+            foreach (var item in lstDotari.SelectedItems)
+                dotariSelectate.Add(item.ToString());
 
-            if (!int.TryParse(txtCapacitate.Text, out int capacitate) || capacitate < CAPACITATE_MIN || capacitate > CAPACITATE_MAX)
-            {
-                eroare += "Capacitate invalidă.\n";
-                ColorError(lblCapacitate, true);
-            }
+            List<SectieSpital> sectii = adminSectii.GetSectii();
 
-            if (!int.TryParse(txtNrPacienti.Text, out int nrPacienti) || nrPacienti < NR_PAC_MIN || nrPacienti > capacitate)
-            {
-                eroare += "Nr. pacienți invalid.\n";
-                ColorError(lblNrPacienti, true);
-            }
+            // Apel validare din clasa Sectii_FISIERTEXT
+            var rezultat = adminSectii.VerificaDateSectie(
+                numeSectie, etaj, capacitate, nrPacienti,
+                temperatura, suprafata, buget, status,
+                dotariSelectate, sectii
+            );
 
-            if (!double.TryParse(txtTemperatura.Text, out double temperatura) || temperatura < TEMP_MIN || temperatura > TEMP_MAX)
+            if (!rezultat.valid)
             {
-                eroare += "Temperatură invalidă.\n";
-                ColorError(lblTemperatura, true);
-            }
+                // Verifică fiecare câmp individual și colorează label-ul asociat
+                if (string.IsNullOrWhiteSpace(numeSectie) || numeSectie.Length < MIN_NUME || numeSectie.Length > MAX_NUME)
+                    ColorError(lblNume, true);
 
-            if (!double.TryParse(txtSuprafata.Text, out double suprafata) || suprafata < SUPRAF_MIN || suprafata > SUPRAF_MAX)
-            {
-                eroare += "Suprafață invalidă.\n";
-                ColorError(lblSuprafata, true);
-            }
+                if (!int.TryParse(etaj, out int valEtaj) || valEtaj < ETAJ_MIN || valEtaj > ETAJ_MAX)
+                    ColorError(lblEtaj, true);
 
-            if (!double.TryParse(txtBuget.Text, out double buget) || buget < BUGET_MIN)
-            {
-                eroare += "Buget invalid.\n";
-                ColorError(lblBuget, true);
-            }
+                if (!int.TryParse(capacitate, out int valCap) || valCap < CAPACITATE_MIN || valCap > CAPACITATE_MAX)
+                    ColorError(lblCapacitate, true);
 
-            if (cmbStatus.SelectedIndex == -1)
-            {
-                eroare += "Selectează un status.\n";
-                ColorError(lblStatus, true);
-            }
+                if (!int.TryParse(nrPacienti, out int valPac) || valPac < NR_PAC_MIN || (valCap > 0 && valPac > valCap))
+                    ColorError(lblNrPacienti, true);
 
-            if (lstDotari.SelectedItems.Count == 0)
-            {
-                eroare += "Selectează cel puțin o dotare.\n";
-                ColorError(lblDotari, true);
-            }
+                if (!double.TryParse(temperatura, out double valTemp) || valTemp < TEMP_MIN || valTemp > TEMP_MAX)
+                    ColorError(lblTemperatura, true);
 
-            if (eroare != "")
-            {
-                MessageBox.Show(eroare, "Erori de validare", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                if (!double.TryParse(suprafata, out double valSup) || valSup < SUPRAF_MIN || valSup > SUPRAF_MAX)
+                    ColorError(lblSuprafata, true);
+
+                if (!double.TryParse(buget, out double valBuget) || valBuget < BUGET_MIN)
+                    ColorError(lblBuget, true);
+
+                if (string.IsNullOrWhiteSpace(status) || !Enum.IsDefined(typeof(StatusFunctionareSectie), status))
+                    ColorError(lblStatus, true);
+
+                if (dotariSelectate.Count == 0)
+                    ColorError(lblDotari, true);
+
+                MessageBox.Show(rezultat.mesaj, "Date invalide", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
+
+            // Conversie enumuri
             DotariSectie dotari = DotariSectie.Nespecificat;
-            foreach (var item in lstDotari.SelectedItems)
+            foreach (var item in dotariSelectate)
             {
-                if (Enum.TryParse(item.ToString(), out DotariSectie dot))
-                {
+                if (Enum.TryParse(item, out DotariSectie dot))
                     dotari |= dot;
-                }
             }
 
-            StatusFunctionareSectie status = (StatusFunctionareSectie)Enum.Parse(typeof(StatusFunctionareSectie), cmbStatus.Text);
+            StatusFunctionareSectie statusEnum = (StatusFunctionareSectie)Enum.Parse(typeof(StatusFunctionareSectie), status);
 
-      
-            List<SectieSpital> listaSectii = adminSectii.GetSectii();
-            int nrSectii = listaSectii.Count;
+            // Creează obiectul SectieSpital
+            int codNou = adminSectii.GetNextCodSectie();
+            var sectie = new SectieSpital(
+                codNou,
+                numeSectie,
+                int.Parse(etaj),
+                int.Parse(capacitate),
+                int.Parse(nrPacienti),
+                double.Parse(temperatura),
+                double.Parse(suprafata),
+                double.Parse(buget),
+                statusEnum,
+                dotari
+            );
 
-
-            var sectie = new SectieSpital(nrSectii + 1, txtNume.Text.Trim(), etaj, capacitate, nrPacienti,
-                temperatura, suprafata, buget, status, dotari);
-
+            // Salvare în fișier
             adminSectii.AddSectii(sectie);
-
             MessageBox.Show("Secție adăugată cu succes!", "Succes", MessageBoxButtons.OK, MessageBoxIcon.Information);
             ResetForm();
         }
+
 
         private void ColorError(MetroLabel lbl, bool isError)
         {
